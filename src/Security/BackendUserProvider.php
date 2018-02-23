@@ -74,7 +74,7 @@ class BackendUserProvider extends BaseUserProvider
      */
     public function loadUserByUsername($username)
     {
-        $user = $this->registry->getRepository('App:AdminUser')->findOneBy(['email' => $username]);
+        $user = $this->registry->getRepository(BackendUser::class)->findOneBy(['email' => $username]);
         if (null !== $user) {
             return $user;
         }

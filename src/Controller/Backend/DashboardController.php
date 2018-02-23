@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/dashboard")
- * @Security("has_role('ROLE_USER')")
+ * @Security("has_role('ROLE_BACKEND_USER')")
  *
  * @return Response
  */
