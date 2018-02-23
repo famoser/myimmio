@@ -16,13 +16,14 @@ use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\ThingTrait;
 use App\Entity\Traits\UserTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\FrontendUserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ApartmentRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Apartment extends BaseEntity
@@ -35,6 +36,20 @@ class Apartment extends BaseEntity
      * @ORM\ManyToOne(targetEntity="Building", inversedBy="apartments")
      */
     private $building;
+
+    /**
+     * @var Building
+     * @ORM\OneToMany(targetEntity="ApplicationSlot", mappedBy="apartment")
+     */
+    private $applicationSlots;
+
+    /**
+     * Apartment constructor.
+     */
+    public function __construct()
+    {
+        $this->applicationSlots = new ArrayCollection();
+    }
 
     /**
      * returns a string representation of this entity.

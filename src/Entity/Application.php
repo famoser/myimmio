@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\FrontendUserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ApplicationRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Application extends BaseEntity

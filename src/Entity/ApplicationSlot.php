@@ -22,9 +22,9 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * the time frame users can apply
+ * the time frame users can apply & defines how they apply (which fields are optional, what they are welcomed with, ...)
  *
- * @ORM\Entity(repositoryClass="App\Repository\FrontendUserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ApplicationSlotRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class ApplicationSlot extends BaseEntity
@@ -48,10 +48,20 @@ class ApplicationSlot extends BaseEntity
     private $identifier;
 
     /**
-     * @var Building
-     * @ORM\ManyToOne(targetEntity="Building", inversedBy="apartments")
+     * @var string
      */
-    private $building;
+    private $welcomeHeader;
+
+    /**
+     * @var string
+     */
+    private $welcomeText;
+
+    /**
+     * @var Apartment
+     * @ORM\ManyToOne(targetEntity="Apartment", inversedBy="applicationSlots")
+     */
+    private $apartment;
 
     /**
      * returns a string representation of this entity.
@@ -112,18 +122,50 @@ class ApplicationSlot extends BaseEntity
     }
 
     /**
-     * @return Building
+     * @return Apartment
      */
-    public function getBuilding()
+    public function getApartment()
     {
-        return $this->building;
+        return $this->apartment;
     }
 
     /**
-     * @param Building $building
+     * @param Apartment $apartment
      */
-    public function setBuilding(Building $building): void
+    public function setApartment(Apartment $apartment): void
     {
-        $this->building = $building;
+        $this->apartment = $apartment;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWelcomeHeader()
+    {
+        return $this->welcomeHeader;
+    }
+
+    /**
+     * @param string $welcomeHeader
+     */
+    public function setWelcomeHeader(string $welcomeHeader): void
+    {
+        $this->welcomeHeader = $welcomeHeader;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWelcomeText(): string
+    {
+        return $this->welcomeText;
+    }
+
+    /**
+     * @param string $welcomeText
+     */
+    public function setWelcomeText(string $welcomeText): void
+    {
+        $this->welcomeText = $welcomeText;
     }
 }

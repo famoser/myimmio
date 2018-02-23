@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\FrontendUserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\BuildingRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Building extends BaseEntity
