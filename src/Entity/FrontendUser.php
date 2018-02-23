@@ -31,14 +31,6 @@ class FrontendUser extends BaseEntity implements AdvancedUserInterface, Equatabl
     use AddressTrait;
 
     /**
-     * constructor.
-     */
-    public function __construct()
-    {
-
-    }
-
-    /**
      * Returns the roles granted to the user.
      *
      * @return array (Role|string)[] The user roles

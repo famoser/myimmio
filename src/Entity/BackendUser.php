@@ -20,10 +20,8 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * CustomerUser.
- *
- * @ORM\Table
  * @ORM\Entity(repositoryClass="App\Repository\BackendUserRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class BackendUser extends BaseEntity implements AdvancedUserInterface, EquatableInterface
 {

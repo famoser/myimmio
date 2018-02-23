@@ -18,9 +18,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * A Member is part of the organisation, and is responsible for the events assigned to it.
  *
- * @ORM\Table
  * @ORM\Entity(repositoryClass="App\Repository\SettingRepository")
- * @ORM\HasLifecycleCallbacks
+ * @ORM\HasLifecycleCallbacks()
  */
 class Setting extends BaseEntity
 {

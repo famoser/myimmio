@@ -31,6 +31,12 @@ class Apartment extends BaseEntity
     use ThingTrait;
 
     /**
+     * @var Building
+     * @ORM\ManyToOne(targetEntity="Building", inversedBy="apartments")
+     */
+    private $building;
+
+    /**
      * returns a string representation of this entity.
      *
      * @return string

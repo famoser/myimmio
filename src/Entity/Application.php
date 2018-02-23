@@ -15,6 +15,7 @@ use App\Entity\Base\BaseEntity;
 use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\UserTrait;
+use App\Helper\DateTimeFormatter;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -28,5 +29,13 @@ class Application extends BaseEntity
 {
     use IdTrait;
 
-
+    /**
+     * returns a string representation of this entity.
+     *
+     * @return string
+     */
+    public function getFullIdentifier()
+    {
+        return $this->createdAt->format(DateTimeFormatter::DATE_TIME_FORMAT);
+    }
 }
