@@ -1,0 +1,184 @@
+about this document:
+	baseline for the platform
+	describes functionality and concept as close as possible
+
+actors:
+	real estate management (REM)
+	applicants which are looking for a new place
+
+phase 0
+=========
+
+concept:
+	try to find potential customers
+	get them to pay for part of the risk
+	create mockups and compelling presentation
+
+minimal valuable product MVP:
+	target audience:
+		REM
+		applicants
+	value proposition:
+		efficient tenant seeking for real estate management because only applicable tenants who are interested will actually visit the place
+		faster application & better feedback for potential tenants
+	channels:
+		ask potential customers (REM) directly
+		include the first two customers before the creation
+	relationship:
+		try to sell the prototype to the first customers
+		
+
+phase 1
+=======
+
+concept:
+	tenant application platform
+	apply online for an apartment
+	filter applications
+	invite only fitting candidates
+
+REM login part:
+	manage employees if master
+	manage buildings, flats
+	manage applicants
+	propose apartments to applicants
+	sees open questions for own flats
+	sees new applicants since last visit
+	
+applicant login:
+	sees applications with status
+	can revert application
+	can edit default application data
+	
+workflow:
+	REM registers:
+		creates an account
+		has to use an access code to be able to register
+		
+	REM registers employee:
+		can create new employees
+		employees are "master" (access to everything) or "administration" (access to own places)
+
+	REM setup place to rent PtR:
+		creates PtR
+		can (but is not required to) add ground plan, photos, description, ...
+
+	REM opens applications:
+		creates a new round of applications
+		can (but is not required to) add visit events (OPTION_EVENTS_ADCANCED)
+		configures necessary, optional, not wanted data about the applicants
+		receives link to directly share the form to apply for PtR
+
+	applicant applies:
+		can asks questions, if not logged in has to additionally leave full name, captcha
+		if logged in, data from previous applications if any are prefilled
+		changes/appends all data required, can fill out optional
+		can select all available dates for visit (OPTION_EVENTS_ADCANCED)
+		is informed of further workflow
+		submits form
+		if logged in, default application data is automatically updated
+		is redirected to info page
+		receives mail with link to info page
+		if not logged in, mail contains unique link to authenticate
+
+	applicant clicks on link:
+		lands on info page
+		can edit own information if not locked (I guess REM does not want this)
+		sees status of application
+		if application is approved, can print out application
+		sees all information about the place
+		can ask questions
+		sees all published answers
+		if not signed in but application is not linked with account: option to link it
+
+	applicant asks question:
+		types in text
+		submits
+
+	REM answers question:
+		write text answer
+		mark question as resolved, duplicate, hidden
+		if question marked as resolved, can choose to make it public
+		
+	REM filters applicants:
+		can sort by most important factors
+		filter criteria persisted over sessions, stored per apartment
+		filter includes marks, labels
+		score of applicants is calculated (OPTION_SCORE)
+		can mark applicants with predefined colors (unmarked (no action performed yet), red (are hidden afterwards), green (are invited))
+		marking an applicant leads to locking his infos, and giving the notice on the info page
+		can mark applicants with custom labels (OPTION_LABEL)
+		can send emails created from templates (OPTION_EMAIL)
+		
+	REM schedules meeting:
+		REM terminates applications
+		adds possible meeting dates
+		sees which applicants have agreed to a meeting date already (OPTION_EVENTS_ADCANCED)
+		sends email to all green applicants with invitation to confirm meeting
+		
+	applicant confirm meeting:
+		opens link in email
+		selects single event to participate
+		has previously selected events marked (OPTION_EVENTS_ADCANCED)
+		prints out application and signs it
+		
+	applicant goes to meeting:
+		brings printed & singed application
+		gives application to person there if still interested
+		sends application later per mail if forgot
+		
+to be defined:
+	form:
+		which infos are needed, which are optional
+		provide sensible default
+		provide way to upload files, photos
+	form filling out:
+		use progress base visualization for the form
+		always display how much is done already, how much is missing
+		
+extensions:
+	OPTION_LABEL:
+		would probably help a lot if a lot of applicants
+		possible labels "missing document", "need to ask supervisor", ...
+	OPTION_EMAIL:
+		to inquire persons about additional info
+		or ask about additional documents
+	OPTION_EVENTS_ADCANCED:
+		so applicants which can not visit anyways are not applying
+	OPTION_SCORE:
+		make exceptional candidates stand out
+		calculate score based on salary, way of live, ...
+	applicant approved:
+		visualized if applicant has been approved for other apartments
+		include enough details to ensure validity of data, but preserve privacy
+	checklist for applicant:
+		REM creates a checklist all applicants must fulfill (like checked name, checked employer, checked documents)
+		each item on checklist can be marked as fulfilled by REM		
+		
+	
+phase 2
+=======
+
+concept:
+	similar to immoscout
+	use the already created rent places
+	
+search:
+	multiple modes:
+		select most important factor (like location, price, size)
+		display different UI per selection
+	score calculation
+		allow to calculate score
+		different predefined score metrics can be included by the user if needed
+		create score based on location, size, ...
+	reminders:
+		can create reminders if new places found
+		can restrict by min-score and other requirements (hard limits on specific values)
+		mail contains as much information about place as possible 
+	
+	
+Verwaltungen / Vermieter
+•	Bewerbungsformulare verwalten
+◦	Editor muss intelligent sein, so dass gleiche Kriterien (über mehrere Verwaltungen) zusammengelegt werden
+•	Bewerbungen verwalten (pro Objekt und Suchlauf)
+◦	manuell erfassen
