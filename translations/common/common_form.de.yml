@@ -18,3 +18,4 @@ submit:
 
 not_required: ' (freiwillig)'
 required: '*'
+back: 'Zurück'

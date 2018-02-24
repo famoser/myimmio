@@ -1,10 +1,27 @@
 {% extends "single_content_base.html.twig" %}
+{% import "widgets/breadcrumb.html.twig" as breadcrumb %}
 
 {% block title %}{{ "remove.title"|trans }}{% endblock %}
-{% block description %}{{ "remove.description"|trans }}{% endblock %}
+{% block description %}{{ apartment.name }}{% endblock %}
 
 {% trans_default_domain "backend_apartment" %}
 
+{% block breadcrumb %}
+    {{ breadcrumb.link("index.title"|trans, path("backend_apartment_index")) }}
+    {{ breadcrumb.sep }}
+    {{ breadcrumb.link(apartment.building.name, path("backend_building_details", {building: apartment.building.id})) }}
+    {{ breadcrumb.sep }}
+    {{ breadcrumb.link(apartment.name, path("backend_apartment_details", {apartment: apartment.id})) }}
+    {{ breadcrumb.sep }}
+    {{ breadcrumb.link("delete"|trans({}, "common_crud"), path("backend_apartment_remove", {apartment: apartment.id})) }}
+{% endblock %}
+
 {% block single_content %}
+    <p>
+        {{ "remove.confirmation"|trans({
+            '%name%': apartment.name,
+            '%building%': apartment.building.name
+        }) }}
+    </p>
     {{ form(form) }}
 {% endblock %}

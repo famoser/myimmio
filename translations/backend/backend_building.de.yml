@@ -1,16 +1,17 @@
 new:
-  title: 'Neu'
+  title: 'Gebäude hinzufügen'
   description: 'Neues Gebäude erfassen'
 
 edit:
-  title: 'Bearbeiten'
-  description: 'Gebäude bearbeiten'
+  title: 'Gebäude bearbeiten'
 
 remove:
-  title: 'Entfernen'
-  description: 'Gebäude entfernen'
+  title: 'Gebäude entfernen'
+  confirmation: '%name% an der %address% entfernen?'
 
 index:
   title: 'Gebäude'
   description: 'Meine Gebäude'
   no_buildings: 'Noch keine Gebäude erfasst'
+
+new_building: 'Gebäude hinzufügen'

@@ -1,9 +1,14 @@
 {% extends 'single_content_base.html.twig' %}
+{% import 'widgets/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}{{ "index.title"|trans }}{% endblock %}
 {% block description %}{{ "index.description"|trans }}{% endblock %}
 
 {% trans_default_domain "backend_dashboard" %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.link("index.title"|trans, path("backend_dashboard_index")) }}
+{% endblock %}
 
 {% block single_content %}
     <p>

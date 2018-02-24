@@ -1,6 +1,6 @@
-{% macro add_button(href) %}
+{% macro add_button(href, label) %}
     {% import _self as buttons %}
-    {{ buttons.button(href, "new"|trans({}, "common_crud"), "plus", "primary") }}
+    {{ buttons.button(href, label|default("new"|trans({}, "common_crud")), "plus", "primary") }}
 {% endmacro %}
 
 {% macro edit_button(href) %}

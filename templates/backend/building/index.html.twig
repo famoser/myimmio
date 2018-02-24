@@ -1,15 +1,20 @@
 {% extends 'single_content_base.html.twig' %}
 {% import "widgets/buttons.html.twig" as buttons %}
+{% import 'widgets/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}{{ "index.title"|trans }}{% endblock %}
 {% block description %}{{ "index.description"|trans }}{% endblock %}
 
 {% trans_default_domain "backend_building" %}
 
+{% block breadcrumb %}
+    {{ breadcrumb.link("index.title"|trans, path("backend_building_index")) }}
+{% endblock %}
+
 {% block single_content %}
 
     <p>
-        {{ buttons.add_button(path("backend_building_new")) }}
+        {{ buttons.add_button(path("backend_building_new"), "new_building"|trans) }}
     </p>
 
     {% if buildings|length > 0 %}
@@ -19,25 +24,16 @@
                 <th>{{ "name"|trans({}, "trait_thing") }}</th>
                 <th>{{ "address_lines"|trans({}, "trait_address") }}</th>
                 <th>{{ "entity.plural"|trans({}, "entity_apartment") }}</th>
-                <th></th>
-                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for building in buildings %}
                 <tr>
-                    <td>{{ building.name }}</td>
+                    <td>
+                        <a href="{{ path("backend_building_details", {"building": building.id}) }}">{{ building.name }}</a>
+                    </td>
                     <td>{{ building.addressLines|implode(", ") }}</td>
                     <td>{{ building.apartments|length }}</td>
-                    <td>
-                        {{ buttons.edit_button(path("backend_building_edit", {"building": building.id}) ) }}
-                    </td>
-                    <td>
-                        {{ buttons.remove_button(path("backend_building_remove", {"building": building.id}) ) }}
-                    </td>
-                    <td>
-                        {{ buttons.add_button(path("backend_apartment_new", {"building" : building.id})) }}
-                    </td>
                 </tr>
             {% endfor %}
             </tbody>

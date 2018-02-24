@@ -36,7 +36,7 @@ class ApplicationSlotVoter extends CrudVoter
         }
 
         // only vote on Post objects inside this voter
-        if (!$subject instanceof Apartment) {
+        if (!$subject instanceof ApplicationSlot) {
             return false;
         }
 

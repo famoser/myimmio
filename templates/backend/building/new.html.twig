@@ -1,9 +1,17 @@
 {% extends "single_content_base.html.twig" %}
+{% import "widgets/buttons.html.twig" as buttons %}
+{% import 'widgets/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}{{ "new.title"|trans }}{% endblock %}
 {% block description %}{{ "new.description"|trans }}{% endblock %}
 
 {% trans_default_domain "backend_building" %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.link("index.title"|trans, path("backend_building_index")) }}
+    {{ breadcrumb.sep }}
+    {{ breadcrumb.link("new_building"|trans, path("backend_building_new")) }}
+{% endblock %}
 
 {% block single_content%}
     {{ form(form) }}

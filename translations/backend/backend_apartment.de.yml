@@ -3,14 +3,18 @@ new:
   description: 'Neue Wohnung erfassen'
 
 edit:
-  title: 'Bearbeiten'
-  description: 'Wohnung bearbeiten'
+  title: 'Wohnung bearbeiten'
 
 remove:
-  title: 'Entfernen'
-  description: 'Wohnung entfernen'
+  title: 'Wohnung entfernen'
+  confirmation: '%name% des Gebäudes %building% entfernen?'
 
 index:
   title: 'Wohnungen'
   description: 'Meine Wohnungen'
   no_apartments: 'Noch keine Wohnungen erfasst'
+
+details:
+  title: 'Bewerbungsfenster dieser Wohnung'
+
+new_apartment: 'Wohnung hinzufügen'

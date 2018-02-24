@@ -1,0 +1,62 @@
+{% extends 'single_content_base.html.twig' %}
+{% import "widgets/buttons.html.twig" as buttons %}
+{% import "widgets/breadcrumb.html.twig" as breadcrumb %}
+
+{% block title %}{{ building.name }}{% endblock %}
+{% block title_html %}
+    {{ title }}
+    <div class="pull-right">
+        {{ buttons.edit_button(path("backend_building_edit", {"building": building.id})) }}
+        {{ buttons.remove_button(path("backend_building_remove", {"building": building.id})) }}
+    </div>
+{% endblock %}
+{% block description %}{{ building.addressLines|implode(", ") }}{% endblock %}
+
+{% trans_default_domain "backend_building" %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.link("index.title"|trans, path("backend_building_index")) }}
+    {{ breadcrumb.sep }}
+    {{ breadcrumb.link(building.name, path("backend_building_details", {building: building.id})) }}
+{% endblock %}
+
+{% block single_content %}
+
+    <p>
+        {{ buttons.add_button(path("backend_apartment_new", {building: building.id}), "new_apartment"|trans({}, "backend_apartment")) }}
+    </p>
+
+    {% if building.apartments|length > 0 %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ "name"|trans({}, "trait_thing") }}</th>
+                <th>{{ "entity.plural"|trans({}, "entity_application_slot") }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for apartment in building.apartments %}
+                <tr>
+                    <td>
+                        <a href="{{ path("backend_apartment_details", {apartment: apartment.id}) }}">{{ apartment.name }}</a>
+                    </td>
+                    <td>{{ apartment.applicationSlots|length }}</td>
+                    <!--
+                    <td>
+                        {{ buttons.edit_button(path("backend_apartment_edit", {"apartment": apartment.id}) ) }}
+                    </td>
+                    <td>
+                        {{ buttons.remove_button(path("backend_apartment_remove", {"apartment": apartment.id}) ) }}
+                    </td>
+                    <td>
+                        {{ buttons.add_button(path("backend_application_slot_new", {"apartment": apartment.id}) ) }}
+                    </td>
+                    -->
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>{{ "index.no_apartments"|trans({}, "backend_apartment") }}</p>
+    {% endif %}
+{% endblock %}

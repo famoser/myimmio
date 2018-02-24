@@ -41,6 +41,34 @@ section
 .content
   min-height: calc(100% - 180px - 60px)
 
+.breadcrumb-container
+  padding: 0
+
+.breadcrumb
+  position: relative
+  padding: 3px 7px 0
+  display: inline-block
+  width: auto
+  margin: 0
+  font-size: 90%
+
+.breadcrumb::before
+  content: ""
+  display: block
+  position: absolute
+  width: 10px
+  transform-origin: top right
+  transform: rotate(-20deg)
+  height: 150%
+  background-color: #efefef
+  z-index: 0
+  top: 0
+  right: 0
+
+.breadcrumb-separator
+  font-size: 70%
+  padding: 4px 5px
+
 .index-container
   padding: 20px
   position: relative
