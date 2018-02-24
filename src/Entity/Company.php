@@ -35,6 +35,12 @@ class Company extends BaseEntity
      */
     private $users;
 
+    /**
+     * @var Building[]|ArrayCollection
+     * @ORM\OneToMany(targetEntity="App\Entity\Building", mappedBy="company")
+     */
+    private $buildings;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -56,5 +62,13 @@ class Company extends BaseEntity
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * @return Building[]|ArrayCollection
+     */
+    public function getBuildings()
+    {
+        return $this->buildings;
     }
 }

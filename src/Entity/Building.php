@@ -42,7 +42,7 @@ class Building extends BaseEntity
 
     /**
      * @var BackendUser[]|ArrayCollection
-     * @ORM\ManyToMany(targetEntity="App\Entity\BackendUser", mappedBy="buildings")
+     * @ORM\ManyToMany(targetEntity="App\Entity\BackendUser", inversedBy="buildings")
      */
     private $administrators;
 
