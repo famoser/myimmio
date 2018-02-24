@@ -189,7 +189,7 @@ class ApplicationSlot extends BaseEntity
      */
     public function getFullIdentifier()
     {
-        return $this->name;
+        return $this->getName();
     }
 
     /**

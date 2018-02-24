@@ -37,12 +37,18 @@ class ApplicantReference extends BaseEntity
     private $applicant;
 
     /**
-     * returns a string representation of this entity.
-     *
-     * @return string
+     * @return Applicant
      */
-    public function getFullIdentifier()
+    public function getApplicant()
     {
-        return $this->createdAt->format(DateTimeFormatter::DATE_TIME_FORMAT);
+        return $this->applicant;
+    }
+
+    /**
+     * @param Applicant $applicant
+     */
+    public function setApplicant(Applicant $applicant): void
+    {
+        $this->applicant = $applicant;
     }
 }

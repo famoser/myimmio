@@ -65,7 +65,7 @@ class Applicant extends BaseEntity
 
     /**
      * @var ApplicantJob
-     * @ORM\OneToOne(targetEntity="ApplicantJob")
+     * @ORM\OneToOne(targetEntity="ApplicantJob", cascade={"persist", "remove"})
      */
     private $applicantJob;
 
@@ -94,16 +94,6 @@ class Applicant extends BaseEntity
     public function __construct()
     {
         $this->references = new ArrayCollection();
-    }
-
-    /**
-     * returns a string representation of this entity.
-     *
-     * @return string
-     */
-    public function getFullIdentifier()
-    {
-        return $this->createdAt->format(DateTimeFormatter::DATE_TIME_FORMAT);
     }
 
     /**

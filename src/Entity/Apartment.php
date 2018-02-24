@@ -53,7 +53,7 @@ class Apartment extends BaseEntity
      */
     public function getFullIdentifier()
     {
-        return $this->name;
+        return $this->getName();
     }
 
     /**

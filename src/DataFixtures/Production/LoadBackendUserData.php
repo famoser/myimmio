@@ -29,7 +29,7 @@ class LoadBackendUserData extends BaseFixture
     {
         $company = $manager->getRepository(Company::class)->findOneBy([]);
         $user = new BackendUser();
-        $user->setEmail('info@example.com');
+        $user->setEmail('info@myimm.io');
         $user->setPlainPassword('heafhwabechabwehjcbwa');
         $user->setPassword();
         $user->setResetHash();

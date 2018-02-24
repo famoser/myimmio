@@ -28,7 +28,7 @@ class LoadFrontendUserData extends BaseFixture
     public function load(ObjectManager $manager)
     {
         $user = new FrontendUser();
-        $user->setEmail('info@example.com');
+        $user->setEmail('info@myimm.io');
         $user->setPlainPassword('heafhwabechabwehjcbwa');
         $user->setPassword();
         $user->setResetHash();

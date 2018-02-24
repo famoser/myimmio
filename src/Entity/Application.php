@@ -67,16 +67,6 @@ class Application extends BaseEntity
     }
 
     /**
-     * returns a string representation of this entity.
-     *
-     * @return string
-     */
-    public function getFullIdentifier()
-    {
-        return $this->createdAt->format(DateTimeFormatter::DATE_TIME_FORMAT);
-    }
-
-    /**
      * @return Applicant[]|ArrayCollection
      */
     public function getApplicants()
