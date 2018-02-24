@@ -6,4 +6,49 @@
 {% trans_default_domain "backend_dashboard" %}
 
 {% block single_content %}
+
+    <p>
+        <a class="btn btn-primary" href="{{ path("backend_building_new") }}">
+            {{ "new"|trans({}, "common_crud") }}
+            <span class="oi oi-plus" title="icon name" aria-hidden="true"></span>
+        </a>
+    </p>
+
+    {% if buildings|length > 0 %}
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ "name"|trans({}, "trait_thing") }}</th>
+                <th>{{ "address_lines"|trans({}, "trait_address") }}</th>
+                <th>{{ "entity.plural"|trans({}, "entity_apartment") }}</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for building in buildings %}
+                <tr>
+                    <td>{{ building.name }}</td>
+                    <td>{{ building.addressLines|implode(", ") }}</td>
+                    <td>{{ building.apartments|length }}</td>
+                    <td>
+                        <a class="btn btn-secondary"
+                           href="{{ path("backend_building_edit", {"building": building.id}) }}">
+                            <span class="oi oi-pencil" title="icon name" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-secondary"
+                           href="{{ path("backend_building_remove", {"building": building.id}) }}">
+                            <span class="oi oi-trash" title="icon name" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>{{ "index.no_buildings"|trans }}</p>
+    {% endif %}
 {% endblock %}

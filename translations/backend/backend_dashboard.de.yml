@@ -1,3 +1,4 @@
 index:
   title: 'Dashboard'
   description: 'Im Dashboard befinden sich die aktuellen Aufgaben'
+  no_buildings: 'Sie haben noch keine Gebäude erfasst'

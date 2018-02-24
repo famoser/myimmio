@@ -12,6 +12,7 @@
 namespace App\Controller\Base;
 
 use App\Entity\Base\BaseEntity;
+use App\Form\Fallback\RemoveThing;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,17 +73,35 @@ class BaseFormController extends BaseDoctrineController
     {
         $translator = $this->getTranslator();
 
-        return $this->handlePersistFormInternal(
+        //create form utils
+        $formType = $this->classToFormType(get_class($defaultEntity));
+        $createMyForm = function ($entity) use ($formType, $translator) {
+            return $this->createForm($formType, $entity)
+                ->add("submit", SubmitType::class,
+                    [
+                        "label" => $translator->trans("submit.create", [], "common_form"),
+                        "translation_domain" => false
+                    ]
+                );
+        };
+
+        //clone entity so we can generate a new empty form
+        $clonedEntity = clone($defaultEntity);
+        $myOnSuccessCallable = function () use ($defaultEntity, $clonedEntity, $createMyForm, $translator) {
+            $this->fastSave($defaultEntity);
+            $this->displaySuccess($translator->trans('successful.create', [], 'common_form'));
+            return $createMyForm($clonedEntity);
+        };
+
+        return $this->handleForm(
+            $createMyForm($defaultEntity),
             $request,
-            $defaultEntity,
-            $this->classToFormType(get_class($defaultEntity)),
-            $translator->trans("submit.create", [], "common_form"),
-            $translator->trans('successful.create', [], 'common_form')
+            $myOnSuccessCallable
         );
     }
 
     /**
-     * creates a "create" form
+     * creates a "update" form
      *
      * @param Request $request
      * @param BaseEntity $entity
@@ -91,13 +110,24 @@ class BaseFormController extends BaseDoctrineController
     protected function handleUpdateForm(Request $request, BaseEntity $entity)
     {
         $translator = $this->getTranslator();
+        $formType = $this->classToFormType(get_class($entity));
 
-        return $this->handlePersistFormInternal(
+        $myOnSuccessCallable = function ($form) use ($entity, $translator) {
+            $this->fastSave($entity);
+            $this->displaySuccess($translator->trans('successful.update', [], 'common_form'));
+            return $form;
+        };
+
+        return $this->handleForm(
+            $this->createForm($formType, $entity)
+                ->add("submit", SubmitType::class,
+                    [
+                        "label" => $translator->trans("submit.update", [], "common_form"),
+                        "translation_domain" => false
+                    ]
+                ),
             $request,
-            $entity,
-            $this->classToFormType(get_class($entity)),
-            $translator->trans("submit.update", [], "common_form"),
-            $translator->trans('successful.update', [], 'common_form')
+            $myOnSuccessCallable
         );
     }
 
@@ -106,74 +136,49 @@ class BaseFormController extends BaseDoctrineController
      *
      * @param Request $request
      * @param BaseEntity $entity
+     * @param callable $afterRemoveCallable called after successful remove
      * @param callable $beforeRemoveCallable called after successful submit, before entity is removed. return true to continue removal
      * @return FormInterface
      */
-    protected function handleRemoveForm(Request $request, BaseEntity $entity, $beforeRemoveCallable = null)
+    protected function handleRemoveForm(Request $request, BaseEntity $entity, $afterRemoveCallable, $beforeRemoveCallable = null)
     {
         $translator = $this->getTranslator();
 
-        return $this->handleRemoveFormInternal(
-            $request,
-            $entity,
-            $this->classToFormType(get_class($entity), "Delete"),
-            $translator->trans("submit.delete", [], "common_form"),
-            $translator->trans('successful.delete', [], 'common_form'),
-            $beforeRemoveCallable ??
-            function () {
-                return true;
-            }
-        );
-    }
-
-    /**
-     * persist the entity to the database if submitted successfully
-     * @param Request $request
-     * @param BaseEntity $entity
-     * @param string $formType namespace of form type to use
-     * @param string $buttonLabel label of button
-     * @param string $successText content of text displayed if successful
-     * @return FormInterface the constructed form
-     */
-    private function handlePersistFormInternal(Request $request, BaseEntity $entity, $formType, $buttonLabel, $successText)
-    {
-        $myOnSuccessCallable = function ($form) use ($entity, $successText) {
-            $this->fastSave($entity);
-            $this->displaySuccess($successText);
-            return $form;
-        };
-
-        $myForm = $this->handleForm($this->createForm($formType, $entity), $request, $myOnSuccessCallable);
-        $myForm->add("submit", SubmitType::class, ["label" => $buttonLabel]);
-        return $myForm;
-    }
-
-    /**
-     * persist the entity to the database if submitted successfully
-     * @param Request $request
-     * @param BaseEntity $entity
-     * @param string $formType namespace of form type to use
-     * @param string $buttonLabel label of button
-     * @param string $successText content of text displayed if successful
-     * @param callable $beforeRemoveCallable called after successful submit, before entity is removed. return true to continue removal
-     * @return FormInterface the constructed form
-     */
-    private function handleRemoveFormInternal(Request $request, BaseEntity $entity, $formType, $buttonLabel, $successText, $beforeRemoveCallable)
-    {
-        $myOnSuccessCallable = function ($form) use ($entity, $successText, $beforeRemoveCallable) {
+        $myOnSuccessCallable = function ($form) use ($entity, $translator, $afterRemoveCallable, $beforeRemoveCallable) {
             $manager = $this->getDoctrine()->getManager();
 
-            if ($beforeRemoveCallable($entity, $manager)) {
-                $manager->remove($entity);
-                $manager->flush();
+            if (is_callable($beforeRemoveCallable)) {
+                if (!$beforeRemoveCallable($entity, $manager)) {
+                    $this->displayError($translator->trans('error.delete_failed', [], 'common_form'));
+                    return $form;
+                }
             }
 
-            $this->displaySuccess($successText);
-            return $form;
+            $manager->remove($entity);
+            $manager->flush();
+
+            $this->displaySuccess($translator->trans('successful.delete', [], 'common_form'));
+            return $afterRemoveCallable();
         };
 
-        $myForm = $this->handleForm($this->createForm($formType, $entity), $request, $myOnSuccessCallable);
-        $myForm->add("submit", SubmitType::class, ["label" => $buttonLabel]);
+        $formType = $this->classToFormType(get_class($entity), "Delete");
+        if (!class_exists($formType)) {
+            $formType = RemoveThing::class;
+        }
+
+        $myForm = $this->handleForm(
+            $this->createForm($formType, $entity)
+                ->add(
+                    "submit",
+                    SubmitType::class,
+                    [
+                        "label" => $translator->trans("submit.delete", [], "common_form"),
+                        "translation_domain" => false
+                    ]
+                ),
+            $request,
+            $myOnSuccessCallable
+        );
         return $myForm;
     }
 

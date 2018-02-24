@@ -42,6 +42,7 @@ class MyTwigExtension extends Twig_Extension
             new Twig_SimpleFilter('dateTimeFormat', [$this, 'dateTimeFilter']),
             new Twig_SimpleFilter('booleanFormat', [$this, 'booleanFilter']),
             new Twig_SimpleFilter('camelCaseToUnderscore', [$this, 'camelCaseToUnderscoreFilter']),
+            new Twig_SimpleFilter('implode', [$this, 'implodeFilter']),
 
         ];
     }
@@ -92,6 +93,18 @@ class MyTwigExtension extends Twig_Extension
     private function prependDayName(DateTime $date)
     {
         return $this->translator->trans('date_time.' . $date->format('D'), [], 'framework');
+    }
+
+    /**
+     * implodes the array with the specified glue
+     *
+     * @param $array
+     * @param $glue
+     * @return string
+     */
+    public function implodeFilter($array, $glue)
+    {
+        return implode($glue, $array);
     }
 
     /**
