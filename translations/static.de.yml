@@ -1,6 +1,13 @@
 index:
   title: 'myimm.io'
-  description: 'Vereinfacht Mieter- und Mietobjektsuche.'
+  description: 'Wir verbinden Mieter und Vermieter'
+  header: 'Wir verbinden Mieter und Vermieter'
+  header_description: 'Mit uns finden Bewohner Ihre Wohnung'
+  i_want_to: "Ich will eine Wohnung"
+  rent: "mieten"
+  offer: "anbieten"
+
+tiles:
   login: 'Login'
   login_description: 'Hier gelangen Sie zum Login'
   register: 'Registrieren'
