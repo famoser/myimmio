@@ -49,7 +49,7 @@ contact:
 
 #register/check page
 register:
-  title: "Registrieren"
+  title: "Anmelden"
   description: "Möchten Sie einen neuen Account erstellen?"
   help_frontend_user: "Beschreibung frontend."
   create_frontend_user: "frontend user erstellen"
