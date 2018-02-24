@@ -36,13 +36,6 @@ class Setting extends BaseEntity
     private $content;
 
     /**
-     * @var FrontendUser
-     *
-     * @ORM\ManyToOne(targetEntity="FrontendUser", inversedBy="settings")
-     */
-    private $frontendUser;
-
-    /**
      * Get content.
      *
      * @return string
@@ -62,30 +55,6 @@ class Setting extends BaseEntity
     public function setContent($content)
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * Get user.
-     *
-     * @return FrontendUser
-     */
-    public function getFrontendUser()
-    {
-        return $this->frontendUser;
-    }
-
-    /**
-     * Set user.
-     *
-     * @param FrontendUser $frontendUser
-     *
-     * @return Setting
-     */
-    public function setFrontendUser(FrontendUser $frontendUser = null)
-    {
-        $this->frontendUser = $frontendUser;
 
         return $this;
     }
