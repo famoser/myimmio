@@ -1,0 +1,4 @@
+entity:
+  name: 'Bewerbungsfenster'
+  plural: 'Bewerbungsfenster'
+  description: 'Ist das Fenster offen, können sich Bewerber für eine Wohnung anmelden'

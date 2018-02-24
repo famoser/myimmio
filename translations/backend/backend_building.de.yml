@@ -1,0 +1,11 @@
+new:
+  title: 'Neu'
+  description: 'Neues Gebäude erfassen'
+
+edit:
+  title: 'Bearbeiten'
+  description: 'Gebäude bearbeiten'
+
+remove:
+  title: 'Entfernen'
+  description: 'Gebäude entfernen'

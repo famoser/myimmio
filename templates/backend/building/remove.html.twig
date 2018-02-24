@@ -1,0 +1,10 @@
+{% extends "single_content_base.html.twig" %}
+
+{% block title %}{{ "remove.title"|trans }}{% endblock %}
+{% block description %}{{ "remove.description"|trans }}{% endblock %}
+
+{% trans_default_domain "backend_building" %}
+
+{% block single_content %}
+    {{ form(form) }}
+{% endblock %}
