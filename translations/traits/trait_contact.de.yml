@@ -3,6 +3,6 @@ trait:
   name: Kontaktinformationen
 
 #properties
-telephone: Telefonnummer
-telephoneMobile: Telefonnummer Mobil
+telephone: Festnetz
+telephoneMobile: Handynummer
 email: Email

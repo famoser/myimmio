@@ -12,6 +12,7 @@
 namespace App\DataFixtures;
 
 use App\DataFixtures\Base\BaseFixture;
+use App\Entity\BackendUser;
 use App\Entity\Building;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -26,7 +27,13 @@ class LoadBuildingData extends BaseFixture
      */
     public function load(ObjectManager $manager)
     {
-        $this->loadSomeRandoms($manager);
+        $backendUser = $manager->getRepository(BackendUser::class)->find(1);
+
+        for ($i = 0; $i < 5; $i++) {
+            $builder = $this->getAllRandomInstance();
+            $builder->getAdministrators()->add($backendUser);
+            $manager->persist($builder);
+        }
         $manager->flush();
     }
 

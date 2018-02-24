@@ -11,6 +11,14 @@ var disableFormButton = function () {
     }
 };
 
+//prevent double submit & give user instant feedback
+var navigateTable = function () {
+    var $tr = $(this);
+    var target = $tr.attr("data-href");
+    window.location = target;
+};
+
 $(document).ready(function () {
     $("form").on("submit", disableFormButton);
+    $("tr[data-href]").on("click", navigateTable);
 });

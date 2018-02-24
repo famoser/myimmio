@@ -11,3 +11,8 @@ app.backend:
     resource: "../src/Controller/Backend"
     type:     annotation
     prefix:   /backend
+
+app.backend_application_slot:
+    resource: "../src/Controller/Backend/ApplicationSlot"
+    type:     annotation
+    prefix:   /backend/application_slot/{applicationSlot}

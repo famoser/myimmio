@@ -27,7 +27,7 @@ class LoadApartmentData extends BaseFixture
      */
     public function load(ObjectManager $manager)
     {
-        $building = $manager->getRepository(Building::class)->findOneBy([]);
+        $building = $manager->getRepository(Building::class)->find(1);
 
         for ($i = 0; $i < 5; $i++) {
             $apartment = $this->getAllRandomInstance();

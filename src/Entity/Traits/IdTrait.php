@@ -31,11 +31,13 @@ trait IdTrait
 
     /**
      * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
      * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $lastChangedAt;
 

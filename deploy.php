@@ -16,6 +16,7 @@ require 'vendor/deployer/deployer/recipe/symfony-flex.php';
 // Configuration
 set('repository', 'git@github.com:famoser/myimmio.git');
 set('shared_files', array_merge(get('shared_files'), ['var/data.sqlite']));
+set('shared_dirs', array_merge(get('shared_dirs'), ['public/pdf', 'public/upload']));
 set('symfony_env_file', '.env');
 set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader --no-scripts');
 
@@ -45,7 +46,7 @@ task('frontend:build', function () {
 set('bin/console', function () {
     $env = get('env_file_path');
 
-    return sprintf('--version && cd {{release_path}} && set -a && source '.$env.' && set +a && {{bin/php}} {{release_path}}/%s/console', trim(get('bin_dir'), '/'));
+    return sprintf('--version && cd {{release_path}} && set -a && source ' . $env . ' && set +a && {{bin/php}} {{release_path}}/%s/console', trim(get('bin_dir'), '/'));
 });
 
 // kill php processes to ensure symlinks are refreshed

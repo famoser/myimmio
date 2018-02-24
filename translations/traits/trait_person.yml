@@ -1,7 +1,0 @@
-#name
-trait:
-  name: Persönliche Informationen
-
-#properties
-givenName: Vorname
-familyName: Nachname

@@ -1,0 +1,29 @@
+{% extends 'single_content_base.html.twig' %}
+{% import "widgets/buttons.html.twig" as buttons %}
+
+{% block title %}{{ "index.title"|trans }}{% endblock %}
+{% block description %}{{ "index.description"|trans }}{% endblock %}
+
+{% trans_default_domain "backend_application_slot_application" %}
+
+{% block single_content %}
+
+    {% if applications|length > 0 %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ "created_at"|trans({}, "trait_id") }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for application in applications %}
+                <tr>
+                    <td>{{ application.createdAt|dateTimeFormat }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>{{ "index.no_applications"|trans }}</p>
+    {% endif %}
+{% endblock %}

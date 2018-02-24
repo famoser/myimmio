@@ -8,7 +8,7 @@
 
 {% block single_content %}
 
-    {% if application_slots|length > 0 %}
+    {% if applications|length > 0 %}
         <table class="table table-striped">
             <thead>
             <tr>
@@ -22,7 +22,7 @@
             </thead>
             <tbody>
             {% for application_slot in application_slots %}
-                <tr class="clickable" data-href="{{ path("backend_application_slot_application_index", {"applicationSlot" : application_slot.id}) }}">
+                <tr>
                     <td>{{ application_slot.startAt|dateTimeFormat }}</td>
                     <td>{{ application_slot.endAt|dateTimeFormat }}</td>
                     <td>{{ application_slot.applications|length }}</td>

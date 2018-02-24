@@ -1,0 +1,8 @@
+index:
+  title: 'Bewerbungen für dieses Zeitfenster'
+  description: 'Alle Bewerbungen die für dieses Zeitfenster empfangen wurde'
+  no_applications: 'Noch keine Bewerbungen erfasst'
+
+view:
+  title: 'Bewerbung ansehen'
+  description: 'Bewerbung im Detail ansehen'

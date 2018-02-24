@@ -1,0 +1,7 @@
+#name
+trait:
+  name: Id
+
+#properties
+created_at: erstellt
+changed_at: zuletzt geändert

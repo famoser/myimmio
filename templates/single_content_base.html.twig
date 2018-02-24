@@ -14,8 +14,11 @@
                 <div class="col-md-12">
                     <h1>{% block title_html %}
                             {% block title %}{% endblock %}
-                        {% endblock %}</h1>
-                    <h2>{% block description %}{% endblock %}</h2>
+                        {% endblock %}
+                    </h1>
+                    {#
+                        <h2>{% block description %}{% endblock %}</h2>
+                    #}
                     {% block single_content %}
                     {% endblock single_content %}
                 </div>
