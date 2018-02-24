@@ -19,7 +19,7 @@ trait CommunicationTrait
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $phone;
+    private $telephone;
 
     /**
      * @Assert\NotBlank()

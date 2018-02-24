@@ -29,6 +29,108 @@ class Application extends BaseEntity
 {
     use IdTrait;
 
+    /*
+     * Applicants
+     */
+
+    /**
+     * @var Applicant
+     * @ORM\OneToMany(targetEntity="Applicant", mappedBy="application")
+     */
+    private $applicants;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $tenantCountAdult;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $tenantCountChild;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $pet;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $playInstrument;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $garage;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $carPark;
+
+    /**
+     * @return Applicant
+     */
+    public function getApplicants()
+    {
+        return $this->applicants;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTenantCountAdult()
+    {
+        return $this->tenantCountAdult;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTenantCountChild()
+    {
+        return $this->tenantCountChild;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPet()
+    {
+        return $this->pet;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlayInstrument()
+    {
+        return $this->playInstrument;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGarage()
+    {
+        return $this->garage;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCarPark()
+    {
+        return $this->carPark;
+    }
+
     /**
      * returns a string representation of this entity.
      *
