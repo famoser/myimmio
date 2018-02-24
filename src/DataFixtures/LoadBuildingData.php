@@ -31,7 +31,6 @@ class LoadBuildingData extends BaseFixture
 
         for ($i = 0; $i < 5; $i++) {
             $builder = $this->getAllRandomInstance();
-            $backendUser->getBuildings()->add($builder);
             $builder->getAdministrators()->add($backendUser);
             $manager->persist($builder);
         }
