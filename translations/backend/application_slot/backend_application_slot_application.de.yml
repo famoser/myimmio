@@ -1,6 +1,7 @@
 index:
   title: 'Bewerbungen für dieses Zeitfenster'
-  description: 'Alle Bewerbungen die für dieses Zeitfenster empfangen wurde'
+  title_short: 'Bewerbungen'
+  description: 'Bewerbungen für %name% an der %address%'
   no_applications: 'Noch keine Bewerbungen erfasst'
 
 view:
@@ -8,3 +9,9 @@ view:
   description: 'Bewerbung im Detail ansehen'
   created_at: 'Bewerbung vom '
   overview: 'Überblick'
+
+list:
+  salary: 'Lohn total'
+  score: 'Bewertung'
+  numApplicants: 'Erwachsene'
+  labels: 'Label'

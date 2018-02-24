@@ -1,9 +1,11 @@
 entity:
   name: 'Bewerbung'
-  description: 'Ein Bewerbung auf eine Wohnung'
+  description: 'Eine Bewerbung auf eine Wohnung'
   plural: 'Bewerbungen'
 
 applicants: 'Bewerber'
 tenant_count_child: 'Anzahl Kinder'
+tenantCountChild: 'Kinder'
 pets: 'Haustiere'
 instruments: 'Instrumente'
+status: 'Status'
