@@ -58,6 +58,12 @@ class Applicant extends BaseEntity
     private $nationality = 'CH';
 
     /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $residenceAuthorization;
+
+    /**
      * @var ApplicantJob
      * @ORM\OneToOne(targetEntity="ApplicantJob")
      */
@@ -218,5 +224,21 @@ class Applicant extends BaseEntity
     public function getReferences()
     {
         return $this->references;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResidenceAuthorization()
+    {
+        return $this->residenceAuthorization;
+    }
+
+    /**
+     * @param string $residenceAuthorization
+     */
+    public function setResidenceAuthorization(string $residenceAuthorization)
+    {
+        $this->residenceAuthorization = $residenceAuthorization;
     }
 }

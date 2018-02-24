@@ -24,6 +24,12 @@ trait ContactTrait
 
     /**
      * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $telephoneMobile;
+
+    /**
+     * @var string
      * @Assert\NotBlank()
      * @Assert\Email()
      * @ORM\Column(type="text")
@@ -44,6 +50,22 @@ trait ContactTrait
     public function setTelephone(string $telephone): void
     {
         $this->telephone = $telephone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTelephoneMobile(): string
+    {
+        return $this->telephoneMobile;
+    }
+
+    /**
+     * @param string $telephoneMobile
+     */
+    public function setTelephoneMobile(string $telephoneMobile): void
+    {
+        $this->telephoneMobile = $telephoneMobile;
     }
 
     /**
@@ -72,6 +94,9 @@ trait ContactTrait
         $res = [];
         if (mb_strlen($this->getTelephone()) > 0) {
             $res[] = $this->getTelephone();
+        }
+        if (mb_strlen($this->getTelephoneMobile()) > 0) {
+            $res[] = $this->getTelephoneMobile();
         }
         if (mb_strlen($this->getEmail()) > 0) {
             $res[] = $this->getEmail();

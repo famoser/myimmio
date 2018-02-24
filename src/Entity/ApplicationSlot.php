@@ -73,12 +73,6 @@ class ApplicationSlot extends BaseEntity
      * @var int
      * @ORM\Column(type="integer")
      */
-    private $displayTenantCountAdult = FieldDisplayType::REQUIRED;
-
-    /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
     private $displayTenantCountChild = FieldDisplayType::REQUIRED;
 
     /**
@@ -92,18 +86,6 @@ class ApplicationSlot extends BaseEntity
      * @ORM\Column(type="integer")
      */
     private $displayPlayInstrument = FieldDisplayType::REQUIRED;
-
-    /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    private $displayGarage = FieldDisplayType::REQUIRED;
-
-    /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    private $displayCarPark = FieldDisplayType::REQUIRED;
 
     /*
      * Applicant
@@ -137,24 +119,6 @@ class ApplicationSlot extends BaseEntity
      * @var int
      * @ORM\Column(type="integer")
      */
-    private $displayPaymentEnforcement = FieldDisplayType::HIDE;
-
-    /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    private $displayLeasingContracts = FieldDisplayType::HIDE;
-
-    /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    private $displayLeasingRatePerMonth = FieldDisplayType::HIDE;
-
-    /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
     private $displayTelephone = FieldDisplayType::REQUIRED;
 
     /**
@@ -179,7 +143,11 @@ class ApplicationSlot extends BaseEntity
      * @var int
      * @ORM\Column(type="integer")
      */
-    private $displayOldLandlord = FieldDisplayType::REQUIRED;
+    private $displayCurrentLandlord = FieldDisplayType::REQUIRED;
+
+    /*
+     * Reference
+     */
 
     /**
      * @var int
@@ -187,9 +155,6 @@ class ApplicationSlot extends BaseEntity
      */
     private $displayRelocationReason = FieldDisplayType::REQUIRED;
 
-    /*
-     * Reference
-     */
 
     /**
      * @var int
@@ -201,7 +166,7 @@ class ApplicationSlot extends BaseEntity
      * @var int
      * @ORM\Column(type="integer")
      */
-    private $displaySalary = FieldDisplayType::REQUIRED;
+    private $displayYearlySalary = FieldDisplayType::REQUIRED;
 
     /**
      * @var Application[]|ArrayCollection
@@ -326,22 +291,6 @@ class ApplicationSlot extends BaseEntity
     /**
      * @return int
      */
-    public function getDisplayTenantCountAdult()
-    {
-        return $this->displayTenantCountAdult;
-    }
-
-    /**
-     * @param int $displayTenantCountAdult
-     */
-    public function setDisplayTenantCountAdult(int $displayTenantCountAdult)
-    {
-        $this->displayTenantCountAdult = $displayTenantCountAdult;
-    }
-
-    /**
-     * @return int
-     */
     public function getDisplayTenantCountChild()
     {
         return $this->displayTenantCountChild;
@@ -385,38 +334,6 @@ class ApplicationSlot extends BaseEntity
     public function setDisplayPlayInstrument(int $displayPlayInstrument)
     {
         $this->displayPlayInstrument = $displayPlayInstrument;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDisplayGarage()
-    {
-        return $this->displayGarage;
-    }
-
-    /**
-     * @param int $displayGarage
-     */
-    public function setDisplayGarage(int $displayGarage)
-    {
-        $this->displayGarage = $displayGarage;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDisplayCarPark()
-    {
-        return $this->displayCarPark;
-    }
-
-    /**
-     * @param int $displayCarPark
-     */
-    public function setDisplayCarPark(int $displayCarPark)
-    {
-        $this->displayCarPark = $displayCarPark;
     }
 
     /**
@@ -486,54 +403,6 @@ class ApplicationSlot extends BaseEntity
     /**
      * @return int
      */
-    public function getDisplayPaymentEnforcement()
-    {
-        return $this->displayPaymentEnforcement;
-    }
-
-    /**
-     * @param int $displayPaymentEnforcement
-     */
-    public function setDisplayPaymentEnforcement(int $displayPaymentEnforcement)
-    {
-        $this->displayPaymentEnforcement = $displayPaymentEnforcement;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDisplayLeasingContracts()
-    {
-        return $this->displayLeasingContracts;
-    }
-
-    /**
-     * @param int $displayLeasingContracts
-     */
-    public function setDisplayLeasingContracts(int $displayLeasingContracts)
-    {
-        $this->displayLeasingContracts = $displayLeasingContracts;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDisplayLeasingRatePerMonth()
-    {
-        return $this->displayLeasingRatePerMonth;
-    }
-
-    /**
-     * @param int $displayLeasingRatePerMonth
-     */
-    public function setDisplayLeasingRatePerMonth(int $displayLeasingRatePerMonth)
-    {
-        $this->displayLeasingRatePerMonth = $displayLeasingRatePerMonth;
-    }
-
-    /**
-     * @return int
-     */
     public function getDisplayTelephone()
     {
         return $this->displayTelephone;
@@ -598,17 +467,17 @@ class ApplicationSlot extends BaseEntity
     /**
      * @return int
      */
-    public function getDisplayOldLandlord()
+    public function getDisplayCurrentLandlord()
     {
-        return $this->displayOldLandlord;
+        return $this->displayCurrentLandlord;
     }
 
     /**
-     * @param int $displayOldLandlord
+     * @param int $displayCurrentLandlord
      */
-    public function setDisplayOldLandlord(int $displayOldLandlord)
+    public function setDisplayCurrentLandlord(int $displayCurrentLandlord)
     {
-        $this->displayOldLandlord = $displayOldLandlord;
+        $this->displayCurrentLandlord = $displayCurrentLandlord;
     }
 
     /**
@@ -646,17 +515,17 @@ class ApplicationSlot extends BaseEntity
     /**
      * @return int
      */
-    public function getDisplaySalary()
+    public function getDisplayYearlySalary()
     {
-        return $this->displaySalary;
+        return $this->displayYearlySalary;
     }
 
     /**
-     * @param int $displaySalary
+     * @param int $displayYearlySalary
      */
-    public function setDisplaySalary(int $displaySalary)
+    public function setDisplayYearlySalary(int $displayYearlySalary)
     {
-        $this->displaySalary = $displaySalary;
+        $this->displayYearlySalary = $displayYearlySalary;
     }
 
     /**

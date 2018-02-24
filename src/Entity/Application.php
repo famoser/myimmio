@@ -38,6 +38,12 @@ class Application extends BaseEntity
     private $applicationSlot;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $tenantCountChild;
+
+    /**
      * @var string
      * @ORM\Column(type="text", nullable=true)
      */
@@ -140,5 +146,21 @@ class Application extends BaseEntity
     public function setFrontendUser(FrontendUser $frontendUser): void
     {
         $this->frontendUser = $frontendUser;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTenantCountChild()
+    {
+        return $this->tenantCountChild;
+    }
+
+    /**
+     * @param int $tenantCountChild
+     */
+    public function setTenantCountChild(int $tenantCountChild)
+    {
+        $this->tenantCountChild = $tenantCountChild;
     }
 }
