@@ -15,6 +15,7 @@ use App\Entity\Base\BaseEntity;
 use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\UserTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -29,6 +30,17 @@ class FrontendUser extends BaseEntity implements AdvancedUserInterface, Equatabl
     use IdTrait;
     use UserTrait;
     use AddressTrait;
+
+    /**
+     * @var Application[]|ArrayCollection
+     * @ORM\OneToMany(targetEntity="App\Entity\Application", mappedBy="frontendUser")
+     */
+    private $applications;
+
+    public function __construct()
+    {
+        $this->applications = new ArrayCollection();
+    }
 
     /**
      * Returns the roles granted to the user.
@@ -64,5 +76,13 @@ class FrontendUser extends BaseEntity implements AdvancedUserInterface, Equatabl
     public function getFullIdentifier()
     {
         return $this->getUserIdentifier();
+    }
+
+    /**
+     * @return Application[]|ArrayCollection
+     */
+    public function getApplications()
+    {
+        return $this->applications;
     }
 }

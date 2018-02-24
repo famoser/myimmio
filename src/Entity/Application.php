@@ -27,7 +27,7 @@ class Application extends BaseEntity
 
     /**
      * @var Applicant[]|ArrayCollection
-     * @ORM\OneToMany(targetEntity="Applicant", mappedBy="application")
+     * @ORM\OneToMany(targetEntity="Applicant", mappedBy="application", cascade={"persist", "remove"})
      */
     private $applicants;
 
@@ -48,6 +48,12 @@ class Application extends BaseEntity
      * @ORM\Column(type="text", nullable=true)
      */
     private $instruments;
+
+    /**
+     * @var FrontendUser
+     * @ORM\ManyToOne(targetEntity="App\Entity\FrontendUser", inversedBy="applications")
+     */
+    private $frontendUser;
 
     public function __construct()
     {
@@ -118,5 +124,21 @@ class Application extends BaseEntity
     public function setApplicationSlot(ApplicationSlot $applicationSlot): void
     {
         $this->applicationSlot = $applicationSlot;
+    }
+
+    /**
+     * @return FrontendUser
+     */
+    public function getFrontendUser()
+    {
+        return $this->frontendUser;
+    }
+
+    /**
+     * @param FrontendUser $frontendUser
+     */
+    public function setFrontendUser(FrontendUser $frontendUser): void
+    {
+        $this->frontendUser = $frontendUser;
     }
 }

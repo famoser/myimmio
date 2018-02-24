@@ -27,8 +27,8 @@ class ApplicationSlotType extends BaseAbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('thing', ThingType::class, ["label" => false, "inherit_data" => true]);
-        $builder->add('startAt', DateTimeType::class);
-        $builder->add('endAt', DateTimeType::class);
+        $builder->add('startAt', DateTimeType::class, static::OPTION_DATE_TIME);
+        $builder->add('endAt', DateTimeType::class, static::OPTION_DATE_TIME);
         $builder->add('welcomeHeader', TextType::class);
         $builder->add('welcomeText', TextareaType::class);
     }

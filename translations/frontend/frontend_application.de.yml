@@ -1,0 +1,27 @@
+#register page
+index:
+  title: 'Anmelden'
+  description: 'Sich für diese Wohnung anmelden'
+
+preview:
+  title: 'Bewerbung noch nicht möglich'
+  description: 'Sie können sich nocht nicht für dieses Objekt bewerben. Wir können Sie aber informieren, wann es soweit ist.'
+
+too_late:
+  title: 'Anmeldung wurde geschlossen'
+  description: 'Die Anmeldung zu diesem Objekt ist bereits beendet.'
+
+new_application:
+  title: 'Neue Bewerbung'
+  description: 'Sie können sich hier online auf diese Wohnung bewerben.'
+  first_application:
+    welcome_message: 'Willkommen auf myimmio, Sie sind wahrscheinlich zum ersten Mal hier.'
+    our_mission: >
+      Wir helfen Mieter, schneller und einfacher eine Wohnung zu finden.
+    how: >
+      Wir ersparen Ihnen das aufwändige Ausfüllen der Formulare, haben Sie die Daten einmal ausgefüllt
+      Füllen Sie hier online Ihre Wohnungsbewerbung aus.
+      Sind Sie können hier online alle benötigten Informationen ausfüllen, und werden dann vom Vermieter zu einer Besichtigung eingeladen.
+      Sie können zudem hier einen Account erstellen, und müssen die Daten in Zukunft nicht wieder alles von neuem Eingeben.
+    text: 'Am Ende der Bewerbung können Sie die Daten freiwillig speichern, und so für künftige Bewerbungen weiternutzen'
+

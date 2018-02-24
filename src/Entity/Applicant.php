@@ -65,7 +65,7 @@ class Applicant extends BaseEntity
 
     /**
      * @var ApplicantLandlord
-     * @ORM\OneToOne(targetEntity="ApplicantLandlord")
+     * @ORM\OneToOne(targetEntity="ApplicantLandlord", cascade={"persist", "remove"})
      * @ORM\Column(type="text", nullable=true)
      */
     private $currentLandlord;
@@ -78,7 +78,7 @@ class Applicant extends BaseEntity
 
     /**
      * @var ApplicantReference[]|ArrayCollection
-     * @ORM\OneToMany(targetEntity="ApplicantReference", mappedBy="applicant")
+     * @ORM\OneToMany(targetEntity="ApplicantReference", mappedBy="applicant", cascade={"persist", "remove"})
      */
     private $references;
 

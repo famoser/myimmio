@@ -44,7 +44,7 @@ class ApplicantLandlord extends BaseEntity
 
     /**
      * @var ApplicantReference
-     * @ORM\OneToOne(targetEntity="ApplicantReference")
+     * @ORM\OneToOne(targetEntity="ApplicantReference", cascade={"persist", "remove"})
      */
     private $reference;
 

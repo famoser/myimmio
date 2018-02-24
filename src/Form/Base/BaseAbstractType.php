@@ -15,4 +15,5 @@ use Symfony\Component\Form\AbstractType;
 
 class BaseAbstractType extends AbstractType
 {
+    const OPTION_DATE_TIME = ['date_widget' => 'single_text', 'time_widget' => 'single_text'];
 }

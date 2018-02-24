@@ -4,7 +4,7 @@
 {% block title %}{{ "index.title"|trans }}{% endblock %}
 {% block description %}{{ "index.description"|trans }}{% endblock %}
 
-{% trans_default_domain "backend_apartment_slot" %}
+{% trans_default_domain "backend_application_slot" %}
 
 {% block single_content %}
 
@@ -12,8 +12,8 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ "startAt"|trans({}, "entity_application_slot") }}</th>
-                <th>{{ "endAt"|trans({}, "entity_application_slot") }}</th>
+                <th>{{ "start_at"|trans({}, "entity_application_slot") }}</th>
+                <th>{{ "end_at"|trans({}, "entity_application_slot") }}</th>
                 <th>{{ "entity.plural"|trans({}, "entity_application") }}</th>
                 <th>{{ "entity.name"|trans({}, "entity_apartment") }}</th>
                 <th></th>
