@@ -60,4 +60,20 @@ class Apartment extends BaseEntity
     {
         return $this->name;
     }
+
+    /**
+     * @return Building
+     */
+    public function getBuilding()
+    {
+        return $this->building;
+    }
+
+    /**
+     * @param Building $building
+     */
+    public function setBuilding(Building $building): void
+    {
+        $this->building = $building;
+    }
 }

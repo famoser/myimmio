@@ -40,7 +40,7 @@ class LoadBuildingData extends BaseFixture
     /**
      * create an instance with all random values.
      *
-     * @return mixed
+     * @return Building
      */
     protected function getAllRandomInstance()
     {

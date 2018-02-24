@@ -29,10 +29,13 @@ class LoadApartmentData extends BaseFixture
     public function load(ObjectManager $manager)
     {
         $building = $manager->getRepository(Building::class)->findOneBy([]);
-        $apartment = new Apartment();
-        $this->fillRandomThing($apartment);
 
-        $manager->persist($apartment);
+        for ($i = 0; $i < 5; $i++) {
+            $apartment = $this->getAllRandomInstance();
+            $apartment->setBuilding($building);
+            $manager->persist($apartment);
+        }
+        $manager->flush();
     }
 
     public function getOrder()
@@ -43,10 +46,12 @@ class LoadApartmentData extends BaseFixture
     /**
      * create an instance with all random values.
      *
-     * @return mixed
+     * @return Apartment
      */
     protected function getAllRandomInstance()
     {
-        return null;
+        $apartment = new Apartment();
+        $this->fillRandomThing($apartment);
+        return $apartment;
     }
 }
