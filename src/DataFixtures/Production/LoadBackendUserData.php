@@ -13,6 +13,7 @@ namespace App\DataFixtures\Production;
 
 use App\DataFixtures\Base\BaseFixture;
 use App\Entity\BackendUser;
+use App\Entity\Company;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadBackendUserData extends BaseFixture
@@ -26,6 +27,7 @@ class LoadBackendUserData extends BaseFixture
      */
     public function load(ObjectManager $manager)
     {
+        $company = $manager->getRepository(Company::class)->findOneBy([]);
         $user = new BackendUser();
         $user->setEmail('info@example.com');
         $user->setPlainPassword('heafhwabechabwehjcbwa');
@@ -33,6 +35,8 @@ class LoadBackendUserData extends BaseFixture
         $user->setResetHash();
         $user->setRegistrationDate(new \DateTime());
         $user->setIsEnabled(true);
+        $user->setCompany($company);
+        $user->setCanAdministerCompany(true);
         $manager->persist($user);
         $manager->flush();
     }

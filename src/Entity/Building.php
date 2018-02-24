@@ -52,6 +52,7 @@ class Building extends BaseEntity
     public function __construct()
     {
         $this->apartments = new ArrayCollection();
+        $this->administrators = new ArrayCollection();
     }
 
     /**

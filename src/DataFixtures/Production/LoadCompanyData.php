@@ -12,11 +12,11 @@
 namespace App\DataFixtures\Production;
 
 use App\DataFixtures\Base\BaseFixture;
+use App\Entity\BackendUser;
 use App\Entity\Company;
-use App\Entity\FrontendUser;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadFrontendUserData extends BaseFixture
+class LoadCompanyData extends BaseFixture
 {
     /**
      * Load data fixtures with the passed EntityManager.
@@ -27,20 +27,16 @@ class LoadFrontendUserData extends BaseFixture
      */
     public function load(ObjectManager $manager)
     {
-        $user = new FrontendUser();
-        $user->setEmail('info@example.com');
-        $user->setPlainPassword('heafhwabechabwehjcbwa');
-        $user->setPassword();
-        $user->setResetHash();
-        $user->setRegistrationDate(new \DateTime());
-        $user->setIsEnabled(true);
-        $manager->persist($user);
+        $company = new Company();
+        $this->fillRandomAddress($company);
+        $this->fillRandomThing($company);
+        $manager->persist($company);
         $manager->flush();
     }
 
     public function getOrder()
     {
-        return 1;
+        return 0;
     }
 
     /**
