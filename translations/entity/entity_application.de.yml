@@ -1,5 +1,5 @@
 entity:
-  name: 'Benutzer'
-  description: 'Ein Benutzer der Applikation mit E-Mail und Passwort als Login'
+  name: 'Bewerbung'
+  description: 'Ein Bewerbung auf eine Wohnung'
+  plural: 'Bewerbungen'
 
-email: Email

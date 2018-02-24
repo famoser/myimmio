@@ -15,6 +15,7 @@ use App\Entity\Base\BaseEntity;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\ThingTrait;
 use App\Enum\FieldDisplayType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -203,6 +204,20 @@ class ApplicationSlot extends BaseEntity
     private $displaySalary = FieldDisplayType::REQUIRED;
 
     /**
+     * @var Application[]|ArrayCollection
+     * @ORM\OneToMany(targetEntity="App\Entity\Application", mappedBy="applicationSlot")
+     */
+    private $applications;
+
+    /**
+     * ApplicationSlot constructor.
+     */
+    public function __construct()
+    {
+        $this->applications = new ArrayCollection();
+    }
+
+    /**
      * returns a string representation of this entity.
      *
      * @return string
@@ -295,7 +310,7 @@ class ApplicationSlot extends BaseEntity
     /**
      * @return string
      */
-    public function getWelcomeText(): string
+    public function getWelcomeText()
     {
         return $this->welcomeText;
     }
@@ -643,6 +658,14 @@ class ApplicationSlot extends BaseEntity
     {
         $this->displaySalary = $displaySalary;
     }
-    
-    
+
+    /**
+     * @return Application[]|ArrayCollection
+     */
+    public function getApplications()
+    {
+        return $this->applications;
+    }
+
+
 }

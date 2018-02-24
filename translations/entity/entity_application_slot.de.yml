@@ -2,3 +2,8 @@ entity:
   name: 'Bewerbungsfenster'
   plural: 'Bewerbungsfenster'
   description: 'Ist das Fenster offen, können sich Bewerber für eine Wohnung anmelden'
+
+start_at: 'Anfang'
+end_at: 'Ende'
+welcome_text: 'Willkommenstext'
+welcome_header: 'Kurze Willkommensnachticht'

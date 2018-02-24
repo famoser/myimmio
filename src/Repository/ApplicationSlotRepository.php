@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\ApplicationSlot;
+use App\Entity\BackendUser;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,4 +14,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class ApplicationSlotRepository extends EntityRepository
 {
+    /**
+     * @param BackendUser $backendUser
+     * @return ApplicationSlot[]
+     */
+    public function findAdministeredBy(BackendUser $backendUser)
+    {
+        $res = [];
+        foreach ($backendUser->getBuildings() as $building) {
+            foreach ($building->getApartments() as $apartment) {
+                $res = array_merge($res, $apartment->getApplicationSlots()->toArray());
+            }
+        }
+        return $res;
+    }
 }

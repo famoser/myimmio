@@ -32,6 +32,12 @@ class Application extends BaseEntity
     private $applicants;
 
     /**
+     * @var ApplicationSlot
+     * @ORM\ManyToOne(targetEntity="App\Entity\ApplicationSlot", inversedBy="applications")
+     */
+    private $applicationSlot;
+
+    /**
      * @var string
      * @ORM\Column(type="text", nullable=true)
      */
@@ -96,5 +102,21 @@ class Application extends BaseEntity
     public function setInstruments(string $instruments): void
     {
         $this->instruments = $instruments;
+    }
+
+    /**
+     * @return ApplicationSlot
+     */
+    public function getApplicationSlot()
+    {
+        return $this->applicationSlot;
+    }
+
+    /**
+     * @param ApplicationSlot $applicationSlot
+     */
+    public function setApplicationSlot(ApplicationSlot $applicationSlot): void
+    {
+        $this->applicationSlot = $applicationSlot;
     }
 }

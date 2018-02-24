@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Apartment;
+use App\Entity\BackendUser;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,4 +14,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ApartmentRepository extends EntityRepository
 {
+    /**
+     * @param BackendUser $backendUser
+     * @return Apartment[]
+     */
+    public function findAdministeredBy(BackendUser $backendUser)
+    {
+        $res = [];
+        foreach ($backendUser->getBuildings() as $building) {
+            $res = array_merge($res, $building->getApartments()->toArray());
+        }
+        return $res;
+    }
 }

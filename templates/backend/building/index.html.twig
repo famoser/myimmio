@@ -35,6 +35,9 @@
                     <td>
                         {{ buttons.remove_button(path("backend_building_remove", {"building": building.id}) ) }}
                     </td>
+                    <td>
+                        {{ buttons.add_button(path("backend_apartment_new", {"building" : building.id})) }}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -33,7 +33,7 @@ class Apartment extends BaseEntity
     private $building;
 
     /**
-     * @var Building
+     * @var ApplicationSlot[]|ArrayCollection
      * @ORM\OneToMany(targetEntity="ApplicationSlot", mappedBy="apartment")
      */
     private $applicationSlots;
@@ -70,5 +70,13 @@ class Apartment extends BaseEntity
     public function setBuilding(Building $building): void
     {
         $this->building = $building;
+    }
+
+    /**
+     * @return ApplicationSlot[]|ArrayCollection
+     */
+    public function getApplicationSlots()
+    {
+        return $this->applicationSlots;
     }
 }

@@ -1,0 +1,16 @@
+new:
+  title: 'Neu'
+  description: 'Neue Wohnung erfassen'
+
+edit:
+  title: 'Bearbeiten'
+  description: 'Wohnung bearbeiten'
+
+remove:
+  title: 'Entfernen'
+  description: 'Wohnung entfernen'
+
+index:
+  title: 'Wohnungen'
+  description: 'Meine Wohnungen'
+  no_apartments: 'Noch keine Wohnungen erfasst'
