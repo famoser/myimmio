@@ -12,6 +12,8 @@
 namespace App\Controller\Frontend;
 
 use App\Controller\Base\BaseController;
+use App\Controller\Frontend\Base\BaseFrontendController;
+use App\Entity\Application;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @return Response
  */
-class DashboardController extends BaseController
+class DashboardController extends BaseFrontendController
 {
     /**
      * @Route("/", name="frontend_dashboard_index")
@@ -31,6 +33,7 @@ class DashboardController extends BaseController
      */
     public function indexAction()
     {
-        return $this->render('frontend/dashboard/index.html.twig');
+        $arr["applications"] = $this->getDoctrine()->getRepository(Application::class)->findBy(['frontendUser' => $this->getUser()->getId()]);
+        return $this->render('frontend/dashboard/index.html.twig', $arr);
     }
 }

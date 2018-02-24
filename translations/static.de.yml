@@ -6,6 +6,10 @@ index:
   i_want_to: "Ich will eine Wohnung"
   rent: "mieten"
   offer: "anbieten"
+  login: "Anmelden"
+  login_description: "Mit Passwort anmelden"
+  register: "Registrieren"
+  register_description: "Neuen Account erstellen"
 
 tiles:
   login: 'Login'
@@ -45,9 +49,11 @@ contact:
 
 #register/check page
 register:
-  title: "Registrieren"
+  title: "Anmelden"
   description: "Möchten Sie einen neuen Account erstellen?"
   help_frontend_user: "Beschreibung frontend."
   create_frontend_user: "frontend user erstellen"
   help_backend_user: "Beschreibung backend."
   create_backend_user: "backend user erstellen"
+
+currency: CHF

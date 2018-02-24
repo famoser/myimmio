@@ -6,4 +6,28 @@
 {% trans_default_domain "frontend_dashboard" %}
 
 {% block single_content %}
+    {% if applications|length == 0 %}
+        <p>{{ 'no_applications'|trans }}</p>
+    {% else %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ 'title.apartment'|trans }}</th>
+                <th>{{ 'title.created'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for application in applications %}
+                <tr>
+                    <td>
+                        <a href="{{ path('frontend_application_apply', {'application': application.id}) }}">{{ application.applicationSlot.name }}</a>
+                    </td>
+                    <td>
+                        {{ application.createdAt|dateFormat }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}

@@ -38,10 +38,10 @@ class LoadApplicationData extends BaseFixture
      */
     public function load(ObjectManager $manager)
     {
-        $applicationSlot = $manager->getRepository(ApplicationSlot::class)->find(1);
         $frontendUser = $manager->getRepository(FrontendUser::class)->findOneBy(["email" => "info@myimm.io"]);
 
         for ($i = 0; $i < 5; $i++) {
+            $applicationSlot = $manager->getRepository(ApplicationSlot::class)->find($i + 1);
             $application = $this->getAllRandomInstance();
             $application->setFrontendUser($frontendUser);
             $application->setApplicationSlot($applicationSlot);

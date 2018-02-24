@@ -1,10 +1,15 @@
 {% extends 'single_content_base.html.twig' %}
 {% import "widgets/buttons.html.twig" as buttons %}
+{% import "widgets/breadcrumb.html.twig" as breadcrumb %}
 
 {% block title %}{{ "index.title"|trans }}{% endblock %}
 {% block description %}{{ "index.description"|trans }}{% endblock %}
 
 {% trans_default_domain "backend_application_slot" %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.link("index.title"|trans, path("backend_application_slot_index")) }}
+{% endblock %}
 
 {% block single_content %}
 
@@ -18,6 +23,7 @@
                 <th>{{ "entity.name"|trans({}, "entity_apartment") }}</th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -27,6 +33,9 @@
                     <td>{{ application_slot.endAt|dateTimeFormat }}</td>
                     <td>{{ application_slot.applications|length }}</td>
                     <td>{{ application_slot.apartment.name }}</td>
+                    <td>
+                        {{ buttons.button(path("backend_application_slot_application_index", {"applicationSlot": application_slot.id}), "index.title_short"|trans({}, "backend_application_slot_application"), "list") }}
+                    </td>
                     <td>
                         {{ buttons.edit_button(path("backend_application_slot_edit", {"applicationSlot": application_slot.id}) ) }}
                     </td>

@@ -2,7 +2,10 @@
 {% import "widgets/buttons.html.twig" as buttons %}
 
 {% block title %}{{ "index.title"|trans }}{% endblock %}
-{% block description %}{{ "index.description"|trans }}{% endblock %}
+{% block description %}{{ "index.description"|trans({
+    '%name%': apartment.name,
+    '%address%': apartment.building.addressLines|implode(", ")
+}) }}{% endblock %}
 
 {% trans_default_domain "backend_application_slot_application" %}
 
@@ -13,12 +16,38 @@
             <thead>
             <tr>
                 <th>{{ "created_at"|trans({}, "trait_id") }}</th>
+                <th>{{ "entity.name"|trans({}, "entity_applicant") }}</th>
+                <th>{{ "list.salary"|trans }}</th>
+                <th>{{ "list.numApplicants"|trans }}</th>
+                <th>{{ "tenantCountChild"|trans({}, "entity_application") }}</th>
+                <th>{{ "list.score"|trans }}</th>
+                <th>{{ "list.labels"|trans }}</th>
+                <th>{{ "status"|trans({}, "entity_application") }}</th>
             </tr>
             </thead>
             <tbody>
             {% for application in applications %}
-                <tr class="clickable" data-href="{{ path("backend_application_slot_application_view", {"applicationSlot" : application.applicationSlot.id, "application": application.id}) }}">
+                <tr class="clickable" data-id="{{ application.id }}"
+                    data-href="{{ path("backend_application_slot_application_view", {"applicationSlot" : application.applicationSlot.id, "application": application.id}) }}">
                     <td>{{ application.createdAt|dateTimeFormat }}</td>
+                    <td>{{ application.name }}</td>
+                    <td class="number">{{ application.yearlySalary|number_format(0, '.', '\'') }}.- {{ "currency"|trans({}, 'static') }}</td>
+                    <td class="number">{{ application.applicants|length }}</td>
+                    <td class="number">{{ application.tenantCountChild }}</td>
+                    <td class="number">{{ application.score }} %</td>
+                    <td data-labels>
+                        {% for label in labels %}{%
+                            if label in application.labels
+                            %}<span data-id="{{ label.id }}" class="label label-present" style="background-color: {{ label.color }}">{{ label.name }}</span>{%
+                            else
+                            %}<span data-id="{{ label.id }}" class="label label-absent" style="background-color: {{ label.color }}">{{ label.name }}</span>{%
+                            endif
+                            %}{% endfor %}
+                    </td>
+                    <td data-status>
+                        <i class="oi oi-check status {% if application.confirmed %}status-active{% endif %}" data-status="{{ status_confirmed }}"></i>
+                        <i class="oi oi-x status {% if application.rejected %}status-active{% endif %}" data-status="{{ status_rejected }}"></i>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

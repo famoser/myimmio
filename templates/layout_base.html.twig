@@ -64,6 +64,11 @@
                         {{ self.menu_entry("index.title"|trans({}, "backend_building"), path("backend_building_index")) }}
                         {{ self.menu_entry("index.title"|trans({}, "backend_apartment"), path("backend_apartment_index")) }}
                         {{ self.menu_entry("index.title"|trans({}, "backend_application_slot"), path("backend_application_slot_index")) }}
+                        {{ self.menu_entry("menu.user.logout"|trans({}, "content_base"), path("backend_login_logout")) }}
+                    {% elseif is_frontend_user_logged_in|default(false) %}
+                        {{ self.menu_entry("index.title"|trans({}, "frontend_dashboard"), path("frontend_dashboard_index")) }}
+                        {{ self.menu_entry("index.title"|trans({}, "frontend_profile"), path("frontend_profile_index")) }}
+                        {{ self.menu_entry("menu.user.logout"|trans({}, "content_base"), path("frontend_login_logout")) }}
                     {% else %}
                         {{ self.menu_entry("index.title"|trans({}, "static"), path("static_index")) }}
                         {{ self.menu_entry("about.title"|trans({}, "static"), path("static_about")) }}

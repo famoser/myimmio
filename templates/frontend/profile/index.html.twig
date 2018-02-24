@@ -3,8 +3,9 @@
 {% block title %}{{ "index.title"|trans }}{% endblock %}
 {% block description %}{{ "index.description"|trans }}{% endblock %}
 
-{% trans_default_domain "frontend_dashboard" %}
+{% trans_default_domain "frontend_profile" %}
 
 {% block single_content %}
-
+<p>{{ 'profile_hi'|trans({'%name%': user.givenName}) }}</p>
+{{ form(changeForm) }}
 {% endblock %}

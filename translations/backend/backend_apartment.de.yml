@@ -15,6 +15,6 @@ index:
   no_apartments: 'Noch keine Wohnungen erfasst'
 
 details:
-  title: 'Bewerbungsfenster dieser Wohnung'
+  title: 'Bewerbungsphase dieser Wohnung'
 
 new_apartment: 'Wohnung hinzufügen'

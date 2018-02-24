@@ -13,9 +13,17 @@ namespace App\Controller\Frontend\Base;
 
 use App\Controller\Base\BaseFormController;
 use App\Entity\FrontendUser;
+use Symfony\Component\HttpFoundation\Response;
 
 class BaseFrontendController extends BaseFormController
 {
+    protected function render(string $view, array $parameters = array(), Response $response = null): Response
+    {
+        $parameters['is_frontend_user_logged_in'] = $this->getUser() instanceof FrontendUser;
+        return parent::render($view, $parameters, $response);
+    }
+
+
     /**
      * @return FrontendUser
      */

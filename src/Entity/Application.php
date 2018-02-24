@@ -61,6 +61,18 @@ class Application extends BaseEntity
      */
     private $frontendUser;
 
+    /**
+     * @var ApplicationLabel[]
+     * @ORM\ManyToMany(targetEntity="App\Entity\ApplicationLabel")
+     */
+    private $labels;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $status = 0;
+
     public function __construct()
     {
         $this->applicants = new ArrayCollection();
@@ -147,6 +159,39 @@ class Application extends BaseEntity
     public function setFrontendUser(FrontendUser $frontendUser): void
     {
         $this->frontendUser = $frontendUser;
+    }
+
+    /**
+     * @return ApplicationLabel[]|ArrayCollection
+     */
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @param ApplicationLabel[]|ArrayCollection $labels
+     */
+    public function setLabels(array $labels)
+    {
+        dump($this->labels);
+        $this->labels = $labels;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param int $status
+     */
+    public function setStatus(int $status)
+    {
+        $this->status = $status;
     }
 
     /**
