@@ -35,7 +35,7 @@ class RegisterController extends BaseLoginController
         $user = new BackendUser();
 
         $form = $this->handleForm(
-            $this->createForm(BackendUserType::class)
+            $this->createForm(BackendUserType::class, $user)
                 ->add("form.register", SubmitType::class),
             $request,
             function ($form) use ($request, $user, $translator) {

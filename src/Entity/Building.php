@@ -84,7 +84,7 @@ class Building extends BaseEntity
     /**
      * @param Company $company
      */
-    public function setCompany(Company $company): void
+    public function setCompany($company): void
     {
         $this->company = $company;
     }

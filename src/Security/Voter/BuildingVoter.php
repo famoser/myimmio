@@ -59,7 +59,14 @@ class BuildingVoter extends CrudVoter
             return false;
         }
 
-        //check if from same company
-        return $subject->getCompany()->getId() === $user->getCompany()->getId();
+        //check if admin of building
+        if ($user->getBuildings()->contains($subject))
+            return true;
+
+        //check if company admin & from same company
+        if ($user->getCanAdministerCompany() && $user->getCompany() != null && $subject->getCompany() != null)
+            return $user->getCompany()->getId() == $subject->getCompany()->getId();
+
+        return false;
     }
 }
