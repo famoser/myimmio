@@ -75,8 +75,8 @@ class LoadApplicationData extends BaseFixture
 
         for ($i = 0; $i < $faker->numberBetween(0, 5); $i++) {
             $applicant = $this->getApplicantRandomInstance();
+            $application->getApplicants()->add($applicant);
             $applicant->setApplication($application);
-            $application->getApplicants()->add($this->getApplicantRandomInstance());
         }
 
         return $application;
@@ -93,7 +93,9 @@ class LoadApplicationData extends BaseFixture
         $this->fillRandomAddress($applicant);
         $this->fillRandomPerson($applicant);
         $this->fillRandomContact($applicant);
-        $applicant->setApplicantJob($this->getApplicantJob());
+        $applicantJob = $this->getApplicantJob();
+        $applicant->setApplicantJob($applicantJob);
+        $applicantJob->getReference()->setApplicant($applicant);
         $applicant->setCurrentLandlord($this->getLandlord());
         $applicant->setBirthDate($faker->dateTimeThisCentury());
         $applicant->setCivilStatus($faker->text(20));
