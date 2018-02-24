@@ -1,10 +1,10 @@
 Introduction
 ======
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![Travis Build Status](https://travis-ci.org/famoser/myimmio.svg?branch=master)](https://travis-ci.org/famoser/myimmo)
-[![Code Climate](https://codeclimate.com/github/famoser/myimmio/badges/gpa.svg)](https://codeclimate.com/github/famoser/myimmo)
+[![Travis Build Status](https://travis-ci.org/famoser/myimmio.svg?branch=master)](https://travis-ci.org/famoser/myimmio)
+[![Code Climate](https://codeclimate.com/github/famoser/myimmio/badges/gpa.svg)](https://codeclimate.com/github/famoser/myimmio)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/fc47298bd9f348d58889b853536eb31d)](https://www.codacy.com/app/famoser/myimmio)
-[![Scrutinizer](https://scrutinizer-ci.com/g/famoser/myimmio/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/famoser/myimmo)
+[![Scrutinizer](https://scrutinizer-ci.com/g/famoser/myimmio/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/famoser/myimmio)
 
 dependencies (you need this on your machine):
  - `xampp` https://www.apachefriends.org/de/index.html

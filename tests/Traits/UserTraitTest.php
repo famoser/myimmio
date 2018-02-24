@@ -26,7 +26,7 @@ class UserTraitTest extends WebTestCase
     {
         $user = new FrontendUser();
         $user->setPlainPassword('asdf1234');
-        $this->assertEmpty($user->getResetHash());
+        $this->assertNull($user->getResetHash());
 
         $user->setPassword();
         $this->assertNotEmpty($user->getResetHash());
