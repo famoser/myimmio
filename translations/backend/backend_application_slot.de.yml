@@ -1,16 +1,16 @@
 new:
   title: 'Neu'
-  description: 'Neues Zeitfenster für Bewerbungen öffnen'
+  description: 'Neue Bewerbungsphase öffnen'
 
 edit:
   title: 'Bearbeiten'
-  description: 'Zeitfenster für Bewerbungen bearbeiten'
+  description: 'Bewerbungsphase bearbeiten'
 
 remove:
   title: 'Entfernen'
-  description: 'Zeitfenster für Bewerbungen entfernen'
+  description: 'Bewerbungsphase entfernen'
 
 index:
-  title: 'Zeitfenster für Bewerbungen'
-  description: 'Meine Zeitfenster für Bewerbungen'
-  no_apartments: 'Noch keine Zeitfenster erfasst'
+  title: 'Bewerbungsphasen'
+  description: 'Meine aktuellen Bewerbungsphasen'
+  no_apartments: 'Noch keine Bewerbungsphase erfasst'

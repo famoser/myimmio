@@ -1,5 +1,5 @@
 index:
-  title: 'Bewerbungen für dieses Zeitfenster'
+  title: 'Bewerbungen für diese Phase'
   title_short: 'Bewerbungen'
   description: 'Bewerbungen für %name% an der %address%'
   no_applications: 'Noch keine Bewerbungen erfasst'

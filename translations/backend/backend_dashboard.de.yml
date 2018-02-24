@@ -1,4 +1,4 @@
 index:
-  title: 'Dashboard'
-  description: 'Im Dashboard befinden sich die aktuellen Aufgaben'
+  title: 'Mission Control'
+  description: 'Verwaltung von Bewerber und Wohnungen'
   no_buildings: 'Sie haben noch keine Gebäude erfasst'

@@ -1,7 +1,7 @@
 entity:
-  name: 'Bewerbungsfenster'
-  plural: 'Bewerbungsfenster'
-  description: 'Ist das Fenster offen, können sich Bewerber für eine Wohnung anmelden'
+  name: 'Bewerbungsphase'
+  plural: 'Bewerbungsphasen'
+  description: 'Ist die Phase aktiv, können sich Bewerber für eine Wohnung anmelden'
 
 start_at: 'Anfang'
 end_at: 'Ende'

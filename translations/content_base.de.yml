@@ -10,7 +10,7 @@ menu:
   user:
     advanced: 'Sonstiges'
     about: "über nodika"
-    logout: "abmelden"
+    logout: "Abmelden"
     contact_support: "support kontaktieren"
     add_own_organisation: 'Eigene Organisation erstellen'
     assign_events: 'Termine zuweisen'
