@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20180224121852 extends AbstractMigration
+class Version20180224141043 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
@@ -32,13 +32,6 @@ class Version20180224121852 extends AbstractMigration
         $this->addSql('INSERT INTO apartment (id, building_id, name, description) SELECT id, building_id, name, description FROM __temp__apartment');
         $this->addSql('DROP TABLE __temp__apartment');
         $this->addSql('CREATE INDEX IDX_4D7E68544D2A7E12 ON apartment (building_id)');
-        $this->addSql('DROP INDEX IDX_9F74B8987887A021');
-        $this->addSql('CREATE TEMPORARY TABLE __temp__setting AS SELECT id, frontend_user_id, "key", content FROM setting');
-        $this->addSql('DROP TABLE setting');
-        $this->addSql('CREATE TABLE setting (id INTEGER NOT NULL, frontend_user_id INTEGER DEFAULT NULL, "key" CLOB NOT NULL COLLATE BINARY, content CLOB NOT NULL COLLATE BINARY, PRIMARY KEY(id), CONSTRAINT FK_9F74B8987887A021 FOREIGN KEY (frontend_user_id) REFERENCES frontend_user (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
-        $this->addSql('INSERT INTO setting (id, frontend_user_id, "key", content) SELECT id, frontend_user_id, "key", content FROM __temp__setting');
-        $this->addSql('DROP TABLE __temp__setting');
-        $this->addSql('CREATE INDEX IDX_9F74B8987887A021 ON setting (frontend_user_id)');
         $this->addSql('DROP INDEX IDX_E16F61D4979B1AD6');
         $this->addSql('CREATE TEMPORARY TABLE __temp__building AS SELECT id, company_id, name, description, street, street_nr, address_line, postal_code, city, country FROM building');
         $this->addSql('DROP TABLE building');
@@ -46,15 +39,15 @@ class Version20180224121852 extends AbstractMigration
         $this->addSql('INSERT INTO building (id, company_id, name, description, street, street_nr, address_line, postal_code, city, country) SELECT id, company_id, name, description, street, street_nr, address_line, postal_code, city, country FROM __temp__building');
         $this->addSql('DROP TABLE __temp__building');
         $this->addSql('CREATE INDEX IDX_E16F61D4979B1AD6 ON building (company_id)');
-        $this->addSql('DROP INDEX IDX_978A66E14D2A7E12');
         $this->addSql('DROP INDEX IDX_978A66E19F66D4CC');
+        $this->addSql('DROP INDEX IDX_978A66E14D2A7E12');
         $this->addSql('CREATE TEMPORARY TABLE __temp__building_backend_user AS SELECT building_id, backend_user_id FROM building_backend_user');
         $this->addSql('DROP TABLE building_backend_user');
         $this->addSql('CREATE TABLE building_backend_user (building_id INTEGER NOT NULL, backend_user_id INTEGER NOT NULL, PRIMARY KEY(building_id, backend_user_id), CONSTRAINT FK_978A66E14D2A7E12 FOREIGN KEY (building_id) REFERENCES building (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_978A66E19F66D4CC FOREIGN KEY (backend_user_id) REFERENCES backend_user (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('INSERT INTO building_backend_user (building_id, backend_user_id) SELECT building_id, backend_user_id FROM __temp__building_backend_user');
         $this->addSql('DROP TABLE __temp__building_backend_user');
-        $this->addSql('CREATE INDEX IDX_978A66E14D2A7E12 ON building_backend_user (building_id)');
         $this->addSql('CREATE INDEX IDX_978A66E19F66D4CC ON building_backend_user (backend_user_id)');
+        $this->addSql('CREATE INDEX IDX_978A66E14D2A7E12 ON building_backend_user (building_id)');
         $this->addSql('DROP INDEX IDX_5BE248EF176DFE85');
         $this->addSql('CREATE TEMPORARY TABLE __temp__application_slot AS SELECT id, apartment_id, name, description, start_at, end_at, identifier, welcome_header, welcome_text, display_tenant_count_child, display_pet, display_play_instrument, display_birth_date, display_civil_status, display_nationality, display_residence_authorization, display_telephone, display_telephone_mobile, display_email, display_employer, display_relocation_reason, display_notice_by, display_current_landlord, display_yearly_salary FROM application_slot');
         $this->addSql('DROP TABLE application_slot');
@@ -62,33 +55,33 @@ class Version20180224121852 extends AbstractMigration
         $this->addSql('INSERT INTO application_slot (id, apartment_id, name, description, start_at, end_at, identifier, welcome_header, welcome_text, display_tenant_count_child, display_pet, display_play_instrument, display_birth_date, display_civil_status, display_nationality, display_residence_authorization, display_telephone, display_telephone_mobile, display_email, display_employer, display_relocation_reason, display_notice_by, display_current_landlord, display_yearly_salary) SELECT id, apartment_id, name, description, start_at, end_at, identifier, welcome_header, welcome_text, display_tenant_count_child, display_pet, display_play_instrument, display_birth_date, display_civil_status, display_nationality, display_residence_authorization, display_telephone, display_telephone_mobile, display_email, display_employer, display_relocation_reason, display_notice_by, display_current_landlord, display_yearly_salary FROM __temp__application_slot');
         $this->addSql('DROP TABLE __temp__application_slot');
         $this->addSql('CREATE INDEX IDX_5BE248EF176DFE85 ON application_slot (apartment_id)');
-        $this->addSql('DROP INDEX IDX_CAAD10193E030ACD');
         $this->addSql('DROP INDEX UNIQ_CAAD1019920427E9');
+        $this->addSql('DROP INDEX IDX_CAAD10193E030ACD');
         $this->addSql('CREATE TEMPORARY TABLE __temp__applicant AS SELECT id, applicant_job_id, application_id, salutation, birth_date, civil_status, nationality, current_landlord, given_name, family_name, street, street_nr, address_line, postal_code, city, country, telephone, email, residence_authorization, telephone_mobile FROM applicant');
         $this->addSql('DROP TABLE applicant');
         $this->addSql('CREATE TABLE applicant (id INTEGER NOT NULL, applicant_job_id INTEGER DEFAULT NULL, application_id INTEGER DEFAULT NULL, salutation CLOB DEFAULT NULL COLLATE BINARY, birth_date DATE DEFAULT NULL, civil_status CLOB DEFAULT NULL COLLATE BINARY, nationality CLOB DEFAULT NULL COLLATE BINARY, current_landlord CLOB DEFAULT NULL COLLATE BINARY, given_name CLOB NOT NULL COLLATE BINARY, family_name CLOB NOT NULL COLLATE BINARY, street CLOB DEFAULT NULL COLLATE BINARY, street_nr CLOB DEFAULT NULL COLLATE BINARY, address_line CLOB DEFAULT NULL COLLATE BINARY, postal_code INTEGER DEFAULT NULL, city CLOB DEFAULT NULL COLLATE BINARY, country CLOB DEFAULT NULL COLLATE BINARY, telephone CLOB DEFAULT NULL COLLATE BINARY, email CLOB NOT NULL COLLATE BINARY, residence_authorization CLOB DEFAULT NULL COLLATE BINARY, telephone_mobile CLOB DEFAULT NULL COLLATE BINARY, PRIMARY KEY(id), CONSTRAINT FK_CAAD1019920427E9 FOREIGN KEY (applicant_job_id) REFERENCES applicant_job (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_CAAD10193E030ACD FOREIGN KEY (application_id) REFERENCES application (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('INSERT INTO applicant (id, applicant_job_id, application_id, salutation, birth_date, civil_status, nationality, current_landlord, given_name, family_name, street, street_nr, address_line, postal_code, city, country, telephone, email, residence_authorization, telephone_mobile) SELECT id, applicant_job_id, application_id, salutation, birth_date, civil_status, nationality, current_landlord, given_name, family_name, street, street_nr, address_line, postal_code, city, country, telephone, email, residence_authorization, telephone_mobile FROM __temp__applicant');
         $this->addSql('DROP TABLE __temp__applicant');
-        $this->addSql('CREATE INDEX IDX_CAAD10193E030ACD ON applicant (application_id)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_CAAD1019920427E9 ON applicant (applicant_job_id)');
-        $this->addSql('DROP INDEX IDX_A45BDDC1B25B14AF');
+        $this->addSql('CREATE INDEX IDX_CAAD10193E030ACD ON applicant (application_id)');
         $this->addSql('DROP INDEX IDX_A45BDDC17887A021');
+        $this->addSql('DROP INDEX IDX_A45BDDC1B25B14AF');
         $this->addSql('CREATE TEMPORARY TABLE __temp__application AS SELECT id, application_slot_id, frontend_user_id, pets, instruments, tenant_count_child FROM application');
         $this->addSql('DROP TABLE application');
         $this->addSql('CREATE TABLE application (id INTEGER NOT NULL, application_slot_id INTEGER DEFAULT NULL, frontend_user_id INTEGER DEFAULT NULL, pets CLOB DEFAULT NULL COLLATE BINARY, instruments CLOB DEFAULT NULL COLLATE BINARY, tenant_count_child INTEGER DEFAULT NULL, PRIMARY KEY(id), CONSTRAINT FK_A45BDDC1B25B14AF FOREIGN KEY (application_slot_id) REFERENCES application_slot (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_A45BDDC17887A021 FOREIGN KEY (frontend_user_id) REFERENCES frontend_user (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('INSERT INTO application (id, application_slot_id, frontend_user_id, pets, instruments, tenant_count_child) SELECT id, application_slot_id, frontend_user_id, pets, instruments, tenant_count_child FROM __temp__application');
         $this->addSql('DROP TABLE __temp__application');
-        $this->addSql('CREATE INDEX IDX_A45BDDC1B25B14AF ON application (application_slot_id)');
         $this->addSql('CREATE INDEX IDX_A45BDDC17887A021 ON application (frontend_user_id)');
-        $this->addSql('DROP INDEX IDX_C73586E979B1AD6');
+        $this->addSql('CREATE INDEX IDX_A45BDDC1B25B14AF ON application (application_slot_id)');
         $this->addSql('DROP INDEX UNIQ_C73586EE7927C74');
+        $this->addSql('DROP INDEX IDX_C73586E979B1AD6');
         $this->addSql('CREATE TEMPORARY TABLE __temp__backend_user AS SELECT id, company_id, email, password_hash, reset_hash, is_enabled, registration_date, agb_accepted, can_administer_company FROM backend_user');
         $this->addSql('DROP TABLE backend_user');
         $this->addSql('CREATE TABLE backend_user (id INTEGER NOT NULL, company_id INTEGER DEFAULT NULL, email CLOB NOT NULL COLLATE BINARY, password_hash CLOB NOT NULL COLLATE BINARY, reset_hash CLOB NOT NULL COLLATE BINARY, is_enabled BOOLEAN NOT NULL, registration_date DATETIME NOT NULL, agb_accepted BOOLEAN DEFAULT \'0\' NOT NULL, can_administer_company BOOLEAN NOT NULL, PRIMARY KEY(id), CONSTRAINT FK_C73586E979B1AD6 FOREIGN KEY (company_id) REFERENCES company (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('INSERT INTO backend_user (id, company_id, email, password_hash, reset_hash, is_enabled, registration_date, agb_accepted, can_administer_company) SELECT id, company_id, email, password_hash, reset_hash, is_enabled, registration_date, agb_accepted, can_administer_company FROM __temp__backend_user');
         $this->addSql('DROP TABLE __temp__backend_user');
-        $this->addSql('CREATE INDEX IDX_C73586E979B1AD6 ON backend_user (company_id)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_C73586EE7927C74 ON backend_user (email)');
+        $this->addSql('CREATE INDEX IDX_C73586E979B1AD6 ON backend_user (company_id)');
         $this->addSql('DROP INDEX UNIQ_3051E7E51645DEA9');
         $this->addSql('CREATE TEMPORARY TABLE __temp__applicant_landlord AS SELECT id, reference_id, relocation_reason, renting_since, notice_by FROM applicant_landlord');
         $this->addSql('DROP TABLE applicant_landlord');
@@ -189,12 +182,5 @@ class Version20180224121852 extends AbstractMigration
         $this->addSql('DROP TABLE __temp__building_backend_user');
         $this->addSql('CREATE INDEX IDX_978A66E14D2A7E12 ON building_backend_user (building_id)');
         $this->addSql('CREATE INDEX IDX_978A66E19F66D4CC ON building_backend_user (backend_user_id)');
-        $this->addSql('DROP INDEX IDX_9F74B8987887A021');
-        $this->addSql('CREATE TEMPORARY TABLE __temp__setting AS SELECT id, frontend_user_id, "key", content FROM setting');
-        $this->addSql('DROP TABLE setting');
-        $this->addSql('CREATE TABLE setting (id INTEGER NOT NULL, frontend_user_id INTEGER DEFAULT NULL, "key" CLOB NOT NULL, content CLOB NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('INSERT INTO setting (id, frontend_user_id, "key", content) SELECT id, frontend_user_id, "key", content FROM __temp__setting');
-        $this->addSql('DROP TABLE __temp__setting');
-        $this->addSql('CREATE INDEX IDX_9F74B8987887A021 ON setting (frontend_user_id)');
     }
 }
