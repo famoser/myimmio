@@ -51,8 +51,23 @@ class ApplicationController extends BaseBackendController
         $arr["apartment"] = $applicationSlot->getApartment();
         $arr["status_confirmed"] = ApplicationStatus::CONFIRMED;
         $arr["status_rejected"] = ApplicationStatus::REJECTED;
+
+        $maxSalary = array_reduce($arr["applications"]->toArray(), function($value, Application $application) {
+            return max($application->yearlySalary(), $value);
+        });
         foreach($arr["applications"] as $application) {
-            $application->score = rand(0,100);
+            $application->score = $application->yearlySalary() / $maxSalary * 100;
+            $application->score -= 2*$application->getTenantCountChild() + $application->getApplicants()->count();
+            if(!empty($application->getInstruments())) {
+                $application->score *= .9;
+            }
+            if(!empty($application->getPets())) {
+                $application->score *= .95;
+            }
+            if($application->score < 0) {
+                $application->score = 0;
+            }
+            $application->score = (int) $application->score;
             $applicant = $application->getApplicants()[0];
             if($applicant instanceof Applicant) {
                 $application->name = $applicant->getFullName();
