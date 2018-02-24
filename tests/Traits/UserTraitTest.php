@@ -29,6 +29,10 @@ class UserTraitTest extends WebTestCase
         $this->assertNull($user->getResetHash());
 
         $user->setPassword();
+        $this->assertNotEmpty($user->getPassword());
+
+        $this->assertNull($user->getResetHash());
+        $user->setResetHash();
         $this->assertNotEmpty($user->getResetHash());
     }
 }
