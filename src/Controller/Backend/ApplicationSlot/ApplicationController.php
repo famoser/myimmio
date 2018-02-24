@@ -27,6 +27,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -48,6 +49,8 @@ class ApplicationController extends BaseBackendController
         $arr["labels"] = $this->getDoctrine()->getRepository(ApplicationLabel::class)->findAll();
         $arr["applications"] = $applicationSlot->getApplications();
         $arr["apartment"] = $applicationSlot->getApartment();
+        $arr["status_confirmed"] = ApplicationStatus::CONFIRMED;
+        $arr["status_rejected"] = ApplicationStatus::REJECTED;
         foreach($arr["applications"] as $application) {
             $application->score = rand(0,100);
             $applicant = $application->getApplicants()[0];
@@ -58,15 +61,15 @@ class ApplicationController extends BaseBackendController
             }
             switch ($application->getStatus()) {
                 case ApplicationStatus::CONFIRMED:
-                    $application->accepted = true;
+                    $application->confirmed = true;
                     $application->rejected = false;
                     break;
                 case ApplicationStatus::REJECTED:
-                    $application->accepted = false;
+                    $application->confirmed = false;
                     $application->rejected = true;
                     break;
                 default:
-                    $application->accepted = false;
+                    $application->confirmed = false;
                     $application->rejected = false;
             }
         }
@@ -98,6 +101,32 @@ class ApplicationController extends BaseBackendController
             $application->getLabels()->removeElement($label);
         } else {
             $application->getLabels()->add($label);
+        }
+        $manager->persist($application);
+        $manager->flush();
+        return new JsonResponse([
+            'success' => true
+        ]);
+    }
+
+    /**
+     * @Route("/{application}/toggleStatus/{status}")
+     *
+     * @param ObjectManager $manager
+     * @param Application $application
+     * @param int $status
+     * @return JsonResponse
+     */
+    public function toggleApplicationStatusAction(ObjectManager $manager, Application $application, $status)
+    {
+        $status = (int)$status;
+        if(!$status || $status < -1 || $status > 1) {
+            throw new NotFoundHttpException();
+        }
+        if($application->getStatus() == $status) {
+            $application->setStatus(0);
+        } else {
+            $application->setStatus($status);
         }
         $manager->persist($application);
         $manager->flush();

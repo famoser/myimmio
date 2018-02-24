@@ -45,8 +45,8 @@
                             %}{% endfor %}
                     </td>
                     <td data-status>
-                        <i class="oi oi-check status {% if application.accepted %}status-active{% endif %}"></i>
-                        <i class="oi oi-x status {% if application.rejected %}status-active{% endif %}"></i>
+                        <i class="oi oi-check status {% if application.confirmed %}status-active{% endif %}" data-status="{{ status_confirmed }}"></i>
+                        <i class="oi oi-x status {% if application.rejected %}status-active{% endif %}" data-status="{{ status_rejected }}"></i>
                     </td>
                 </tr>
             {% endfor %}

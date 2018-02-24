@@ -48,4 +48,21 @@ $(document).ready(function () {
             url: location.href + applicationId + '/toggleLabel/' + labelId
         });
     });
+
+    $('[data-status] i').click(function(evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+        var applicationId = this.parentNode.parentNode.dataset.id;
+        var status = this.dataset.status;
+        var $this = $(this);
+        if($this.hasClass('status-active')) {
+            $this.removeClass('status-active');
+        } else {
+            $this.parent().find('.status-active').removeClass('status-active');
+            $this.addClass('status-active');
+        }
+        $.ajax({
+            url: location.href + applicationId + '/toggleStatus/' + status
+        });
+    });
 });
