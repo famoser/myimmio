@@ -1,0 +1,8 @@
+#name
+trait:
+  name: Kontaktinformationen
+
+#properties
+telephone: Telefonnummer
+telephoneMobile: Telefonnummer Mobil
+email: Email

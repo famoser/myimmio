@@ -1,0 +1,10 @@
+entity:
+  name: 'Bewerber'
+  description: 'Ein Bewerber, Teil einer Bewerbung'
+  plural: 'Bewerber'
+
+salutation: 'Anrede'
+birthDate: 'Geburtsdatum'
+civilStatus: 'Zivilstand'
+nationality: 'Nationalität'
+residenceAuthorization: 'Aufenthaltsbewilligung'

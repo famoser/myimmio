@@ -1,0 +1,8 @@
+entity:
+  name: 'Vermieter'
+  description: 'Aktueller Vermieter eines Bewerbers'
+  plural: 'Vermieter'
+
+relocationReason: 'Umzugsgrund'
+rentingSince: 'Zur Miete seit'
+noticeBy: 'Kündigung durch'

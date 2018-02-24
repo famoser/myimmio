@@ -1,0 +1,8 @@
+entity:
+  name: 'Arbeitgeber'
+  description: 'Aktueller Arbeitgeber eines Bewerbers'
+  plural: 'Arbeitgeber'
+
+profession: 'Beruf'
+yearlySalary: 'Jahreslohn'
+workingSince: 'Arbeit seit'

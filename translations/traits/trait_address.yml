@@ -1,0 +1,11 @@
+#name
+trait:
+  name: Adressinformationen
+
+#properties
+street: Strasse
+streetNr: Strasse Nr
+addressLines: Zusätzliche Adresszeile
+postalCode: PLZ
+city: Ort
+country: Land
