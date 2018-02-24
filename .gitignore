@@ -13,6 +13,9 @@
 # nodejs
 /node_modules/
 
+#yarn
+yarn-error.log
+
 # IDE files
 .idea
 
