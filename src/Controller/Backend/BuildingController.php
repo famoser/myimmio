@@ -49,6 +49,7 @@ class BuildingController extends BaseBackendController
     {
         $building = new Building();
         $building->setCompany($this->getUser()->getCompany());
+        $this->getUser()->getBuildings()->add($building);
         $building->getAdministrators()->add($this->getUser());
 
         $form = $this->handleCreateForm(

@@ -74,6 +74,17 @@ class Application extends BaseEntity
         return $this->applicants;
     }
 
+    public function yearlySalary()
+    {
+        $income = 0;
+        foreach ($this->applicants as $applicant) {
+            if ($applicant->getApplicantJob() != null) {
+                $income += $applicant->getApplicantJob()->getYearlySalary();
+            }
+        }
+        return $income;
+    }
+
     /**
      * @return string
      */
@@ -157,7 +168,8 @@ class Application extends BaseEntity
     /**
      * @return Application
      */
-    public function deepClone(){
+    public function deepClone()
+    {
         $clone = new Application();
         // TODO: deep clone application
         return $clone;

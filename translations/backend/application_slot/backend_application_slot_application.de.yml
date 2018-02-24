@@ -6,3 +6,5 @@ index:
 view:
   title: 'Bewerbung ansehen'
   description: 'Bewerbung im Detail ansehen'
+  created_at: 'Bewerbung vom '
+  overview: 'Überblick'

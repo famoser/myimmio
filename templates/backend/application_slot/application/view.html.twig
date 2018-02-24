@@ -1,43 +1,31 @@
-{% extends 'single_content_base.html.twig' %}
+{% extends 'layout_base.html.twig' %}
 {% import "widgets/buttons.html.twig" as buttons %}
 
-{% block title %}{{ "index.title"|trans }}{% endblock %}
-{% block description %}{{ "index.description"|trans }}{% endblock %}
+{% block title %}{{ "view.title"|trans }}{% endblock %}
+{% block description %}{{ "view.description"|trans }}{% endblock %}
 
-{% trans_default_domain "backend_application_slot" %}
+{% trans_default_domain "backend_application_slot_application" %}
 
-{% block single_content %}
-
-    {% if applications|length > 0 %}
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>{{ "start_at"|trans({}, "entity_application_slot") }}</th>
-                <th>{{ "end_at"|trans({}, "entity_application_slot") }}</th>
-                <th>{{ "entity.plural"|trans({}, "entity_application") }}</th>
-                <th>{{ "entity.name"|trans({}, "entity_apartment") }}</th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for application_slot in application_slots %}
-                <tr>
-                    <td>{{ application_slot.startAt|dateTimeFormat }}</td>
-                    <td>{{ application_slot.endAt|dateTimeFormat }}</td>
-                    <td>{{ application_slot.applications|length }}</td>
-                    <td>{{ application_slot.apartment.name }}</td>
-                    <td>
-                        {{ buttons.edit_button(path("backend_application_slot_edit", {"applicationSlot": application_slot.id}) ) }}
-                    </td>
-                    <td>
-                        {{ buttons.remove_button(path("backend_application_slot_remove", {"applicationSlot": application_slot.id}) ) }}
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>{{ "index.no_apartments"|trans }}</p>
-    {% endif %}
+{% block content %}
+    <section class="content">
+        <div class="container list-container d-md-block">
+            <div class="tile-grid row">
+                <div class="tile tile-4 default-color">
+                    <h3>{{ "view.overview"|trans }}</h3>
+                    <p>
+                        {% for applicant in application.applicants %}
+                            {% if loop0.index > 0 %}
+                                |
+                            {% endif %}
+                            {{ applicant.fullName }}
+                        {% endfor %}
+                        <br/>
+                        {{ "yearlySalary"|trans({}, "entity_applicant_job") }}: {{ application.yearlySalary }}</p>
+                </div>
+                <div class="tile tile-4 default-color">
+                    <p>{{ "view.created_at"|trans }} <b>{{ application.createdAt|dateTimeFormat }}</b></p>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

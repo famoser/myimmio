@@ -74,6 +74,8 @@ class LoadApplicationData extends BaseFixture
         $application->setTenantCountChild($faker->numberBetween(0, 5));
 
         for ($i = 0; $i < $faker->numberBetween(0, 5); $i++) {
+            $applicant = $this->getApplicantRandomInstance();
+            $applicant->setApplication($application);
             $application->getApplicants()->add($this->getApplicantRandomInstance());
         }
 

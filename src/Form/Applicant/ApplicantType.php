@@ -11,6 +11,8 @@ namespace App\Form\Applicant;
 
 use App\Entity\Applicant;
 use App\Enum\SalutationType;
+use App\Form\ApplicantJob\ApplicantJobType;
+use App\Form\ApplicantLandlord\ApplicantLandlordType;
 use App\Form\Base\BaseAbstractType;
 use App\Form\Traits\Address\AddressType;
 use App\Form\Traits\Contact\ContactType;
@@ -37,9 +39,8 @@ class ApplicantType extends BaseAbstractType
         $builder->add("birthDate", DateTimeType::class);
         $builder->add("civilStatus", TextType::class);
         $builder->add("nationality", CountryType::class);
-        $builder->add("applicantJob", CountryType::class);
-        $builder->add("currentLandlord", CountryType::class);
-        $builder->add("nationality", CountryType::class);
+        $builder->add("applicantJob", ApplicantJobType::class);
+        $builder->add("currentLandlord", ApplicantLandlordType::class);
     }
 
     /**
