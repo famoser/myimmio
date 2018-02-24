@@ -1,10 +1,10 @@
 Introduction
 ======
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![Travis Build Status](https://travis-ci.org/famoser/nodika.svg?branch=master)](https://travis-ci.org/famoser/nodika)
-[![Code Climate](https://codeclimate.com/github/famoser/nodika/badges/gpa.svg)](https://codeclimate.com/github/famoser/nodika)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0049282fe1b3437ba8321ec244a3ea93)](https://www.codacy.com/app/famoser/nodika)
-[![Scrutinizer](https://scrutinizer-ci.com/g/famoser/nodika/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/famoser/nodika)
+[![Travis Build Status](https://travis-ci.org/famoser/myimmio.svg?branch=master)](https://travis-ci.org/famoser/nodika)
+[![Code Climate](https://codeclimate.com/github/famoser/myimmio/badges/gpa.svg)](https://codeclimate.com/github/famoser/nodika)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fc47298bd9f348d58889b853536eb31d)](https://www.codacy.com/app/famoser/myimmio?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=famoser/myimmio&amp;utm_campaign=Badge_Grade)
+[![Scrutinizer](https://scrutinizer-ci.com/g/famoser/myimmio/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/famoser/nodika)
 
 dependencies (you need this on your machine):
  - `xampp` https://www.apachefriends.org/de/index.html

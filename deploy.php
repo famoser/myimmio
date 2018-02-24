@@ -14,7 +14,7 @@ namespace Deployer;
 require 'vendor/deployer/deployer/recipe/symfony-flex.php';
 
 // Configuration
-set('repository', 'git@github.com:famoser/symfony-template.git');
+set('repository', 'git@github.com:famoser/myimmio.git');
 set('shared_files', array_merge(get('shared_files'), ['var/data.sqlite']));
 set('symfony_env_file', '.env');
 set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader --no-scripts');
