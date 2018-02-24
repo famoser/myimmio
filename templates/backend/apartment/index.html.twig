@@ -1,10 +1,15 @@
 {% extends 'single_content_base.html.twig' %}
 {% import "widgets/buttons.html.twig" as buttons %}
+{% import "widgets/breadcrumb.html.twig" as breadcrumb %}
 
 {% block title %}{{ "index.title"|trans }}{% endblock %}
 {% block description %}{{ "index.description"|trans }}{% endblock %}
 
 {% trans_default_domain "backend_apartment" %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.link("index.title"|trans, path("backend_apartment_index")) }}
+{% endblock %}
 
 {% block single_content %}
 
@@ -15,25 +20,18 @@
                 <th>{{ "name"|trans({}, "trait_thing") }}</th>
                 <th>{{ "entity.name"|trans({}, "entity_building") }}</th>
                 <th>{{ "entity.plural"|trans({}, "entity_application_slot") }}</th>
-                <th></th>
-                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for apartment in apartments %}
                 <tr>
-                    <td>{{ apartment.name }}</td>
-                    <td>{{ apartment.building.name }}</td>
+                    <td>
+                        <a href="{{ path("backend_apartment_details", {apartment: apartment.id}) }}">{{ apartment.name }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ path("backend_building_details", {building: apartment.building.id}) }}">{{ apartment.building.name }}</a>
+                    </td>
                     <td>{{ apartment.applicationSlots|length }}</td>
-                    <td>
-                        {{ buttons.edit_button(path("backend_apartment_edit", {"apartment": apartment.id}) ) }}
-                    </td>
-                    <td>
-                        {{ buttons.remove_button(path("backend_apartment_remove", {"apartment": apartment.id}) ) }}
-                    </td>
-                    <td>
-                        {{ buttons.add_button(path("backend_application_slot_new", {"apartment": apartment.id}) ) }}
-                    </td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -13,6 +13,7 @@ namespace App\Controller\Base;
 
 use App\Entity\Base\BaseEntity;
 use App\Form\Fallback\RemoveThing;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,9 +68,10 @@ class BaseFormController extends BaseDoctrineController
      *
      * @param Request $request
      * @param BaseEntity $defaultEntity
+     * @param string|null $successLink
      * @return FormInterface
      */
-    protected function handleCreateForm(Request $request, BaseEntity $defaultEntity)
+    protected function handleCreateForm(Request $request, BaseEntity $defaultEntity, string $successLink = null)
     {
         $translator = $this->getTranslator();
 
@@ -87,9 +89,9 @@ class BaseFormController extends BaseDoctrineController
 
         //clone entity so we can generate a new empty form
         $clonedEntity = clone($defaultEntity);
-        $myOnSuccessCallable = function () use ($defaultEntity, $clonedEntity, $createMyForm, $translator) {
+        $myOnSuccessCallable = function () use ($defaultEntity, $clonedEntity, $createMyForm, $translator, $successLink) {
             $this->fastSave($defaultEntity);
-            $this->displaySuccess($translator->trans('successful.create', [], 'common_form'));
+            $this->displaySuccess($translator->trans('successful.create', [], 'common_form'), $successLink);
             return $createMyForm($clonedEntity);
         };
 

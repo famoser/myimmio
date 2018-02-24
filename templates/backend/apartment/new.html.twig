@@ -1,9 +1,19 @@
 {% extends "single_content_base.html.twig" %}
+{% import "widgets/buttons.html.twig" as buttons %}
+{% import "widgets/breadcrumb.html.twig" as breadcrumb %}
 
 {% block title %}{{ "new.title"|trans }}{% endblock %}
 {% block description %}{{ "new.description"|trans }}{% endblock %}
 
 {% trans_default_domain "backend_apartment" %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.link("index.title"|trans, path("backend_building_index")) }}
+    {{ breadcrumb.sep }}
+    {{ breadcrumb.link(building.name, path("backend_building_details", {building: building.id})) }}
+    {{ breadcrumb.sep }}
+    {{ breadcrumb.link("new_apartment"|trans({}, "backend_apartment"), path("backend_apartment_new", {building: building.id})) }}
+{% endblock %}
 
 {% block single_content%}
     {{ form(form) }}

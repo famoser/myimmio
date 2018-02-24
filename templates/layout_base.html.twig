@@ -59,10 +59,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    {{ self.menu_entry("index.title"|trans({}, "static"), path("static_index")) }}
-                    {{ self.menu_entry("about.title"|trans({}, "static"), path("static_about")) }}
-                    {{ self.menu_entry("contact.title"|trans({}, "static"), path("static_contact")) }}
-                    {{ self.menu_entry("register.title"|trans({}, "static"), path("static_register")) }}
+                    {% if is_backend_user_logged_in|default(false) %}
+                        {{ self.menu_entry("index.title"|trans({}, "backend_dashboard"), path("backend_dashboard_index")) }}
+                        {{ self.menu_entry("index.title"|trans({}, "backend_building"), path("backend_building_index")) }}
+                        {{ self.menu_entry("index.title"|trans({}, "backend_apartment"), path("backend_apartment_index")) }}
+                    {% else %}
+                        {{ self.menu_entry("index.title"|trans({}, "static"), path("static_index")) }}
+                        {{ self.menu_entry("about.title"|trans({}, "static"), path("static_about")) }}
+                        {{ self.menu_entry("contact.title"|trans({}, "static"), path("static_contact")) }}
+                        {{ self.menu_entry("register.title"|trans({}, "static"), path("static_register")) }}
+                    {% endif %}
                 </ul>
             </div>
         </div>

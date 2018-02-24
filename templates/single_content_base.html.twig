@@ -2,10 +2,19 @@
 
 {% block content %}
     <section class="content">
+        {% if block('breadcrumb') is not empty %}
+            <div class="container breadcrumb-container">
+                <nav class="breadcrumb default-color" role="navigation">
+                    {% block breadcrumb %}{% endblock %}
+                </nav>
+            </div>
+        {% endif %}
         <div class="container index-container default-color">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>{% block title %}{% endblock %}</h1>
+                    <h1>{% block title_html %}
+                            {% block title %}{% endblock %}
+                        {% endblock %}</h1>
                     <h2>{% block description %}{% endblock %}</h2>
                     {% block single_content %}
                     {% endblock single_content %}

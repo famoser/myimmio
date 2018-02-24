@@ -1,8 +1,16 @@
-{% extends "single_content_base.html.twig" %}
+{% extends 'single_content_base.html.twig' %}
+{% import "widgets/buttons.html.twig" as buttons %}
 {% import "widgets/breadcrumb.html.twig" as breadcrumb %}
 
 {% block title %}{{ apartment.name }}{% endblock %}
-{% block description %}{{ "edit.title"|trans }}{% endblock %}
+{% block title_html %}
+    {{ title }}
+    <div class="pull-right">
+        {{ buttons.edit_button(path("backend_apartment_edit", {"apartment": apartment.id})) }}
+        {{ buttons.remove_button(path("backend_apartment_remove", {"apartment": apartment.id})) }}
+    </div>
+{% endblock %}
+{% block description %}{{ "details.title"|trans }}{% endblock %}
 
 {% trans_default_domain "backend_apartment" %}
 
@@ -12,10 +20,8 @@
     {{ breadcrumb.link(apartment.building.name, path("backend_building_details", {building: apartment.building.id})) }}
     {{ breadcrumb.sep }}
     {{ breadcrumb.link(apartment.name, path("backend_apartment_details", {apartment: apartment.id})) }}
-    {{ breadcrumb.sep }}
-    {{ breadcrumb.link("edit"|trans({}, "common_crud"), path("backend_apartment_edit", {apartment: apartment.id})) }}
 {% endblock %}
 
-{% block single_content%}
-    {{ form(form) }}
+{% block single_content %}
+    <p>ToDo</p>
 {% endblock %}

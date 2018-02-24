@@ -14,6 +14,7 @@ namespace App\Controller\Backend;
 use App\Controller\Backend\Base\BaseBackendController;
 use App\Entity\Building;
 use App\Security\Voter\BuildingVoter;
+use Deployer\Component\Version\Builder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,6 +75,7 @@ class BuildingController extends BaseBackendController
             $building
         );
         $arr["form"] = $form->createView();
+        $arr["building"] = $building;
         return $this->render('backend/building/edit.html.twig', $arr);
     }
 
@@ -96,6 +98,22 @@ class BuildingController extends BaseBackendController
             }
         );
         $arr["form"] = $form->createView();
+        $arr["building"] = $building;
         return $this->render('backend/building/remove.html.twig', $arr);
+    }
+
+    /**
+     * @Route("/{building}/details", name="backend_building_details")
+     *
+     * @param Request $request
+     * @param Building $building
+     * @return Response
+     */
+    public function detailsAction(Request $request, Building $building)
+    {
+        $this->denyAccessUnlessGranted(BuildingVoter::VIEW, $building);
+
+        $arr["building"] = $building;
+        return $this->render('backend/building/details.html.twig', $arr);
     }
 }

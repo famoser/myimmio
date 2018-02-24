@@ -56,6 +56,7 @@ class ApartmentController extends BaseBackendController
             $apartment
         );
         $arr["form"] = $form->createView();
+        $arr["building"] = $building;
         return $this->render('backend/apartment/new.html.twig', $arr);
     }
 
@@ -75,6 +76,7 @@ class ApartmentController extends BaseBackendController
             $apartment
         );
         $arr["form"] = $form->createView();
+        $arr["apartment"] = $apartment;
         return $this->render('backend/apartment/edit.html.twig', $arr);
     }
 
@@ -97,6 +99,22 @@ class ApartmentController extends BaseBackendController
             }
         );
         $arr["form"] = $form->createView();
+        $arr["apartment"] = $apartment;
         return $this->render('backend/apartment/remove.html.twig', $arr);
+    }
+
+    /**
+     * @Route("/{apartment}/details", name="backend_apartment_details")
+     *
+     * @param Request $request
+     * @param Apartment $apartment
+     * @return Response
+     */
+    public function detailsAction(Request $request, Apartment $apartment)
+    {
+        $this->denyAccessUnlessGranted(ApartmentVoter::VIEW, $apartment);
+
+        $arr["apartment"] = $apartment;
+        return $this->render('backend/apartment/details.html.twig', $arr);
     }
 }
