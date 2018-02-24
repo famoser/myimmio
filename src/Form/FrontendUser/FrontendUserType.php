@@ -12,6 +12,7 @@ namespace App\Form\FrontendUser;
 use App\Entity\FrontendUser;
 use App\Form\Base\BaseAbstractType;
 use App\Form\Traits\Address\AddressType;
+use App\Form\Traits\Person\PersonType;
 use App\Form\Traits\User\RegisterType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,6 +26,7 @@ class FrontendUserType extends BaseAbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('user', RegisterType::class, ["label" => false, "inherit_data" => true]);
+        $builder->add('person', PersonType::class, ["label" => false, "inherit_data" => true]);
         $builder->add('address', AddressType::class, ["inherit_data" => true]);
     }
 

@@ -6,6 +6,10 @@ index:
   i_want_to: "Ich will eine Wohnung"
   rent: "mieten"
   offer: "anbieten"
+  login: "Anmelden"
+  login_description: "Mit Passwort anmelden"
+  register: "Registrieren"
+  register_description: "Neuen Account erstellen"
 
 tiles:
   login: 'Login'

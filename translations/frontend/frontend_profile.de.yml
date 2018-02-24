@@ -1,2 +1,11 @@
 login_form:
   login: 'Einloggen'
+
+index:
+  title: 'Mein Profil'
+  description: 'Profil bearbeiten'
+
+profile_hi: 'Hi %name%, how are you today?'
+
+profile:
+  submit: Ändern

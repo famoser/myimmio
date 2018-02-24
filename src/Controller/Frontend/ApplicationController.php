@@ -213,6 +213,10 @@ class ApplicationController extends BaseFrontendController
                 return $this->redirectToRoute('frontend_application_apply', ['application' => $application]);
             });
 
+        if ($form instanceof Response) {
+            return $form;
+        }
+
         $arr = [];
         $arr['form'] = $form->createView();
         $arr['welcome_header'] = $applicationSlot->getWelcomeHeader();

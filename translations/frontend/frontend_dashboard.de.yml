@@ -1,3 +1,9 @@
 index:
   title: 'Dashboard'
   description: 'Im Dashboard befinden sich die aktuellen Aufgaben'
+
+title:
+  apartment: 'Wohnung'
+  created: 'Erstellt'
+
+no_applications: 'Keine Bewerbungen verfügbar'

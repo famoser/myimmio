@@ -28,6 +28,8 @@ class LoadDevFrontendUserData extends BaseFixture
         $user = $manager->getRepository("App:FrontendUser")->findOneBy(["email" => "info@myimm.io"]);
         $user->setPlainPassword("asdf1234");
         $user->setPassword();
+        $user->setGivenName("Hans");
+        $user->setFamilyName("Muster");
         $manager->persist($user);
         $manager->flush();
     }
