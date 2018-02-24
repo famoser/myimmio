@@ -187,7 +187,8 @@ AddDefaultCharset utf-8
 ServerSignature Off
 
 # Prevent Apache from publishing exact server version
-ServerTokens Prod
+# NOTE: turned off because hostpoint can't handle it (error 500)
+# ServerTokens Prod
 
 # Compress HTML, CSS, JavaScript, Text, XML and fonts
 <IfModule mod_deflate.c>
