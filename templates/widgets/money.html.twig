@@ -1,0 +1,3 @@
+{% macro money(amount) %}
+    {{ amount|number_format(0, '.', '\'') }}.- {{ "currency"|trans({}, 'static') }}
+{% endmacro %}

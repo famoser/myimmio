@@ -23,5 +23,38 @@
 {% endblock %}
 
 {% block single_content %}
-    <p>ToDo</p>
+    {% if application_slots|length == 0 %}
+        <p>{{ "index.no_slots"|trans }}</p>
+    {% else %}
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>{{ "start_at"|trans({}, "entity_application_slot") }}</th>
+                <th>{{ "end_at"|trans({}, "entity_application_slot") }}</th>
+                <th>{{ "entity.plural"|trans({}, "entity_application") }}</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for application_slot in application_slots %}
+                <tr class="clickable" data-href="{{ path("backend_application_slot_application_index", {"applicationSlot" : application_slot.id}) }}">
+                    <td>{{ application_slot.startAt|dateTimeFormat }}</td>
+                    <td>{{ application_slot.endAt|dateTimeFormat }}</td>
+                    <td>{{ application_slot.applications|length }}</td>
+                    <td>
+                        {{ buttons.button(path("backend_application_slot_application_index", {"applicationSlot": application_slot.id}), "index.title_short"|trans({}, "backend_application_slot_application"), "list") }}
+                    </td>
+                    <td>
+                        {{ buttons.edit_button(path("backend_application_slot_edit", {"applicationSlot": application_slot.id}) ) }}
+                    </td>
+                    <td>
+                        {{ buttons.remove_button(path("backend_application_slot_remove", {"applicationSlot": application_slot.id}) ) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}

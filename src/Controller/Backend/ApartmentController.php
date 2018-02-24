@@ -13,6 +13,7 @@ namespace App\Controller\Backend;
 
 use App\Controller\Backend\Base\BaseBackendController;
 use App\Entity\Apartment;
+use App\Entity\ApplicationSlot;
 use App\Entity\Building;
 use App\Security\Voter\ApartmentVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -115,6 +116,7 @@ class ApartmentController extends BaseBackendController
         $this->denyAccessUnlessGranted(ApartmentVoter::VIEW, $apartment);
 
         $arr["apartment"] = $apartment;
+        $arr["application_slots"] = $this->getDoctrine()->getRepository(ApplicationSlot::class)->findBy(['apartment' => $apartment]);
         return $this->render('backend/apartment/details.html.twig', $arr);
     }
 }

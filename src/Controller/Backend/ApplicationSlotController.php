@@ -37,7 +37,7 @@ class ApplicationSlotController extends BaseBackendController
      */
     public function indexAction()
     {
-        $arr["application_slots"] = $this->getDoctrine()->getRepository(ApplicationSlot::class)->findAdministeredBy($this->getUser());;
+        $arr["application_slots"] = $this->getDoctrine()->getRepository(ApplicationSlot::class)->findAdministeredBy($this->getUser());
         return $this->render('backend/application_slot/index.html.twig', $arr);
     }
 
