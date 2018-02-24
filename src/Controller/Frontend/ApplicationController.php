@@ -35,6 +35,10 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class ApplicationController extends BaseFrontendController
 {
+    private const STATE_PREVIEW = "preview";
+    private const STATE_CLOSED = "closed";
+    private const STATE_APPLY = "apply";
+
     /**
      * @Route("/{applicationSlotGuid}", name="frontend_application_view")
      *
@@ -43,19 +47,42 @@ class ApplicationController extends BaseFrontendController
      */
     public function indexAction($applicationSlotGuid)
     {
-        $applicationSlot = $this->getApplicationSlot($applicationSlotGuid);
-        $application = $this->getDoctrine()->getRepository(Application::class)->findOneBy(["applicationSlot" => $applicationSlot->getId()]);
+        return $this->redirectToState($this->getState($applicationSlotGuid), $applicationSlotGuid);
+    }
 
+    /**
+     * @param $applicationSlotGuid
+     * @return string
+     */
+    private function getState($applicationSlotGuid)
+    {
+        $applicationSlot = $this->getApplicationSlot($applicationSlotGuid);
         $now = new \DateTime();
         if ($applicationSlot->getStartAt() > $now) {
+            return static::STATE_PREVIEW;
             //not started yet
-            return $this->redirectToRoute("frontend_application_preview", ["applicationSlotGuid" => $applicationSlotGuid]);
         } else if ($applicationSlot->getEndAt() < $now) {
-            return $this->redirectToRoute("frontend_application_closed", ["applicationSlotGuid" => $applicationSlotGuid]);
-        } else if ($application != null) {
-            return $this->redirectToRoute("frontend_application_apply", ["application" => $application->getId()]);
+            return static::STATE_CLOSED;
         } else {
-            return $this->redirectToRoute("frontend_application_new", ["applicationSlotGuid" => $applicationSlotGuid]);
+            return static::STATE_APPLY;
+        }
+    }
+
+    /**
+     * @param $state
+     * @param $applicationSlotGuid
+     * @return Response
+     */
+    private function redirectToState($state, $applicationSlotGuid)
+    {
+        switch ($state) {
+            case static::STATE_PREVIEW:
+                return $this->redirectToRoute("frontend_application_preview", ["applicationSlotGuid" => $applicationSlotGuid]);
+            case static::STATE_CLOSED:
+                return $this->redirectToRoute("frontend_application_apply", ["applicationSlotGuid" => $applicationSlotGuid]);
+            case static::STATE_APPLY:
+            default:
+                return $this->redirectToRoute("frontend_application_apply", ["applicationSlotGuid" => $applicationSlotGuid]);
         }
     }
 
@@ -73,33 +100,18 @@ class ApplicationController extends BaseFrontendController
     }
 
     /**
-     * @param $guid
-     * @return ApplicationPreview|null
+     * @Route("/{applicationSlotGuid}/closed", name="frontend_application_closed")
+     *
+     * @param $applicationSlotGuid
+     * @return Response
      */
-    private function getPreview($guid)
+    public function closedAction($applicationSlotGuid)
     {
-        $applicationSlot = $this->getApplicationSlot($guid);
-        $applicationPreview = $this->getDoctrine()->getRepository(ApplicationPreview::class)
-            ->findOneBy(['applicationSlot' => $applicationSlot->getId(), 'frontendUser' => $this->getUser()->getId()]);
-        return $applicationPreview;
-    }
-
-    /**
-     * @param $applicationSlot
-     * @return Application
-     */
-    private function createNewApplication($applicationSlot){
-        $application = new Application();
-        $application->setApplicationSlot($applicationSlot);
-        $application->setFrontendUser($this->getUser());
-        $applicant = new Applicant();
-        $application->getApplicants()->add($applicant);
-        $applicant->setApplication($application);
-        $employer = new ApplicantJob();
-        $applicant->setApplicantJob($employer);
-        $landlord = new ApplicantLandlord();
-        $applicant->setCurrentLandlord($landlord);
-        return $application;
+        $state = $this->getState($applicationSlotGuid);
+        if ($state !== static::STATE_CLOSED) {
+            return $this->redirectToState($state, $applicationSlotGuid);
+        }
+        return $this->render("frontend/application/closed.html.twig");
     }
 
     /**
@@ -112,47 +124,90 @@ class ApplicationController extends BaseFrontendController
      */
     public function previewAction(Request $request, TranslatorInterface $translator, $applicationSlotGuid)
     {
-        $preview = $this->getPreview($applicationSlotGuid);
-
-        if ($preview != null) {
-            return $this->render("frontend/application/preview_success.html.twig");
+        $state = $this->getState($applicationSlotGuid);
+        if ($state !== static::STATE_PREVIEW) {
+            return $this->redirectToState($state, $applicationSlotGuid);
         }
 
         $applicationSlot = $this->getApplicationSlot($applicationSlotGuid);
-
-        $preview = new ApplicationPreview();
-        $preview->setApplicationSlot($applicationSlot);
-        $preview->setFrontendUser($this->getUser());
+        $preview = $this->getDoctrine()->getRepository(ApplicationPreview::class)
+            ->findOneBy(['applicationSlot' => $applicationSlot->getId(), 'frontendUser' => $this->getUser()->getId()]);
+        if ($preview != null) {
+            return $this->redirectToRoute("frontend_application_remembered", ["applicationSlotGuid" => $applicationSlotGuid]);
+        }
 
         $form = $this->createFormBuilder($preview)
-            ->add('form.send', SubmitType::class, array('label' => $translator->trans('preview.submit', [], 'frontend_application')))
+            ->add(
+                'form.send',
+                SubmitType::class,
+                ['label' => $translator->trans('preview.please_remember_action', [], 'frontend_application')]
+            )
             ->getForm();
 
-        $form = $this->handleForm($form, $request,
-            function () use ($preview, $translator, $applicationSlotGuid) {
+        $form = $this->handleForm(
+            $form,
+            $request,
+            function () use ($applicationSlot) {
+                $preview = new ApplicationPreview();
+                $preview->setApplicationSlot($applicationSlot);
+                $preview->setFrontendUser($this->getUser());
                 $this->fastSave($preview);
-                $this->displaySuccess($translator->trans('preview.submit_success', [], 'frontend_application'));
-                return $this->redirectToRoute('frontend_application_preview', ['applicationSlotGuid' => $applicationSlotGuid]);
+
+                return $this->redirectToRoute('frontend_application_remembered', ['applicationSlotGuid' => $applicationSlot->getIdentifier()]);
             });
 
-        //todo: user needs to login to use this functionality
+        if ($form instanceof Response) {
+            return $form;
+        }
 
-        $arr = [];
         $arr['form'] = $form->createView();
-
         return $this->render("frontend/application/preview.html.twig", $arr);
     }
 
-
     /**
-     * @Route("/{applicationSlotGuid}/closed", name="frontend_application_closed")
+     * @Route("/{applicationSlotGuid}/remembered", name="frontend_application_remembered")
      *
-     * @param $applicationSlotGuid
+     * @param Request $request
+     * @param TranslatorInterface $translator
+     * @param string $applicationSlotGuid
      * @return Response
      */
-    public function closedAction($applicationSlotGuid)
+    public function rememberedAction(Request $request, TranslatorInterface $translator, $applicationSlotGuid)
     {
-        return $this->render("frontend/application/closed.html.twig");
+        $state = $this->getState($applicationSlotGuid);
+        if ($state !== static::STATE_PREVIEW) {
+            return $this->redirectToState($state, $applicationSlotGuid);
+        }
+
+        $applicationSlot = $this->getApplicationSlot($applicationSlotGuid);
+        $preview = $this->getDoctrine()->getRepository(ApplicationPreview::class)
+            ->findOneBy(['applicationSlot' => $applicationSlot->getId(), 'frontendUser' => $this->getUser()->getId()]);
+        if ($preview == null) {
+            return $this->redirectToRoute("frontend_application_preview", ["applicationSlotGuid" => $applicationSlotGuid]);
+        }
+
+        $form = $this->createFormBuilder($preview)
+            ->add(
+                'form.send',
+                SubmitType::class,
+                ['label' => $translator->trans('remembered.please_stop_remember_action', [], 'frontend_application')]
+            )
+            ->getForm();
+
+        $form = $this->handleForm(
+            $form,
+            $request,
+            function () use ($preview, $applicationSlotGuid) {
+                $this->fastRemove($preview);
+                return $this->redirectToRoute('frontend_application_preview', ['applicationSlotGuid' => $applicationSlotGuid]);
+            });
+
+        if ($form instanceof Response) {
+            return $form;
+        }
+
+        $arr['form'] = $form->createView();
+        return $this->render("frontend/application/remembered.html.twig", $arr);
     }
 
 
@@ -171,9 +226,8 @@ class ApplicationController extends BaseFrontendController
 
         $any = $this->getDoctrine()->getRepository(Application::class)->findBy(["frontendUser" => $this->getUser()->getId()]);
         if (count($any) === 0) {
-            //no previous applications, trivially create new and redirect
-            $application = $this->createNewApplication($applicationSlot);
-            $this->fastSave($application);
+            //no previous applications, so we need to create new anyways; skipping this step
+            return $this->redirectToRoute("frontend_application_apply", ["applicationSlotGuid" => $applicationSlotGuid]);
         }
 
         if ($application != null) {
@@ -198,13 +252,13 @@ class ApplicationController extends BaseFrontendController
         $form = $this->handleForm($form, $request,
             function () use ($form, $applicationSlot) {
                 $cloneId = $form->getData()['clone'];
-                if ($cloneId == -1){
+                if ($cloneId == -1) {
                     $application = $this->createNewApplication($applicationSlot);
                     $this->fastSave($application);
                 } else {
                     $oldApplication = $this->getDoctrine()->getRepository(Application::class)
                         ->findOneBy(['id' => $cloneId, 'frontendUser' => $this->getUser()->getId()]);
-                    if ($oldApplication == null){
+                    if ($oldApplication == null) {
                         throw new AccessDeniedHttpException();
                     }
                     $application = $oldApplication->deepClone();
@@ -223,14 +277,17 @@ class ApplicationController extends BaseFrontendController
 
 
     /**
-     * @Route("/{application}/apply", name="frontend_application_apply")
+     * @Route("/{applicationSlotGuid}/apply", name="frontend_application_apply")
      *
      * @param Request $request
-     * @param Application $application
+     * @param TranslatorInterface $translator
+     * @param $applicationSlotGuid
      * @return Response
      */
-    public function applyAction(Request $request, TranslatorInterface $translator, Application $application)
+    public function applyAction(Request $request, TranslatorInterface $translator, $applicationSlotGuid)
     {
+
+        $application = $this->getDoctrine()->getRepository(Application::class)->findOneBy(["applicationSlot" => $applicationSlotGuid, "frontendUser" => $this->getUser()->getId()]);
         //todo: show form for applicants
         //todo: see https://symfony.com/doc/current/reference/forms/types/collection.html to implement client side functionality
         $form = $this->handleForm(

@@ -5,10 +5,15 @@ index:
 
 preview:
   title: 'Bewerbung noch nicht möglich'
-  description: 'Sie können sich nocht nicht für dieses Objekt bewerben. Wir können Sie aber informieren, wann es soweit ist.'
-  description_success: 'Sie können sich noch nicht für dieses Objekt bewerben. Sie werden informiert, sobald es verfügbar ist.'
-  submit: 'Benachrichtigung einrichten'
-  submit_success: 'Benachrichtigung eingerichtet'
+  description: 'Sie können sich nocht nicht für dieses Objekt bewerben.'
+  please_remember: 'Wir können Ihnen eine Benachrichtigung senden, sobald die Bewerbung offen ist.'
+  please_remember_action: 'Ja gerne!'
+
+remembered:
+  title: 'Erinnerung aktiv'
+  description: 'Sie können sich noch nicht für dieses Objekt bewerben, wir werden Sie aber informieren, sobald das möglicht ist.'
+  please_stop_remember: 'Möchten Sie doch keine Benachrichtigung erhalten?'
+  please_stop_remember_action: "Abmelden"
 
 too_late:
   title: 'Anmeldung wurde geschlossen'

@@ -1,0 +1,11 @@
+{% extends "single_content_base.html.twig" %}
+
+{% block title %}{{ "remembered.title"|trans }}{% endblock %}
+{% block description %}{{ "remembered.description"|trans }}{% endblock %}
+
+{% trans_default_domain "frontend_application" %}
+
+{% block single_content %}
+    <p>{{ "remembered.description"|trans }}</p>
+    {{ form(form) }}
+{% endblock %}
