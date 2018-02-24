@@ -6,6 +6,22 @@
             {%- set label = name|camelCaseToUnderscore -%}
         {%- endif -%}
     {%- endif -%}
+
+    {%- if label is not empty -%}
+        {%- set label = translation_domain is same as(false) ? label : label|trans({}, translation_domain) -%}
+
+        {# make sure to exclude fieldsets (form inside forms) #}
+        {%- if compound is not defined or not compound -%}
+            {%- if required -%}
+                {%- set label = label ~ "required"|trans({}, "common_form") -%}
+            {%- else -%}
+                {%- set label = label ~ "not_required"|trans({}, "common_form") -%}
+            {%- endif -%}
+        {%- endif -%}
+
+        {%- set translation_domain = false -%}
+    {%- endif -%}
+
     {{- parent() -}}
 {%- endblock checkbox_radio_label %}
 
@@ -15,6 +31,7 @@
             {% set label = name|camelCaseToUnderscore %}
         {%- endif -%}
     {%- endif -%}
+
     {{- parent() -}}
 {%- endblock button_widget -%}
 
@@ -26,16 +43,21 @@
             {%- endif -%}
         {%- endif -%}
     {%- endif -%}
+
+    {%- if label is not empty -%}
+        {%- set label = translation_domain is same as(false) ? label : label|trans({}, translation_domain) -%}
+
+        {# make sure to exclude fieldsets (form inside forms) #}
+        {%- if compound is not defined or not compound -%}
+            {%- if required -%}
+                {%- set label = label ~ "required"|trans({}, "common_form") -%}
+            {%- else -%}
+                {%- set label = label ~ "not_required"|trans({}, "common_form") -%}
+            {%- endif -%}
+        {%- endif -%}
+
+        {%- set translation_domain = false -%}
+    {%- endif -%}
+
     {{- parent() -}}
 {%- endblock form_label -%}
-
-
-{#
-{%- if label is not empty -%}
-    {%- if required -%}
-        {%- set label = label ~ "*" -%}
-    {%- else -%}
-        {%- set label = label ~ " (freiwllig)" -%}
-    {%- endif -%}
-{%- endif -%}
-#}

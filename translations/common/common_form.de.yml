@@ -16,5 +16,5 @@ submit:
   confirm: 'bestätigen'
   apply: 'anwenden'
 
-not_required: '(freiwillig)'
+not_required: ' (freiwillig)'
 required: '*'

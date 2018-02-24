@@ -11,7 +11,7 @@ namespace App\Controller\Backend;
 
 use App\Controller\Base\BaseLoginController;
 use App\Entity\BackendUser;
-use App\Form\FrontendUser\BackendUserType;
+use App\Form\BackendUser\BackendUserType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
