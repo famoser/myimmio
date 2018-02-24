@@ -4,7 +4,7 @@ entity:
   plural: 'Bewerber'
 
 salutation: 'Anrede'
-birthDate: 'Geburtsdatum'
-civilStatus: 'Zivilstand'
+birth_date: 'Geburtsdatum'
+civil_status: 'Zivilstand'
 nationality: 'Nationalität'
-residenceAuthorization: 'Aufenthaltsbewilligung'
+residence_authorization: 'Aufenthaltsbewilligung'

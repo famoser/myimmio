@@ -3,6 +3,7 @@ entity:
   description: 'Aktueller Arbeitgeber eines Bewerbers'
   plural: 'Arbeitgeber'
 
+applicant_job: 'Arbeitgeber'
 profession: 'Beruf'
-yearlySalary: 'Jahreslohn'
-workingSince: 'Arbeit seit'
+yearly_salary: 'Jahreslohn'
+working_since: 'Arbeit seit'

@@ -2,7 +2,9 @@
 trait:
   name: Kontaktinformationen
 
+contact: Kontaktinformationen
+
 #properties
 telephone: Telefonnummer
-telephoneMobile: Telefonnummer Mobil
+telephone_mobile: Telefonnummer Mobil
 email: Email

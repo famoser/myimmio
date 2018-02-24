@@ -39,7 +39,7 @@ trait ContactTrait
     /**
      * @return string
      */
-    public function getTelephone(): string
+    public function getTelephone()
     {
         return $this->telephone;
     }
@@ -55,7 +55,7 @@ trait ContactTrait
     /**
      * @return string
      */
-    public function getTelephoneMobile(): string
+    public function getTelephoneMobile()
     {
         return $this->telephoneMobile;
     }
@@ -71,7 +71,7 @@ trait ContactTrait
     /**
      * @return string
      */
-    public function getEmail(): string
+    public function getEmail()
     {
         return $this->email;
     }

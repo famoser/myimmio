@@ -13,6 +13,7 @@ use App\Entity\ApplicantJob;
 use App\Form\ApplicantReference\ApplicantReferenceType;
 use App\Form\Base\BaseAbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,10 +27,10 @@ class ApplicantJobType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add("workingSince", DateTimeType::class);
+        $builder->add("workingSince", DateType::class);
         $builder->add("profession", TextType::class);
         $builder->add("yearlySalary", NumberType::class);
-        $builder->add("reference", ApplicantReferenceType::class);
+        $builder->add("reference", ApplicantReferenceType::class, array('label' => false));
     }
 
     /**

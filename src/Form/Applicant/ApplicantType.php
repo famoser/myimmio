@@ -20,6 +20,7 @@ use App\Form\Traits\Person\PersonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -36,9 +37,10 @@ class ApplicantType extends BaseAbstractType
         $builder->add('person', PersonType::class, ["label" => false, "inherit_data" => true]);
         $builder->add('address', AddressType::class, ["inherit_data" => true]);
         $builder->add('contact', ContactType::class, ["inherit_data" => true]);
-        $builder->add("birthDate", DateTimeType::class);
+        $builder->add("birthDate", DateType::class);
         $builder->add("civilStatus", TextType::class);
-        $builder->add("nationality", CountryType::class);
+        $builder->add("nationality", CountryType::class, ['preferred_choices' => array('CH')]);
+        $builder->add("residenceAuthorization", TextType::class);
         $builder->add("applicantJob", ApplicantJobType::class);
         $builder->add("currentLandlord", ApplicantLandlordType::class);
     }
