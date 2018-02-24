@@ -14,7 +14,6 @@ namespace App\Entity;
 use App\Entity\Base\BaseEntity;
 use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\IdTrait;
-use App\Entity\Traits\ReferenceTrait;
 use App\Entity\Traits\UserTrait;
 use App\Helper\DateTimeFormatter;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,14 +22,18 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ApplicantLandlordRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ApplicantEmployerRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class ApplicantLandlord extends BaseEntity
 {
     use IdTrait;
 
-    use ReferenceTrait;
+    /**
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $relocationReason;
 
     /**
      * @var \DateTime
@@ -45,6 +48,54 @@ class ApplicantLandlord extends BaseEntity
     private $noticeBy;
 
     /**
+     * @var ApplicantReference
+     * @ORM\OneToOne(targetEntity="ApplicantReference")
+     */
+    private $reference;
+
+    /**
+     * @return string
+     */
+    public function getRelocationReason()
+    {
+        return $this->relocationReason;
+    }
+
+    /**
+     * @param string $relocationReason
+     */
+    public function setRelocationReason(string $relocationReason): void
+    {
+        $this->relocationReason = $relocationReason;
+    }
+
+    /**
+     * @return ApplicantReference
+     */
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
+    /**
+     * @param ApplicantReference $reference
+     */
+    public function setReference(ApplicantReference $reference): void
+    {
+        $this->reference = $reference;
+    }
+
+    /**
+     * returns a string representation of this entity.
+     *
+     * @return string
+     */
+    public function getFullIdentifier()
+    {
+        return $this->createdAt->format(DateTimeFormatter::DATE_TIME_FORMAT);
+    }
+
+    /**
      * @return \DateTime
      */
     public function getRentingSince()
@@ -55,7 +106,7 @@ class ApplicantLandlord extends BaseEntity
     /**
      * @param \DateTime $rentingSince
      */
-    public function setRentingSince(\DateTime $rentingSince)
+    public function setRentingSince(\DateTime $rentingSince): void
     {
         $this->rentingSince = $rentingSince;
     }
@@ -71,18 +122,8 @@ class ApplicantLandlord extends BaseEntity
     /**
      * @param string $noticeBy
      */
-    public function setNoticeBy(string $noticeBy)
+    public function setNoticeBy(string $noticeBy): void
     {
         $this->noticeBy = $noticeBy;
-    }
-
-    /**
-     * returns a string representation of this entity.
-     *
-     * @return string
-     */
-    public function getFullIdentifier()
-    {
-        return $this->createdAt->format(DateTimeFormatter::DATE_TIME_FORMAT);
     }
 }

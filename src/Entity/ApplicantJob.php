@@ -26,11 +26,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass="App\Repository\ApplicantEmployerRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class ApplicantEmployer extends BaseEntity
+class ApplicantJob extends BaseEntity
 {
     use IdTrait;
-
-    use ReferenceTrait;
 
     /**
      * @var string
@@ -42,13 +40,19 @@ class ApplicantEmployer extends BaseEntity
      * @var int
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $salary;
+    private $yearlySalary;
 
     /**
      * @var \DateTime
      * @ORM\Column(type="date", nullable=true)
      */
     private $workingSince;
+
+    /**
+     * @var ApplicantReference
+     * @ORM\OneToOne(targetEntity="ApplicantReference")
+     */
+    private $reference;
 
     /**
      * @return string
@@ -69,17 +73,17 @@ class ApplicantEmployer extends BaseEntity
     /**
      * @return int
      */
-    public function getSalary()
+    public function getYearlySalary()
     {
-        return $this->salary;
+        return $this->yearlySalary;
     }
 
     /**
-     * @param int $salary
+     * @param int $yearlySalary
      */
-    public function setSalary(int $salary)
+    public function setYearlySalary(int $yearlySalary)
     {
-        $this->salary = $salary;
+        $this->yearlySalary = $yearlySalary;
     }
 
     /**
@@ -106,5 +110,21 @@ class ApplicantEmployer extends BaseEntity
     public function getFullIdentifier()
     {
         return $this->createdAt->format(DateTimeFormatter::DATE_TIME_FORMAT);
+    }
+
+    /**
+     * @return ApplicantReference
+     */
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
+    /**
+     * @param ApplicantReference $reference
+     */
+    public function setReference(ApplicantReference $reference): void
+    {
+        $this->reference = $reference;
     }
 }

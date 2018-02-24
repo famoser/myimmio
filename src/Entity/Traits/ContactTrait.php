@@ -14,14 +14,16 @@ namespace App\Entity\Traits;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-trait CommunicationTrait
+trait ContactTrait
 {
     /**
+     * @var string
      * @ORM\Column(type="text", nullable=true)
      */
     private $telephone;
 
     /**
+     * @var string
      * @Assert\NotBlank()
      * @Assert\Email()
      * @ORM\Column(type="text")
@@ -29,65 +31,35 @@ trait CommunicationTrait
     private $email;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Assert\Url()
+     * @return string
      */
-    private $webpage;
-
-    /**
-     * @return mixed
-     */
-    public function getPhone()
+    public function getTelephone(): string
     {
-        return $this->phone;
+        return $this->telephone;
     }
 
     /**
-     * @param mixed $phone
-     *
-     * @return static
+     * @param string $telephone
      */
-    public function setPhone($phone)
+    public function setTelephone(string $telephone): void
     {
-        $this->phone = $phone;
-
-        return $this;
+        $this->telephone = $telephone;
     }
 
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
     /**
      * @param string $email
-     *
-     * @return static
      */
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getWebpage()
-    {
-        return $this->webpage;
-    }
-
-    /**
-     * @param mixed $webpage
-     */
-    public function setWebpage($webpage)
-    {
-        $this->webpage = $webpage;
     }
 
     /**
@@ -98,14 +70,11 @@ trait CommunicationTrait
     public function getCommunicationLines()
     {
         $res = [];
-        if (mb_strlen($this->getPhone()) > 0) {
-            $res[] = $this->getPhone();
+        if (mb_strlen($this->getTelephone()) > 0) {
+            $res[] = $this->getTelephone();
         }
         if (mb_strlen($this->getEmail()) > 0) {
             $res[] = $this->getEmail();
-        }
-        if (mb_strlen($this->getWebpage()) > 0) {
-            $res[] = $this->getWebpage();
         }
 
         return $res;

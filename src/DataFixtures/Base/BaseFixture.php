@@ -12,7 +12,7 @@
 namespace App\DataFixtures\Base;
 
 use App\Entity\Traits\AddressTrait;
-use App\Entity\Traits\CommunicationTrait;
+use App\Entity\Traits\ContactTrait;
 use App\Entity\Traits\PersonTrait;
 use App\Entity\Traits\ThingTrait;
 use App\Service\EventGenerationService;
@@ -58,7 +58,7 @@ abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, C
     }
 
     /**
-     * @param CommunicationTrait $obj
+     * @param ContactTrait $obj
      */
     protected function fillRandomCommunication($obj)
     {

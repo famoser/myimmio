@@ -16,6 +16,7 @@ use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\UserTrait;
 use App\Helper\DateTimeFormatter;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -29,106 +30,27 @@ class Application extends BaseEntity
 {
     use IdTrait;
 
-    /*
-     * Applicants
-     */
-
     /**
-     * @var Applicant
+     * @var Applicant[]|ArrayCollection
      * @ORM\OneToMany(targetEntity="Applicant", mappedBy="application")
      */
     private $applicants;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer", nullable=true)
+     * @var string
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $tenantCountAdult;
-
-    /**
-     * @var int
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $tenantCountChild;
+    private $pets;
 
     /**
      * @var string
      * @ORM\Column(type="text", nullable=true)
      */
-    private $pet;
+    private $instruments;
 
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $playInstrument;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $garage;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $carPark;
-
-    /**
-     * @return Applicant
-     */
-    public function getApplicants()
+    public function __construct()
     {
-        return $this->applicants;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTenantCountAdult()
-    {
-        return $this->tenantCountAdult;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTenantCountChild()
-    {
-        return $this->tenantCountChild;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPet()
-    {
-        return $this->pet;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPlayInstrument()
-    {
-        return $this->playInstrument;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isGarage()
-    {
-        return $this->garage;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isCarPark()
-    {
-        return $this->carPark;
+        $this->applicants = new ArrayCollection();
     }
 
     /**
@@ -139,5 +61,45 @@ class Application extends BaseEntity
     public function getFullIdentifier()
     {
         return $this->createdAt->format(DateTimeFormatter::DATE_TIME_FORMAT);
+    }
+
+    /**
+     * @return Applicant[]|ArrayCollection
+     */
+    public function getApplicants()
+    {
+        return $this->applicants;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPets()
+    {
+        return $this->pets;
+    }
+
+    /**
+     * @param string $pets
+     */
+    public function setPets(string $pets): void
+    {
+        $this->pets = $pets;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInstruments()
+    {
+        return $this->instruments;
+    }
+
+    /**
+     * @param string $instruments
+     */
+    public function setInstruments(string $instruments): void
+    {
+        $this->instruments = $instruments;
     }
 }

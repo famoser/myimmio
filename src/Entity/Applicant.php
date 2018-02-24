@@ -13,13 +13,13 @@ namespace App\Entity;
 
 use App\Entity\Base\BaseEntity;
 use App\Entity\Traits\AddressTrait;
+use App\Entity\Traits\ContactTrait;
 use App\Entity\Traits\IdTrait;
-use App\Entity\Traits\UserTrait;
+use App\Entity\Traits\PersonTrait;
 use App\Helper\DateTimeFormatter;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-use Symfony\Component\Security\Core\User\EquatableInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ApplicantRepository")
@@ -28,31 +28,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class Applicant extends BaseEntity
 {
     use IdTrait;
+    use PersonTrait;
     use AddressTrait;
+    use ContactTrait;
 
     /**
      * @var string
      * @ORM\Column(type="text", nullable=true)
      */
-    private $relationship;
-
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $title;
-
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $familyName;
-
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $givenName;
+    private $salutation;
 
     /**
      * @var \DateTime
@@ -69,70 +53,22 @@ class Applicant extends BaseEntity
     /**
      * @var string
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Country()
      */
-    private $nationality;
+    private $nationality = 'CH';
 
     /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
+     * @var ApplicantJob
+     * @ORM\OneToOne(targetEntity="ApplicantJob")
      */
-    private $residenceAuthorization;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean", nullable=true)
-     *
-     * Betreibung
-     */
-    private $paymentEnforcement;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $leasingContracts;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @var string
-     */
-    private $leasingRatePerMonth;
-
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $telephone;
-
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $telephoneMobile;
-
-    /**
-     * @var string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $email;
-
-    /**
-     * @var ApplicantEmployer
-     * @ORM\OneToOne(targetEntity="ApplicantEmployer")
-     */
-    private $employer;
+    private $applicantJob;
 
     /**
      * @var ApplicantLandlord
      * @ORM\OneToOne(targetEntity="ApplicantLandlord")
-     */
-    private $oldLandlord;
-
-    /**
-     * @var string
      * @ORM\Column(type="text", nullable=true)
      */
-    private $relocationReason;
+    private $currentLandlord;
 
     /**
      * @var Application
@@ -141,67 +77,43 @@ class Applicant extends BaseEntity
     private $application;
 
     /**
+     * @var ApplicantReference[]|ArrayCollection
+     * @ORM\OneToMany(targetEntity="ApplicantReference")
+     */
+    private $references;
+
+    /**
+     * Applicant constructor.
+     */
+    public function __construct()
+    {
+        $this->references = new ArrayCollection();
+    }
+
+    /**
+     * returns a string representation of this entity.
+     *
      * @return string
      */
-    public function getRelationship()
+    public function getFullIdentifier()
     {
-        return $this->relationship;
-    }
-
-    /**
-     * @param string $relationship
-     */
-    public function setRelationship(string $relationship)
-    {
-        $this->relationship = $relationship;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title)
-    {
-        $this->title = $title;
+        return $this->createdAt->format(DateTimeFormatter::DATE_TIME_FORMAT);
     }
 
     /**
      * @return string
      */
-    public function getFamilyName()
+    public function getSalutation(): string
     {
-        return $this->familyName;
+        return $this->salutation;
     }
 
     /**
-     * @param string $familyName
+     * @param string $salutation
      */
-    public function setFamilyName(string $familyName)
+    public function setSalutation(string $salutation): void
     {
-        $this->familyName = $familyName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getGivenName()
-    {
-        return $this->givenName;
-    }
-
-    /**
-     * @param string $givenName
-     */
-    public function setGivenName(string $givenName)
-    {
-        $this->givenName = $givenName;
+        $this->salutation = $salutation;
     }
 
     /**
@@ -215,7 +127,7 @@ class Applicant extends BaseEntity
     /**
      * @param \DateTime $birthDate
      */
-    public function setBirthDate(\DateTime $birthDate)
+    public function setBirthDate(\DateTime $birthDate): void
     {
         $this->birthDate = $birthDate;
     }
@@ -231,7 +143,7 @@ class Applicant extends BaseEntity
     /**
      * @param string $civilStatus
      */
-    public function setCivilStatus(string $civilStatus)
+    public function setCivilStatus(string $civilStatus): void
     {
         $this->civilStatus = $civilStatus;
     }
@@ -247,169 +159,41 @@ class Applicant extends BaseEntity
     /**
      * @param string $nationality
      */
-    public function setNationality(string $nationality)
+    public function setNationality(string $nationality): void
     {
         $this->nationality = $nationality;
     }
 
     /**
-     * @return string
+     * @return ApplicantJob
      */
-    public function getResidenceAuthorization()
+    public function getApplicantJob()
     {
-        return $this->residenceAuthorization;
+        return $this->applicantJob;
     }
 
     /**
-     * @param string $residenceAuthorization
+     * @param ApplicantJob $applicantJob
      */
-    public function setResidenceAuthorization(string $residenceAuthorization)
+    public function setApplicantJob(ApplicantJob $applicantJob): void
     {
-        $this->residenceAuthorization = $residenceAuthorization;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isPaymentEnforcement()
-    {
-        return $this->paymentEnforcement;
-    }
-
-    /**
-     * @param bool $paymentEnforcement
-     */
-    public function setPaymentEnforcement(bool $paymentEnforcement)
-    {
-        $this->paymentEnforcement = $paymentEnforcement;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isLeasingContracts()
-    {
-        return $this->leasingContracts;
-    }
-
-    /**
-     * @param bool $leasingContracts
-     */
-    public function setLeasingContracts(bool $leasingContracts)
-    {
-        $this->leasingContracts = $leasingContracts;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLeasingRatePerMonth()
-    {
-        return $this->leasingRatePerMonth;
-    }
-
-    /**
-     * @param string $leasingRatePerMonth
-     */
-    public function setLeasingRatePerMonth(string $leasingRatePerMonth)
-    {
-        $this->leasingRatePerMonth = $leasingRatePerMonth;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTelephone()
-    {
-        return $this->telephone;
-    }
-
-    /**
-     * @param string $telephone
-     */
-    public function setTelephone(string $telephone)
-    {
-        $this->telephone = $telephone;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTelephoneMobile()
-    {
-        return $this->telephoneMobile;
-    }
-
-    /**
-     * @param string $telephoneMobile
-     */
-    public function setTelephoneMobile(string $telephoneMobile)
-    {
-        $this->telephoneMobile = $telephoneMobile;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email
-     */
-    public function setEmail(string $email)
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * @return ApplicantEmployer
-     */
-    public function getEmployer()
-    {
-        return $this->employer;
-    }
-
-    /**
-     * @param ApplicantEmployer $employer
-     */
-    public function setEmployer(ApplicantEmployer $employer)
-    {
-        $this->employer = $employer;
+        $this->applicantJob = $applicantJob;
     }
 
     /**
      * @return ApplicantLandlord
      */
-    public function getOldLandlord()
+    public function getCurrentLandlord()
     {
-        return $this->oldLandlord;
+        return $this->currentLandlord;
     }
 
     /**
-     * @param ApplicantLandlord $oldLandlord
+     * @param ApplicantLandlord $currentLandlord
      */
-    public function setOldLandlord(ApplicantLandlord $oldLandlord)
+    public function setCurrentLandlord(ApplicantLandlord $currentLandlord): void
     {
-        $this->oldLandlord = $oldLandlord;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRelocationReason()
-    {
-        return $this->relocationReason;
-    }
-
-    /**
-     * @param string $relocationReason
-     */
-    public function setRelocationReason(string $relocationReason)
-    {
-        $this->relocationReason = $relocationReason;
+        $this->currentLandlord = $currentLandlord;
     }
 
     /**
@@ -423,18 +207,16 @@ class Applicant extends BaseEntity
     /**
      * @param Application $application
      */
-    public function setApplication(Application $application)
+    public function setApplication(Application $application): void
     {
         $this->application = $application;
     }
 
     /**
-     * returns a string representation of this entity.
-     *
-     * @return string
+     * @return ApplicantReference[]|ArrayCollection
      */
-    public function getFullIdentifier()
+    public function getReferences()
     {
-        return $this->createdAt->format(DateTimeFormatter::DATE_TIME_FORMAT);
+        return $this->references;
     }
 }
