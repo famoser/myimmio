@@ -39,7 +39,7 @@ class LoadApartmentData extends BaseFixture
 
     public function getOrder()
     {
-        return 10;
+        return 12;
     }
 
     /**

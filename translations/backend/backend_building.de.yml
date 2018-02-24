@@ -13,3 +13,4 @@ remove:
 index:
   title: 'Gebäude'
   description: 'Meine Gebäude'
+  no_buildings: 'Noch keine Gebäude erfasst'

@@ -1,4 +1,5 @@
 {% extends 'single_content_base.html.twig' %}
+{% import "widgets/buttons.html.twig" as buttons %}
 
 {% block title %}{{ "index.title"|trans }}{% endblock %}
 {% block description %}{{ "index.description"|trans }}{% endblock %}
@@ -8,14 +9,10 @@
 {% block single_content %}
 
     <p>
-        <a class="btn btn-primary" href="{{ path("backend_building_new") }}">
-            {{ "new"|trans({}, "common_crud") }}
-            <span class="oi oi-plus" title="icon name" aria-hidden="true"></span>
-        </a>
+        {{ buttons.add_button(path("backend_building_new")) }}
     </p>
 
     {% if buildings|length > 0 %}
-
         <table class="table table-striped">
             <thead>
             <tr>
@@ -33,16 +30,10 @@
                     <td>{{ building.addressLines|implode(", ") }}</td>
                     <td>{{ building.apartments|length }}</td>
                     <td>
-                        <a class="btn btn-secondary"
-                           href="{{ path("backend_building_edit", {"building": building.id}) }}">
-                            <span class="oi oi-pencil" title="icon name" aria-hidden="true"></span>
-                        </a>
+                        {{ buttons.edit_button(path("backend_building_edit", {"building": building.id}) ) }}
                     </td>
                     <td>
-                        <a class="btn btn-secondary"
-                           href="{{ path("backend_building_remove", {"building": building.id}) }}">
-                            <span class="oi oi-trash" title="icon name" aria-hidden="true"></span>
-                        </a>
+                        {{ buttons.remove_button(path("backend_building_remove", {"building": building.id}) ) }}
                     </td>
                 </tr>
             {% endfor %}

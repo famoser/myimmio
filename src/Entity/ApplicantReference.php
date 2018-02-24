@@ -31,6 +31,12 @@ class ApplicantReference extends BaseEntity
     use ContactTrait;
 
     /**
+     * @var Applicant
+     * @ORM\ManyToOne(targetEntity="App\Entity\Applicant", inversedBy="references")
+     */
+    private $applicant;
+
+    /**
      * returns a string representation of this entity.
      *
      * @return string

@@ -27,11 +27,12 @@ class LoadBuildingData extends BaseFixture
     public function load(ObjectManager $manager)
     {
         $this->loadSomeRandoms($manager);
+        $manager->flush();
     }
 
     public function getOrder()
     {
-        return 10;
+        return 11;
     }
 
     /**

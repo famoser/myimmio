@@ -78,7 +78,7 @@ class Applicant extends BaseEntity
 
     /**
      * @var ApplicantReference[]|ArrayCollection
-     * @ORM\OneToMany(targetEntity="ApplicantReference")
+     * @ORM\OneToMany(targetEntity="ApplicantReference", mappedBy="applicant")
      */
     private $references;
 
