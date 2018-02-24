@@ -65,6 +65,7 @@ abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, C
         $obj->setEmail($faker->email);
         if ($faker->numberBetween(0, 10) > 5) {
             $obj->setTelephone($faker->phoneNumber);
+            $obj->setTelephoneMobile($faker->phoneNumber);
         }
     }
 

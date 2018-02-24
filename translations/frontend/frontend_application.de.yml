@@ -6,6 +6,9 @@ index:
 preview:
   title: 'Bewerbung noch nicht möglich'
   description: 'Sie können sich nocht nicht für dieses Objekt bewerben. Wir können Sie aber informieren, wann es soweit ist.'
+  description_success: 'Sie können sich noch nicht für dieses Objekt bewerben. Sie werden informiert, sobald es verfügbar ist.'
+  submit: 'Benachrichtigung einrichten'
+  submit_success: 'Benachrichtigung eingerichtet'
 
 too_late:
   title: 'Anmeldung wurde geschlossen'
@@ -14,6 +17,9 @@ too_late:
 new_application:
   title: 'Neue Bewerbung'
   description: 'Sie können sich hier online auf diese Wohnung bewerben.'
+  choose_template: 'Vorlage auswählen'
+  start_application: 'Bewerbung beginnen'
+  start_new_application: 'Neue Bewerbung'
   first_application:
     welcome_message: 'Willkommen auf myimmio, Sie sind wahrscheinlich zum ersten Mal hier.'
     our_mission: >

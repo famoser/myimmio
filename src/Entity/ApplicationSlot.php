@@ -65,6 +65,13 @@ class ApplicationSlot extends BaseEntity
      */
     private $apartment;
 
+
+    /**
+     * @var ApplicationPreview[]|ArrayCollection
+     * @ORM\OneToMany(targetEntity="ApplicationPreview", mappedBy="applicationSlot")
+     */
+    private $previews;
+
     /*
      * Application
      */

@@ -32,7 +32,7 @@ class LoadApplicationSlotData extends BaseFixture
     {
         $apartment = $manager->getRepository(Apartment::class)->findOneBy([]);
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $applicationSlot = $this->getAllRandomInstance();
             $applicationSlot->setApartment($apartment);
             $manager->persist($applicationSlot);

@@ -21,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -38,6 +39,7 @@ class ApplicationType extends BaseAbstractType
             'allow_delete' => true,
             'entry_type' => ApplicationSlotType::class
         ]);
+        $builder->add('tenantCountChild', IntegerType::class);
         $builder->add('instruments', TextType::class);
         $builder->add('pets', TextType::class);
     }

@@ -153,4 +153,13 @@ class Application extends BaseEntity
     {
         $this->tenantCountChild = $tenantCountChild;
     }
+
+    /**
+     * @return Application
+     */
+    public function deepClone(){
+        $clone = new Application();
+        // TODO: deep clone application
+        return $clone;
+    }
 }
