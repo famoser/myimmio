@@ -12,6 +12,9 @@
 namespace App\Controller\Frontend;
 
 use App\Controller\Frontend\Base\BaseFrontendController;
+use App\Entity\Applicant;
+use App\Entity\ApplicantJob;
+use App\Entity\ApplicantLandlord;
 use App\Entity\Application;
 use App\Entity\ApplicationPreview;
 use App\Entity\ApplicationSlot;
@@ -89,6 +92,13 @@ class ApplicationController extends BaseFrontendController
         $application = new Application();
         $application->setApplicationSlot($applicationSlot);
         $application->setFrontendUser($this->getUser());
+        $applicant = new Applicant();
+        $application->getApplicants()->add($applicant);
+        $applicant->setApplication($application);
+        $employer = new ApplicantJob();
+        $applicant->setApplicantJob($employer);
+        $landlord = new ApplicantLandlord();
+        $applicant->setCurrentLandlord($landlord);
         return $application;
     }
 
@@ -187,7 +197,7 @@ class ApplicationController extends BaseFrontendController
 
         $form = $this->handleForm($form, $request,
             function () use ($form, $applicationSlot) {
-                $cloneId = $form->get('clone');
+                $cloneId = $form->getData()['clone'];
                 if ($cloneId == -1){
                     $application = $this->createNewApplication($applicationSlot);
                     $this->fastSave($application);
@@ -205,6 +215,8 @@ class ApplicationController extends BaseFrontendController
 
         $arr = [];
         $arr['form'] = $form->createView();
+        $arr['welcome_header'] = $applicationSlot->getWelcomeHeader();
+        $arr['welcome_text'] = $applicationSlot->getWelcomeText();
 
         return $this->render("frontend/application/new.html.twig", $arr);
     }
@@ -217,19 +229,21 @@ class ApplicationController extends BaseFrontendController
      * @param Application $application
      * @return Response
      */
-    public function applyAction(Request $request, Application $application)
+    public function applyAction(Request $request, TranslatorInterface $translator, Application $application)
     {
         //todo: show form for applicants
         //todo: see https://symfony.com/doc/current/reference/forms/types/collection.html to implement client side functionality
         $form = $this->handleForm(
             $this->createForm(ApplicationType::class, $application)
-                ->add("submit", SubmitType::class),
+                ->add("submit", SubmitType::class, array('label' => $translator->trans('new_application.submit', [], 'frontend_application'))),
             $request,
             function () use ($application) {
                 $this->fastSave($application);
             }
         );
         $arr["form"] = $form->createView();
+        $arr['welcome_header'] = $application->getApplicationSlot()->getWelcomeHeader();
+        $arr['welcome_text'] = $application->getApplicationSlot()->getWelcomeText();
         return $this->render("frontend/application/index.html.twig", $arr);
     }
 }

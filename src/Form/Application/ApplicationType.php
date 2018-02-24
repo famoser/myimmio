@@ -11,7 +11,10 @@ namespace App\Form\Application;
 
 use App\Entity\Applicant;
 use App\Entity\Application;
+use App\Entity\ApplicationSlot;
+use App\Enum\FieldDisplayType;
 use App\Enum\SalutationType;
+use App\Form\Applicant\ApplicantType;
 use App\Form\ApplicationSlot\ApplicationSlotType;
 use App\Form\Base\BaseAbstractType;
 use App\Form\Traits\Address\AddressType;
@@ -37,7 +40,8 @@ class ApplicationType extends BaseAbstractType
         $builder->add('applicants', CollectionType::class, [
             'allow_add' => true,
             'allow_delete' => true,
-            'entry_type' => ApplicationSlotType::class
+            'prototype' => true,
+            'entry_type' => ApplicantType::class
         ]);
         $builder->add('tenantCountChild', IntegerType::class);
         $builder->add('instruments', TextType::class);

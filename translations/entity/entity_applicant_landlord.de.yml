@@ -3,6 +3,8 @@ entity:
   description: 'Aktueller Vermieter eines Bewerbers'
   plural: 'Vermieter'
 
-relocationReason: 'Umzugsgrund'
-rentingSince: 'Zur Miete seit'
-noticeBy: 'Kündigung durch'
+current_landlord: 'Vermieter'
+
+relocation_reason: 'Umzugsgrund'
+renting_since: 'Zur Miete seit'
+notice_by: 'Kündigung durch'

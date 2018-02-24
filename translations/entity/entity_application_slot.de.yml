@@ -6,4 +6,4 @@ entity:
 start_at: 'Anfang'
 end_at: 'Ende'
 welcome_text: 'Willkommenstext'
-welcome_header: 'Kurze Willkommensnachticht'
+welcome_header: 'Kurze Willkommensnachricht'

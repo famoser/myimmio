@@ -12,6 +12,7 @@
 namespace App\Enum;
 
 use App\Enum\Base\BaseEnum;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class FieldDisplayType extends BaseEnum
 {

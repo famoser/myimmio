@@ -31,7 +31,7 @@ class AddressType extends BaseAbstractType
         $builder->add('addressLine', TextType::class, ["required" => false]);
         $builder->add('postalCode', NumberType::class);
         $builder->add('city', TextType::class);
-        $builder->add('country', CountryType::class);
+        $builder->add('country', CountryType::class, ['preferred_choices' => array('CH')]);
     }
 
     /**

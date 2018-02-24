@@ -3,6 +3,7 @@ entity:
   description: 'Ein Bewerbung auf eine Wohnung'
   plural: 'Bewerbungen'
 
-tenantCountChild: 'Anzahl Kinder'
+applicants: 'Bewerber'
+tenant_count_child: 'Anzahl Kinder'
 pets: 'Haustiere'
 instruments: 'Instrumente'

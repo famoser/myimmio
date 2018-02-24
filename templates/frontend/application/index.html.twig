@@ -1,10 +1,21 @@
 {% extends "single_content_base.html.twig" %}
 
-{% block title %}{{ "new_application.title"|trans }}{% endblock %}
-{% block description %}{{ "new_application.description"|trans }}{% endblock %}
+{% block title %}{{ welcome_header }}{% endblock %}
+{% block description %}{{ 'new_application.description'|trans }}{% endblock %}
 
 {% trans_default_domain "frontend_application" %}
 
 {% block single_content %}
-    {{ form(form) }}
+    <p>{{ welcome_text }}</p>
+    {{ form_start(form, { 'attr': {'class': 'col-md-4'}}) }}
+        {{ form_errors(form) }}
+        <fieldset id="applicants-list" class="form-group" data-prototype="{{ form_widget(form.applicants.vars.prototype)|e }}" data-widget-tags="{{ '<div></div>'|e }}">
+            {{ form_label(form.applicants) }}
+            {% for applicant in form.applicants %}
+                {{ form_row(applicant) }}
+            {% endfor %}
+        </fieldset>
+        <a href="#" class="btn btn-primary add-another-applicant-widget" data-list="#applicants-list">{{ 'new_application.add_applicant'|trans }}</a>
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
 {% endblock %}

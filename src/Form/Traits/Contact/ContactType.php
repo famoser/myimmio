@@ -26,9 +26,9 @@ class ContactType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add("phone", TextType::class, ["required" => false]);
+        $builder->add("telephone", TextType::class, ["required" => false]);
+        $builder->add("telephoneMobile", TextType::class, ["required" => false]);
         $builder->add("email", EmailType::class);
-        $builder->add("webpage", UrlType::class, ["required" => false]);
     }
 
     /**

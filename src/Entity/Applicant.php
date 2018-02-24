@@ -99,7 +99,7 @@ class Applicant extends BaseEntity
     /**
      * @return string
      */
-    public function getSalutation(): string
+    public function getSalutation()
     {
         return $this->salutation;
     }
