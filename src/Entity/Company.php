@@ -12,38 +12,32 @@
 namespace App\Entity;
 
 use App\Entity\Base\BaseEntity;
+use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\ThingTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ApartmentRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\BackendUserRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Apartment extends BaseEntity
+class Company extends BaseEntity
 {
     use IdTrait;
     use ThingTrait;
+    use AddressTrait;
 
     /**
-     * @var Building
-     * @ORM\ManyToOne(targetEntity="Building", inversedBy="apartments")
+     * @var BackendUser[]|ArrayCollection
+     * @ORM\OneToMany(targetEntity="App\Entity\BackendUser", mappedBy="company")
      */
-    private $building;
+    private $users;
 
-    /**
-     * @var Building
-     * @ORM\OneToMany(targetEntity="ApplicationSlot", mappedBy="apartment")
-     */
-    private $applicationSlots;
-
-    /**
-     * Apartment constructor.
-     */
     public function __construct()
     {
-        $this->applicationSlots = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -53,22 +47,14 @@ class Apartment extends BaseEntity
      */
     public function getFullIdentifier()
     {
-        return $this->name;
+        return $this->getName();
     }
 
     /**
-     * @return Building
+     * @return BackendUser[]|ArrayCollection
      */
-    public function getBuilding()
+    public function getUsers()
     {
-        return $this->building;
-    }
-
-    /**
-     * @param Building $building
-     */
-    public function setBuilding(Building $building): void
-    {
-        $this->building = $building;
+        return $this->users;
     }
 }

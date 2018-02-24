@@ -6,16 +6,17 @@
  * Time: 17:17
  */
 
-namespace App\Form\BackendUser;
+namespace App\Form\ApplicantLandlord;
 
 
-use App\Entity\BackendUser;
+use App\Entity\ApplicantLandlord;
+use App\Form\ApplicantReference\ApplicantReferenceType;
 use App\Form\Base\BaseAbstractType;
-use App\Form\Traits\User\RegisterType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BackendUserType extends BaseAbstractType
+class ApplicantLandlordType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -23,7 +24,10 @@ class BackendUserType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('user', RegisterType::class, ["label" => false, "inherit_data" => true]);
+        $builder->add("relocationReason", TextType::class);
+        $builder->add("noticeBy", TextType::class);
+        $builder->add("rentingSince", TextType::class);
+        $builder->add("reference", ApplicantReferenceType::class);
     }
 
     /**
@@ -32,8 +36,8 @@ class BackendUserType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'trait_user',
-            'data_class' => BackendUser::class
+            'translation_domain' => 'entity_applicant_landlord',
+            'data_class' => ApplicantLandlord::class
         ]);
     }
 }

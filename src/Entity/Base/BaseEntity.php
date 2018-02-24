@@ -11,8 +11,6 @@
 
 namespace App\Entity\Base;
 
-use App\Framework\TranslatableObject;
-
 abstract class BaseEntity
 {
     /**

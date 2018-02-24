@@ -15,12 +15,8 @@ use App\Entity\Base\BaseEntity;
 use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\ThingTrait;
-use App\Entity\Traits\UserTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-use Symfony\Component\Security\Core\User\EquatableInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BuildingRepository")
@@ -38,6 +34,21 @@ class Building extends BaseEntity
      */
     private $apartments;
 
+    /**
+     * @var Company
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="buildings")
+     */
+    private $company;
+
+    /**
+     * @var BackendUser[]|ArrayCollection
+     * @ORM\ManyToMany(targetEntity="App\Entity\BackendUser", mappedBy="buildings")
+     */
+    private $administrators;
+
+    /**
+     * Building constructor.
+     */
     public function __construct()
     {
         $this->apartments = new ArrayCollection();
@@ -59,5 +70,29 @@ class Building extends BaseEntity
     public function getApartments()
     {
         return $this->apartments;
+    }
+
+    /**
+     * @return Company
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param Company $company
+     */
+    public function setCompany(Company $company): void
+    {
+        $this->company = $company;
+    }
+
+    /**
+     * @return BackendUser[]|ArrayCollection
+     */
+    public function getAdministrators()
+    {
+        return $this->administrators;
     }
 }

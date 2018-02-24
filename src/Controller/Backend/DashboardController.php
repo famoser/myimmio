@@ -11,9 +11,7 @@
 
 namespace App\Controller\Backend;
 
-use App\Controller\Base\BaseController;
-use App\Entity\Building;
-use App\Model\ContactRequest\ContactRequest;
+use App\Controller\Backend\Base\BaseBackendController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @return Response
  */
-class DashboardController extends BaseController
+class DashboardController extends BaseBackendController
 {
     /**
      * @Route("/", name="backend_dashboard_index")
@@ -33,8 +31,7 @@ class DashboardController extends BaseController
      */
     public function indexAction()
     {
-        $buildings = $this->getDoctrine()->getRepository(Building::class)->findAll();
-        $arr["buildings"] = $buildings;
+        $arr["buildings"] = $this->getUser()->getBuildings();
         return $this->render('backend/dashboard/index.html.twig', $arr);
     }
 }

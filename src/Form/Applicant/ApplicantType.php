@@ -6,17 +6,23 @@
  * Time: 17:17
  */
 
-namespace App\Form\BackendUser;
+namespace App\Form\Applicant;
 
 
-use App\Entity\BackendUser;
+use App\Entity\Applicant;
+use App\Enum\SalutationType;
 use App\Form\Base\BaseAbstractType;
 use App\Form\Traits\Address\AddressType;
-use App\Form\Traits\User\RegisterType;
+use App\Form\Traits\Contact\ContactType;
+use App\Form\Traits\Person\PersonType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BackendUserType extends BaseAbstractType
+class ApplicantType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -24,7 +30,16 @@ class BackendUserType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('user', RegisterType::class, ["label" => false, "inherit_data" => true]);
+        $builder->add('salutation', ChoiceType::class, SalutationType::getChoicesForBuilder());
+        $builder->add('person', PersonType::class, ["label" => false, "inherit_data" => true]);
+        $builder->add('address', AddressType::class, ["inherit_data" => true]);
+        $builder->add('contact', ContactType::class, ["inherit_data" => true]);
+        $builder->add("birthDate", DateTimeType::class);
+        $builder->add("civilStatus", TextType::class);
+        $builder->add("nationality", CountryType::class);
+        $builder->add("applicantJob", CountryType::class);
+        $builder->add("currentLandlord", CountryType::class);
+        $builder->add("nationality", CountryType::class);
     }
 
     /**
@@ -33,8 +48,8 @@ class BackendUserType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'trait_user',
-            'data_class' => BackendUser::class
+            'translation_domain' => 'entity_applicant',
+            'data_class' => Applicant::class
         ]);
     }
 }

@@ -12,10 +12,7 @@
 namespace App\DataFixtures;
 
 use App\DataFixtures\Base\BaseFixture;
-use App\Entity\Apartment;
 use App\Entity\Building;
-use App\Form\Building\BuildingType;
-use Doctrine\Common\DataFixtures\BadMethodCallException;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadBuildingData extends BaseFixture

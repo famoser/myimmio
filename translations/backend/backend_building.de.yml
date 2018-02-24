@@ -9,3 +9,7 @@ edit:
 remove:
   title: 'Entfernen'
   description: 'Gebäude entfernen'
+
+index:
+  title: 'Gebäude'
+  description: 'Meine Gebäude'

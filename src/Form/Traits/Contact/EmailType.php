@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Traits\Communication;
+namespace App\Form\Traits\Contact;
 
 use App\Form\Base\BaseAbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

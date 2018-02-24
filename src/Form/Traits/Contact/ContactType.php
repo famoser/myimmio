@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Traits\Communication;
+namespace App\Form\Traits\Contact;
 
 use App\Form\Base\BaseAbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CommunicationType extends BaseAbstractType
+class ContactType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder

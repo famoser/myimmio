@@ -11,6 +11,8 @@
 
 namespace App\Service\Interfaces;
 
+use Symfony\Component\HttpFoundation\Response;
+
 interface CsvServiceInterface
 {
 
@@ -21,6 +23,6 @@ interface CsvServiceInterface
      * @param string[] $header
      * @param string[][] $data
      *
-     * @return StreamedResponse
+     * @return Response
      */
 }

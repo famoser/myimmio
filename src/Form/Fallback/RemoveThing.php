@@ -10,7 +10,6 @@ namespace App\Form\Fallback;
 
 
 use App\Form\Base\BaseAbstractType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RemoveThing extends BaseAbstractType
 {

@@ -66,7 +66,7 @@ class BaseLoginController extends BaseFormController
             $error = null;
         }
         if (null !== $error) {
-            $this->displayError($this->getTranslator()->trans('error.login_failed', [], 'access'));
+            //display error
         }
 
         // last username entered by the user

@@ -15,7 +15,6 @@ use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\ContactTrait;
 use App\Entity\Traits\PersonTrait;
 use App\Entity\Traits\ThingTrait;
-use App\Service\EventGenerationService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -60,15 +59,12 @@ abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, C
     /**
      * @param ContactTrait $obj
      */
-    protected function fillRandomCommunication($obj)
+    protected function fillRandomContact($obj)
     {
         $faker = $this->getFaker();
         $obj->setEmail($faker->email);
         if ($faker->numberBetween(0, 10) > 5) {
-            $obj->setPhone($faker->phoneNumber);
-        }
-        if ($faker->numberBetween(0, 10) > 8) {
-            $obj->setWebpage($faker->url);
+            $obj->setTelephone($faker->phoneNumber);
         }
     }
 

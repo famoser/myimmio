@@ -11,8 +11,7 @@
 
 namespace App\Controller\Backend;
 
-use App\Controller\Base\BaseController;
-use App\Controller\Base\BaseFormController;
+use App\Controller\Backend\Base\BaseBackendController;
 use App\Entity\Building;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,8 +24,19 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @return Response
  */
-class BuildingController extends BaseFormController
+class BuildingController extends BaseBackendController
 {
+    /**
+     * @Route("/", name="backend_building_index")
+     *
+     * @return Response
+     */
+    public function indexAction()
+    {
+        $arr["buildings"] = $this->getUser()->getBuildings();
+        return $this->render('backend/building/index.html.twig', $arr);
+    }
+
     /**
      * @Route("/new", name="backend_building_new")
      *

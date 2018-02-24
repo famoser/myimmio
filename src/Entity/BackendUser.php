@@ -14,6 +14,7 @@ namespace App\Entity;
 use App\Entity\Base\BaseEntity;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\UserTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -28,6 +29,29 @@ class BackendUser extends BaseEntity implements AdvancedUserInterface, Equatable
     use IdTrait;
     use UserTrait;
 
+    /**
+     * @var Company
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="users")
+     */
+    private $company;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $canAdministerCompany = false;
+
+    /**
+     * @var Building[]|ArrayCollection
+     * @ORM\ManyToMany(targetEntity="App\Entity\Building", mappedBy="administrators")
+     * @ORM\JoinTable(name="backend_user_buildings")
+     */
+    private $buildings;
+
+    public function __construct()
+    {
+        $this->buildings = new ArrayCollection();
+    }
 
     /**
      * returns a string representation of this entity.
@@ -81,5 +105,45 @@ class BackendUser extends BaseEntity implements AdvancedUserInterface, Equatable
         }
 
         return $this->isEqualToUser($user);
+    }
+
+    /**
+     * @return Company
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param Company $company
+     */
+    public function setCompany(Company $company): void
+    {
+        $this->company = $company;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCanAdministerCompany()
+    {
+        return $this->canAdministerCompany;
+    }
+
+    /**
+     * @param bool $canAdministerCompany
+     */
+    public function setCanAdministerCompany(bool $canAdministerCompany): void
+    {
+        $this->canAdministerCompany = $canAdministerCompany;
+    }
+
+    /**
+     * @return Building[]|ArrayCollection
+     */
+    public function getBuildings()
+    {
+        return $this->buildings;
     }
 }
