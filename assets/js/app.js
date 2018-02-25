@@ -1,7 +1,7 @@
 require("../sass/app.sass");
-var $ = require("jquery");
+$ = require("jquery");
+var jQuery = $;
 var bootstrap = require("bootstrap");
-var DataTable = require( 'datatables.net-dt' )();
 
 //prevent double submit & give user instant feedback
 var disableFormButton = function () {
@@ -67,5 +67,5 @@ $(document).ready(function () {
         });
     });
 
-
+    $('[data-table]').DataTable();
 });
