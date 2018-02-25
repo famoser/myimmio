@@ -21,10 +21,62 @@
                             {{ applicant.fullName }}
                         {% endfor %}
                         <br/>
-                        {{ "yearly_salary"|trans({}, "entity_applicant_job") }}: {{ money.money(application.yearlySalary) }}</p>
+                        {{ "view.created_at"|trans }}: {{ application.createdAt|dateTimeFormat }}
+                        <br/>
+                        {{ "list.score"|trans }}: {{ application.score }} %
+                        <br/>
+                        {{ "yearly_salary"|trans }}: {{ money.money(application.yearlySalary) }}
+                    </p>
                 </div>
                 <div class="tile tile-4 default-color">
-                    <p>{{ "view.created_at"|trans }} <b>{{ application.createdAt|dateTimeFormat }}</b></p>
+                    <ul class="nav nav-tabs">
+                        {% for applicant in application.applicants %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if loop.index0 == 0 %} active {% endif %}" data-toggle="tab" href="#applicant_{{ loop.index }}" role="tab">{{ applicant.fullName }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="tab-content">
+                        {% for applicant in application.applicants %}
+                            <div id="applicant_{{ loop.index }}" class="tab-pane fade {% if loop.index0 == 0 %} in show active {% endif %}">
+                                <dl>
+                                    <dt>{{ 'address'|trans }}</dt>
+                                    <dd>
+                                        {{ applicant.salutation|trans }}
+                                        {{ applicant.givenName }} {{ applicant.familyName }} <br/>
+                                        {{ applicant.street }} {{ applicant.streetNr }} <br/>
+                                        {{ applicant.addressLine }}{% if applicant.addressLine %} <br/> {% endif %}
+                                        {{ applicant.country }}-{{ applicant.postalCode }} {{ applicant.city }}<br/>
+                                        </dd>
+                                    <dt>{{ 'telephone'|trans }}</dt>
+                                    <dd>{{ applicant.telephone }}</dd>
+                                    <dt>{{ 'telephone_mobile'|trans }}</dt>
+                                    <dd>{{ applicant.telephoneMobile }}</dd>
+                                    <dt>{{ 'email'|trans }}</dt>
+                                    <dd>{{ applicant.email }}</dd>
+                                    <dt>{{ 'birthdate'|trans }}</dt>
+                                    <dd>{{ applicant.birthDate|dateFormat }}</dd>
+                                    <dt>{{ 'civil_status'|trans }}</dt>
+                                    <dd>{{ applicant.civilStatus }}</dd>
+                                    <dt>{{ 'nationality'|trans }}</dt>
+                                    <dd>{{ applicant.nationality }} {% if applicant.residenceAuthorization %}({{ applicant.residenceAuthorization }}){% endif %}</dd>
+                                    <dt>{{ 'employer'|trans }}</dt>
+                                    <dd>
+                                        {{ applicant.applicantJob.profession }}<br/>
+                                        {{ 'workingat'|trans }}: {{ applicant.applicantJob.reference.fullName }}<br/>
+                                        {{ 'workingsince'|trans }}: {{ applicant.applicantJob.workingSince|dateFormat }}<br/>
+                                        {{ 'salary'|trans }}: {{ applicant.applicantJob.yearlySalary }}
+                                    </dd>
+                                    <dt>{{ 'landlord'|trans }}</dt>
+                                    <dd>
+                                        {{ applicant.currentLandlord.reference.fullName }}<br/>
+                                        {{ applicant.currentLandlord.reference.telephone or applicant.currentLandlord.reference.telephoneMobile }}<br/>
+                                        {{ applicant.currentLandlord.reference.email }}
+                                    </dd>
+                                </dl>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
