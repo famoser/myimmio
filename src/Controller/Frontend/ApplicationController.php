@@ -273,6 +273,7 @@ class ApplicationController extends BaseFrontendController
                 $application->writeFrom($copyApplication);
                 $this->fastSave($application);
                 $this->displaySuccess($translator->trans("apply.success.template_chosen", [], "frontend_application"));
+                return $form;
             }
         );
 
@@ -281,8 +282,10 @@ class ApplicationController extends BaseFrontendController
             $this->createForm(ApplicationType::class, $application)
                 ->add("submit", SubmitType::class, ['label' => $translator->trans('apply.submit', [], 'frontend_application')]),
             $request,
-            function () use ($application) {
+            function ($form) use ($application, $translator) {
                 $this->fastSave($application);
+                $this->displaySuccess($translator->trans("apply.success.sent_successfully",[], "frontend_application"));
+                return $form;
             }
         );
         $arr["form"] = $useTemplate->createView();

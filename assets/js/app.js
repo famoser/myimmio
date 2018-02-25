@@ -1,6 +1,7 @@
 require("../sass/app.sass");
 $ = require("jquery");
-var jQuery = $;
+global.$ = $;
+global.jQuery = $;
 var bootstrap = require("bootstrap");
 var dataTables = require("datatables.net");
 
@@ -22,9 +23,7 @@ var navigateTable = function () {
 $(document).ready(function () {
     $("form").on("submit", disableFormButton);
     $("tr[data-href]").on("click", navigateTable);
-    if ($("leaf-view").length) {
-        initializeLeafView();
-    }
+    initializeLeafView();
     $(".add-another-applicant-widget").click(function (e) {
         e.preventDefault();
         var list = $($(this).data('list'));
@@ -80,23 +79,34 @@ $(document).ready(function () {
     $('div.dataTables_filter input').addClass('form-control');
 });
 
-function initializeListView() {
+function initializeLeafView() {
     var leafActive = 0;
     var leafes = $(".leaf-view .leaf");
-    leafes[0].css("display", "block");
+    $(leafes.get(0)).css("display", "block");
 
     var forwardButton = $(".leaf-view .go-forward");
     var backButton = $(".leaf-view .go-back");
 
     forwardButton.on("click", function (e) {
         e.preventDefault();
-        leafes[leafActive].css("display", "none");
+        $(leafes.get(leafActive)).css("display", "none");
         leafActive++;
-        leafes[leafActive].css("display", "block");
+        $(leafes.get(leafActive)).css("display", "block");
         backButton.css("display", "block");
-    })
-}
+        if (leafActive === leafes.length - 1) {
+            forwardButton.css("display", "none")
+        }
+    });
 
-function goToActiveLeaf() {
-    $(".leaf-view .leaf")[leafActive].css("display", "block");
+    backButton.on("click", function (e) {
+        e.preventDefault();
+        $(leafes.get(leafActive)).css("display", "none");
+        leafActive--;
+        $(leafes.get(leafActive)).css("display", "block");
+        backButton.css("display", "block");
+        if (leafActive === 0) {
+            backButton.css("display", "none");
+
+        }
+    })
 }

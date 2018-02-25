@@ -29,6 +29,7 @@ apply:
   submit: 'Bewerben'
   success:
     template_chosen: 'Vorlage wurde kopiert'
+    sent_successfully: 'Vielen Dank! Wir setzen uns mit Ihnen in Verbindung.'
   button:
     back: 'zurück'
     forward: 'weiter'
