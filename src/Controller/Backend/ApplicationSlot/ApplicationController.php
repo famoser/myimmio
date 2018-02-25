@@ -21,6 +21,7 @@ use App\Entity\Building;
 use App\Enum\ApplicationStatus;
 use App\Repository\ApplicationLabelRepository;
 use App\Security\Voter\ApplicationSlotVoter;
+use App\Service\ScoreService;
 use Doctrine\Common\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -44,7 +45,7 @@ class ApplicationController extends BaseBackendController
      * @param ApplicationSlot $applicationSlot
      * @return Response
      */
-    public function indexAction(ApplicationSlot $applicationSlot)
+    public function indexAction(ApplicationSlot $applicationSlot, ScoreService $scoreService)
     {
         $arr["labels"] = $this->getDoctrine()->getRepository(ApplicationLabel::class)->findAll();
         $arr["applications"] = $applicationSlot->getApplications();
@@ -52,22 +53,8 @@ class ApplicationController extends BaseBackendController
         $arr["status_confirmed"] = ApplicationStatus::CONFIRMED;
         $arr["status_rejected"] = ApplicationStatus::REJECTED;
 
-        $maxSalary = array_reduce($arr["applications"]->toArray(), function($value, Application $application) {
-            return max($application->yearlySalary(), $value);
-        });
         foreach($arr["applications"] as $application) {
-            $application->score = $application->yearlySalary() / $maxSalary * 100;
-            $application->score -= 2*$application->getTenantCountChild() + $application->getApplicants()->count();
-            if(!empty($application->getInstruments())) {
-                $application->score *= .9;
-            }
-            if(!empty($application->getPets())) {
-                $application->score *= .95;
-            }
-            if($application->score < 0) {
-                $application->score = 0;
-            }
-            $application->score = (int) $application->score;
+            $application->score = $scoreService->getScore($application);
             $applicant = $application->getApplicants()[0];
             if($applicant instanceof Applicant) {
                 $application->name = $applicant->getFullName();
