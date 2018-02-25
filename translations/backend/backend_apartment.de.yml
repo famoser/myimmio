@@ -13,8 +13,9 @@ index:
   title: 'Wohnungen'
   description: 'Meine Wohnungen'
   no_apartments: 'Noch keine Wohnungen erfasst'
+  no_slots: 'Noch keine Bewerbungsphasen erfasst'
 
 details:
-  title: 'Bewerbungsphase dieser Wohnung'
+  title: 'Bewerbungsphasen dieser Wohnung'
 
 new_apartment: 'Wohnung hinzufügen'
