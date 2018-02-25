@@ -43,6 +43,7 @@ class ApplicationController extends BaseBackendController
      * @Route("/", name="backend_application_slot_application_index")
      *
      * @param ApplicationSlot $applicationSlot
+     * @param ScoreService $scoreService
      * @return Response
      */
     public function indexAction(ApplicationSlot $applicationSlot, ScoreService $scoreService)
@@ -82,10 +83,12 @@ class ApplicationController extends BaseBackendController
      * @Route("/{application}/view", name="backend_application_slot_application_view")
      *
      * @param Application $application
+     * @param ScoreService $scoreService
      * @return Response
      */
-    public function viewAction(Application $application)
+    public function viewAction(Application $application, ScoreService $scoreService)
     {
+        $application->score = $scoreService->getScore($application);
         return $this->render('backend/application_slot/application/view.html.twig', ["application" => $application]);
     }
 

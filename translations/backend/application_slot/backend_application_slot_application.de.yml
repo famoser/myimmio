@@ -7,7 +7,7 @@ index:
 view:
   title: 'Bewerbung ansehen'
   description: 'Bewerbung im Detail ansehen'
-  created_at: 'Bewerbung vom '
+  created_at: 'Bewerbung vom'
   overview: 'Überblick'
 
 list:
@@ -15,3 +15,21 @@ list:
   score: 'Bewertung'
   numApplicants: 'Erwachsene'
   labels: 'Label'
+
+yearly_salary: 'Gemeinsamer Jahreslohn'
+given_name: 'Vorname'
+family_name: 'Nachname'
+address: 'Adresse'
+telephone: 'Telefon'
+telephone_mobile: 'Telefon Mobil'
+email: 'E-Mail'
+mister: 'Herr'
+misses: 'Frau'
+birthdate: 'Geburtsdatum'
+civil_status: 'Zivilstand'
+nationality: 'Nationalität'
+employer: 'Arbeitgeber'
+workingat: 'bei'
+workingsince: 'seit'
+salary: 'Lohn'
+landlord: 'Vermieter'
