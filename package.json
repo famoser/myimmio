@@ -8,7 +8,6 @@
   "dependencies": {
     "bootstrap": "^4",
     "datatables.net-dt": "^1.10.16",
-    "isotope-layout": "^3.0",
     "open-iconic": "^1.*",
     "open-sans-fontface": "^1.4.0",
     "popper.js": "^1.12.9"

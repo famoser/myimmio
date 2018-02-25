@@ -2,6 +2,7 @@ require("../sass/app.sass");
 $ = require("jquery");
 var jQuery = $;
 var bootstrap = require("bootstrap");
+var dataTables = require("datatables.net");
 
 //prevent double submit & give user instant feedback
 var disableFormButton = function () {
