@@ -73,7 +73,6 @@ class Applicant extends BaseEntity
     /**
      * @var ApplicantLandlord
      * @ORM\OneToOne(targetEntity="ApplicantLandlord", cascade={"persist", "remove"})
-     * @ORM\Column(type="text", nullable=true)
      */
     private $currentLandlord;
 
@@ -95,6 +94,7 @@ class Applicant extends BaseEntity
     public function __construct()
     {
         $this->references = new ArrayCollection();
+
     }
 
     /**

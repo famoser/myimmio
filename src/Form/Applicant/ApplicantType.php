@@ -10,6 +10,7 @@ namespace App\Form\Applicant;
 
 
 use App\Entity\Applicant;
+use App\Entity\ApplicantJob;
 use App\Enum\SalutationType;
 use App\Form\ApplicantJob\ApplicantJobType;
 use App\Form\ApplicantLandlord\ApplicantLandlordType;
@@ -17,7 +18,9 @@ use App\Form\Base\BaseAbstractType;
 use App\Form\Traits\Address\AddressType;
 use App\Form\Traits\Contact\ContactType;
 use App\Form\Traits\Person\PersonType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -42,7 +45,7 @@ class ApplicantType extends BaseAbstractType
         $builder->add("nationality", CountryType::class, ['preferred_choices' => array('CH')]);
         $builder->add("residenceAuthorization", TextType::class);
         $builder->add("applicantJob", ApplicantJobType::class);
-        $builder->add("currentLandlord", ApplicantLandlordType::class);
+        $builder->add("landLord2", ApplicantLandlordType::class);
     }
 
     /**

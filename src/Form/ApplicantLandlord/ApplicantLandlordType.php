@@ -12,6 +12,7 @@ namespace App\Form\ApplicantLandlord;
 use App\Entity\ApplicantLandlord;
 use App\Form\ApplicantReference\ApplicantReferenceType;
 use App\Form\Base\BaseAbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,7 +27,7 @@ class ApplicantLandlordType extends BaseAbstractType
     {
         $builder->add("relocationReason", TextType::class);
         $builder->add("noticeBy", TextType::class);
-        $builder->add("rentingSince", TextType::class);
+        $builder->add("rentingSince", DateTimeType::class);
         $builder->add("reference", ApplicantReferenceType::class);
     }
 
