@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "bootstrap": "^4",
+    "datatables.net-bs": "^1.10.16",
     "datatables.net-dt": "^1.10.16",
     "open-iconic": "^1.*",
     "open-sans-fontface": "^1.4.0",

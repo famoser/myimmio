@@ -70,7 +70,14 @@ $(document).ready(function () {
         });
     });
 
-    $('[data-table]').DataTable();
+    $('[data-table]').DataTable({
+        paging: false,
+        info: false,
+        oLanguage: {
+            sSearch: "Suchen"
+        }
+    });
+    $('div.dataTables_filter input').addClass('form-control');
 });
 
 function initializeListView() {

@@ -4,3 +4,24 @@ tr.bold > td
 .table .form-group
   margin-bottom: 0
   line-height: 1em
+
+th.sorting::after,
+th.sorting_asc::after,
+th.sorting_desc::after
+  content: "\E0BF"
+  display: inline-block
+  font-family: Icons
+  opacity: .5
+  transition: all .2s
+
+th.sorting:hover::after
+  opacity: .7
+
+th.sorting_desc:hover::after,
+th.sorting_asc::after
+  opacity: 1
+
+th.sorting_asc:hover::after,
+th.sorting_desc::after
+  content: "\E0C0"
+  opacity: 1
