@@ -20,7 +20,7 @@
             {% for application in applications %}
                 <tr>
                     <td>
-                        <a href="{{ path('frontend_application_apply', {'application': application.id}) }}">{{ application.applicationSlot.name }}</a>
+                        <a href="{{ path('frontend_application_apply', {'applicationSlotGuid': application.fullIdentifier}) }}">{{ application.applicationSlot.name }}</a>
                     </td>
                     <td>
                         {{ application.createdAt|dateFormat }}
