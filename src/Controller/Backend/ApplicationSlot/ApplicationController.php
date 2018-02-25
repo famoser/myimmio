@@ -52,6 +52,7 @@ class ApplicationController extends BaseBackendController
         $arr["apartment"] = $applicationSlot->getApartment();
         $arr["status_confirmed"] = ApplicationStatus::CONFIRMED;
         $arr["status_rejected"] = ApplicationStatus::REJECTED;
+        $arr["link"] = $applicationSlot->getIdentifier();
 
         foreach($arr["applications"] as $application) {
             $application->score = $scoreService->getScore($application);

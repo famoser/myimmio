@@ -3,6 +3,7 @@ index:
   title_short: 'Bewerbungen'
   description: 'Bewerbungen für %name% an der %address%'
   no_applications: 'Noch keine Bewerbungen erfasst'
+  link: 'Link für Bewerbungen'
 
 view:
   title: 'Bewerbung ansehen'
