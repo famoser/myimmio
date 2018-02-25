@@ -6,9 +6,9 @@
   },
   "dependencies": {
     "bootstrap": "^4",
-    "jquery": "^3.2",
     "datatables.net-bs": "^1.10.16",
     "datatables.net-dt": "^1.10.16",
+    "jquery": "^3.2",
     "open-iconic": "^1.*",
     "open-sans-fontface": "^1.4.0",
     "popper.js": "^1.12.9"
