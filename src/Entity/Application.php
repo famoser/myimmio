@@ -211,12 +211,19 @@ class Application extends BaseEntity
     }
 
     /**
-     * @return Application
+     * @param static $entity
      */
-    public function deepClone()
+    public function writeFrom($entity)
     {
-        $clone = new Application();
-        // TODO: deep clone application
-        return $clone;
+        $this->setTenantCountChild($entity->getTenantCountChild());
+        $this->setPets($entity->getPets());
+        $this->setInstruments($entity->getInstruments());
+        $entity->getApplicants()->clear();
+        foreach ($entity->getApplicants() as $applicant) {
+            $newApplicant = new Applicant();
+            $newApplicant->writeFrom($applicant);
+            $newApplicant->setApplication($this);
+            $entity->getApplicants()->add($newApplicant);
+        }
     }
 }

@@ -111,4 +111,20 @@ class ApplicantJob extends BaseEntity
     {
         $this->reference = $reference;
     }
+
+    /**
+     * @param static $entity
+     */
+    public function writeFrom($entity)
+    {
+        $this->setYearlySalary($this->getYearlySalary());
+        $this->setWorkingSince(clone $this->getWorkingSince());
+        $this->setProfession($this->getProfession());
+
+        if ($entity->getReference() != null) {
+            $newReference = new ApplicantReference();
+            $newReference->writeFrom($entity->getReference());
+            $this->setReference($newReference);
+        }
+    }
 }

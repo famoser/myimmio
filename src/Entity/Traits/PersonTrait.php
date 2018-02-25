@@ -84,4 +84,13 @@ trait PersonTrait
     {
         return $this->getGivenName() . ' ' . $this->getFamilyName();
     }
+
+    /**
+     * @param static $entity
+     */
+    protected function writeFromPerson($entity)
+    {
+        $this->setGivenName($entity->getGivenName());
+        $this->setFamilyName($entity->getFamilyName());
+    }
 }

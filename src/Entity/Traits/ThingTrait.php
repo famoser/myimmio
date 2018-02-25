@@ -70,4 +70,13 @@ trait ThingTrait
 
         return $this;
     }
+
+    /**
+     * @param static $entity
+     */
+    protected function writeFromThing($entity)
+    {
+        $this->setName($entity->getName());
+        $this->setDescription($entity->getDescription());
+    }
 }

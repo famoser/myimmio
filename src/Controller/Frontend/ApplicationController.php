@@ -233,6 +233,7 @@ class ApplicationController extends BaseFrontendController
 
         //form to use another application as template
         $choices = [];
+        $choicesById = [];
         foreach ($this->getUser()->getApplications() as $myApplication) {
             if ($myApplication->getApplicationSlot()->getId() == $applicationSlot->getId()) {
                 //found existing application
@@ -242,6 +243,7 @@ class ApplicationController extends BaseFrontendController
                     $myApplication->getCreatedAt()->format(DateTimeFormatter::DATE_FORMAT) . " - " .
                     implode(", ", $myApplication->getApplicationSlot()->getApartment()->getBuilding()->getAddressLines());
                 $choices[$description] = $myApplication->getId();
+                $choicesById[$myApplication->getId()] = $myApplication;
             }
         }
 
@@ -265,9 +267,9 @@ class ApplicationController extends BaseFrontendController
         $useTemplateForm = $this->handleForm(
             $useTemplateForm,
             $request,
-            function ($form) use ($application, $choices, $translator) {
+            function ($form) use ($application, $choicesById, $translator) {
                 /* @var \Symfony\Component\Form\FormInterface $form */
-                $copyApplication = $choices[$form->getData()["clone"]];
+                $copyApplication = $choicesById[$form->getData()["clone"]];
                 $application->writeFrom($copyApplication);
                 $this->fastSave($application);
                 $this->displaySuccess($translator->trans("apply.success.template_chosen", [], "frontend_application"));

@@ -19,6 +19,7 @@ use App\Entity\Traits\PersonTrait;
 use App\Helper\DateTimeFormatter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -230,5 +231,44 @@ class Applicant extends BaseEntity
     public function setResidenceAuthorization(string $residenceAuthorization)
     {
         $this->residenceAuthorization = $residenceAuthorization;
+    }
+
+    /**
+     * @param static $entity
+     */
+    public function writeFrom($entity)
+    {
+        $this->setResidenceAuthorization($entity->getResidenceAuthorization());
+        $this->setNationality($entity->getNationality());
+        $this->setCivilStatus($entity->getCivilStatus());
+        $this->setBirthDate(clone $entity->getBirthDate());
+        $this->setSalutation($entity->getSalutation());
+        $this->writeFromPerson($entity);
+        $this->writeFromAddress($entity);
+        $this->writeFromContact($entity);
+
+        $this->getReferences()->clear();
+        foreach ($entity->getReferences() as $reference) {
+            $newReference = new ApplicantReference();
+            $newReference->writeFrom($reference);
+            $newReference->setApplicant($this);
+            $this->getReferences()->add($newReference);
+        }
+
+        $this->setCurrentLandlord(null);
+        if ($entity->getCurrentLandlord() != null)
+        {
+            $newLandlord = new ApplicantLandlord();
+            $newLandlord->writeFrom($entity->getCurrentLandlord());
+            $this->setCurrentLandlord($newLandlord);
+        }
+
+        $this->setApplicantJob(null);
+        if ($entity->getApplicantJob() != null)
+        {
+            $newJob = new ApplicantJob();
+            $newJob->writeFrom($entity->getApplicantJob());
+            $this->setApplicantJob($newJob);
+        }
     }
 }

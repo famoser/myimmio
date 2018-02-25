@@ -104,4 +104,14 @@ trait ContactTrait
 
         return $res;
     }
+
+    /**
+     * @param static $entity
+     */
+    protected function writeFromContact($entity)
+    {
+        $this->setTelephone($entity->getTelephone());
+        $this->setTelephoneMobile($entity->getTelephoneMobile());
+        $this->setEmail($entity->getEmail());
+    }
 }

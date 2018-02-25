@@ -222,4 +222,17 @@ trait AddressTrait
 
         return $res;
     }
+
+    /**
+     * @param static $entity
+     */
+    protected function writeFromAddress($entity)
+    {
+        $this->setStreet($entity->getStreet());
+        $this->setStreetNr($entity->getStreetNr());
+        $this->setAddressLine($entity->getAddressLine());
+        $this->setPostalCode($entity->getPostalCode());
+        $this->setCity($entity->getCity());
+        $this->setCountry($entity->getCountry());
+    }
 }

@@ -51,4 +51,14 @@ class ApplicantReference extends BaseEntity
     {
         $this->applicant = $applicant;
     }
+
+    /**
+     * @param static $reference
+     */
+    public function writeFrom($reference)
+    {
+        $this->writeFromThing($reference);
+        $this->writeFromPerson($reference);
+        $this->writeFromContact($reference);
+    }
 }

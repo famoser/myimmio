@@ -111,4 +111,20 @@ class ApplicantLandlord extends BaseEntity
     {
         $this->noticeBy = $noticeBy;
     }
+
+    /**
+     * @param static $entity
+     */
+    public function writeFrom($entity)
+    {
+        $this->setRentingSince(clone $entity->getRentingSince());
+        $this->setRelocationReason($entity->getRelocationReason());
+        $this->setNoticeBy($entity->getNoticeBy());
+
+        if ($entity->getReference() != null) {
+            $newReference = new ApplicantReference();
+            $newReference->writeFrom($entity->getReference());
+            $this->setReference($newReference);
+        }
+    }
 }
