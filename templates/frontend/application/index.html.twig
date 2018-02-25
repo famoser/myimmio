@@ -1,21 +1,38 @@
 {% extends "single_content_base.html.twig" %}
 
-{% block title %}{{ welcome_header }}{% endblock %}
-{% block description %}{{ 'new_application.description'|trans }}{% endblock %}
+{% block title %}{{ "apply.title"|trans }}{% endblock %}
+{% block description %}{{ 'apply.description'|trans }}{% endblock %}
 
 {% trans_default_domain "frontend_application" %}
 
 {% block single_content %}
-    <p>{{ welcome_text }}</p>
-    {{ form_start(form, { 'attr': {'class': 'col-md-4'}}) }}
-        {{ form_errors(form) }}
-        <fieldset id="applicants-list" class="form-group" data-prototype="{{ form_widget(form.applicants.vars.prototype)|e }}" data-widget-tags="{{ '<div></div>'|e }}">
-            {{ form_label(form.applicants) }}
-            {% for applicant in form.applicants %}
-                {{ form_row(applicant) }}
-            {% endfor %}
-        </fieldset>
-        <a href="#" class="btn btn-primary add-another-applicant-widget" data-list="#applicants-list">{{ 'new_application.add_applicant'|trans }}</a>
-        {{ form_rest(form) }}
-    {{ form_end(form) }}
+    <div class="leaf-view">
+        <div class="leaf">
+            <div class="text-center">
+                <h2>{{ application_slot.welcomeHeader }}</h2>
+                <p>{{ application_slot.welcomeText }}</p>
+            </div>
+        </div>
+        <div class="leaf">
+            <p>{{ "apply.choose_template"|trans }}</p>
+
+            <div class="alert alert-warning" role="alert">
+                {{ "apply.choose_template_warning"|trans }}
+            </div>
+            {{ form(use_template_form) }}
+        </div>
+        <div class="leaf">
+            {{ form(form) }}
+        </div>
+        <div class="leaf-control">
+            <div class="col-md-6">
+                <button data-behaviour="go-back" role="button">
+                    {{ "apply.button.back"|trans }}
+                </button>
+                <button data-behaviour="go-forward" role="button">
+                    {{ "apply.button.forward"|trans }}
+                </button>
+            </div>
+        </div>
+    </div>
 {% endblock %}

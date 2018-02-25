@@ -19,6 +19,7 @@ use App\Entity\Application;
 use App\Entity\ApplicationPreview;
 use App\Entity\ApplicationSlot;
 use App\Form\Application\ApplicationType;
+use App\Helper\DateTimeFormatter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -79,7 +80,7 @@ class ApplicationController extends BaseFrontendController
             case static::STATE_PREVIEW:
                 return $this->redirectToRoute("frontend_application_preview", ["applicationSlotGuid" => $applicationSlotGuid]);
             case static::STATE_CLOSED:
-                return $this->redirectToRoute("frontend_application_apply", ["applicationSlotGuid" => $applicationSlotGuid]);
+                return $this->redirectToRoute("frontend_application_closed", ["applicationSlotGuid" => $applicationSlotGuid]);
             case static::STATE_APPLY:
             default:
                 return $this->redirectToRoute("frontend_application_apply", ["applicationSlotGuid" => $applicationSlotGuid]);
@@ -210,76 +211,6 @@ class ApplicationController extends BaseFrontendController
         return $this->render("frontend/application/remembered.html.twig", $arr);
     }
 
-
-    /**
-     * @Route("/{applicationSlotGuid}/new", name="frontend_application_new")
-     *
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param $applicationSlotGuid
-     * @return Response
-     */
-    public function newAction(Request $request, TranslatorInterface $translator, $applicationSlotGuid)
-    {
-        $applicationSlot = $this->getApplicationSlot($applicationSlotGuid);
-        $application = $this->getDoctrine()->getRepository(Application::class)->findOneBy(["applicationSlot" => $applicationSlot->getId(), "frontendUser" => $this->getUser()->getId()]);
-
-        $any = $this->getDoctrine()->getRepository(Application::class)->findBy(["frontendUser" => $this->getUser()->getId()]);
-        if (count($any) === 0) {
-            //no previous applications, so we need to create new anyways; skipping this step
-            return $this->redirectToRoute("frontend_application_apply", ["applicationSlotGuid" => $applicationSlotGuid]);
-        }
-
-        if ($application != null) {
-            return $this->redirectToRoute("frontend_application_apply", ["application" => $application->getId()]);
-        }
-
-        $choices = [];
-        foreach ($any as $app) {
-            $choices[$app->getApplicationSlot()->getDescription()] = $app->getId();
-        }
-        $choices[$translator->trans('new_application.start_new_application', [], 'frontend_application')] = -1;
-
-        $form = $this->createFormBuilder()
-            ->add('clone', ChoiceType::class, array(
-                'choices' => $choices
-            ))
-            ->add('send', SubmitType::class, array(
-                'label' => $translator->trans('new_application.start_application', [], 'frontend_application')
-            ))
-            ->getForm();
-
-        $form = $this->handleForm($form, $request,
-            function () use ($form, $applicationSlot) {
-                $cloneId = $form->getData()['clone'];
-                if ($cloneId == -1) {
-                    $application = $this->createNewApplication($applicationSlot);
-                    $this->fastSave($application);
-                } else {
-                    $oldApplication = $this->getDoctrine()->getRepository(Application::class)
-                        ->findOneBy(['id' => $cloneId, 'frontendUser' => $this->getUser()->getId()]);
-                    if ($oldApplication == null) {
-                        throw new AccessDeniedHttpException();
-                    }
-                    $application = $oldApplication->deepClone();
-                    $this->fastSave($application);
-                }
-                return $this->redirectToRoute('frontend_application_apply', ['application' => $application]);
-            });
-
-        if ($form instanceof Response) {
-            return $form;
-        }
-
-        $arr = [];
-        $arr['form'] = $form->createView();
-        $arr['welcome_header'] = $applicationSlot->getWelcomeHeader();
-        $arr['welcome_text'] = $applicationSlot->getWelcomeText();
-
-        return $this->render("frontend/application/new.html.twig", $arr);
-    }
-
-
     /**
      * @Route("/{applicationSlotGuid}/apply", name="frontend_application_apply")
      *
@@ -290,21 +221,71 @@ class ApplicationController extends BaseFrontendController
      */
     public function applyAction(Request $request, TranslatorInterface $translator, $applicationSlotGuid)
     {
+        $state = $this->getState($applicationSlotGuid);
+        if ($state !== static::STATE_APPLY) {
+            return $this->redirectToState($state, $applicationSlotGuid);
+        }
 
-        $application = $this->getDoctrine()->getRepository(Application::class)->findOneBy(["applicationSlot" => $applicationSlotGuid, "frontendUser" => $this->getUser()->getId()]);
-        //todo: show form for applicants
-        //todo: see https://symfony.com/doc/current/reference/forms/types/collection.html to implement client side functionality
-        $form = $this->handleForm(
+        $applicationSlot = $this->getApplicationSlot($applicationSlotGuid);
+
+        /* @var \App\Entity\Application $application */
+        $application = null;
+
+        //form to use another application as template
+        $choices = [];
+        foreach ($this->getUser()->getApplications() as $myApplication) {
+            if ($myApplication->getApplicationSlot()->getId() == $applicationSlot->getId()) {
+                //found existing application
+                $application = $myApplication;
+            } else {
+                $description =
+                    $myApplication->getCreatedAt()->format(DateTimeFormatter::DATE_FORMAT) . " - " .
+                    implode(", ", $myApplication->getApplicationSlot()->getApartment()->getBuilding()->getAddressLines());
+                $choices[$description] = $myApplication->getId();
+            }
+        }
+
+        //ensure application is not null
+        if ($application == null) {
+            $application = new Application();
+            $application->setFrontendUser($this->getUser());
+            $application->setApplicationSlot($applicationSlot);
+        }
+
+        //create use template command
+        $useTemplateForm = $this->createFormBuilder()
+            ->add('clone', ChoiceType::class, array(
+                'choices' => $choices
+            ))
+            ->add('send', SubmitType::class, array(
+                'label' => $translator->trans('apply.choose_template_action', [], 'frontend_application')
+            ))
+            ->getForm();
+
+        $useTemplateForm = $this->handleForm(
+            $useTemplateForm,
+            $request,
+            function ($form) use ($application, $choices, $translator) {
+                /* @var \Symfony\Component\Form\FormInterface $form */
+                $copyApplication = $choices[$form->getData()["clone"]];
+                $application->writeFrom($copyApplication);
+                $this->fastSave($application);
+                $this->displaySuccess($translator->trans("apply.success.template_chosen", [], "frontend_application"));
+            }
+        );
+
+        $arr["use_template_form"] = $useTemplateForm->createView();
+        $useTemplate = $this->handleForm(
             $this->createForm(ApplicationType::class, $application)
-                ->add("submit", SubmitType::class, array('label' => $translator->trans('new_application.submit', [], 'frontend_application'))),
+                ->add("submit", SubmitType::class, ['label' => $translator->trans('apply.submit', [], 'frontend_application')]),
             $request,
             function () use ($application) {
                 $this->fastSave($application);
             }
         );
-        $arr["form"] = $form->createView();
-        $arr['welcome_header'] = $application->getApplicationSlot()->getWelcomeHeader();
-        $arr['welcome_text'] = $application->getApplicationSlot()->getWelcomeText();
+        $arr["form"] = $useTemplate->createView();
+        $arr["application"] = $application;
+        $arr["application_slot"] = $application->getApplicationSlot();
         return $this->render("frontend/application/index.html.twig", $arr);
     }
 }
