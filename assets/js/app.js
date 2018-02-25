@@ -4,6 +4,7 @@ global.$ = $;
 global.jQuery = $;
 var bootstrap = require("bootstrap");
 var dataTables = require("datatables.net");
+var lightBox = require("ekko-lightbox");
 
 //prevent double submit & give user instant feedback
 var disableFormButton = function () {
@@ -34,6 +35,11 @@ $(document).ready(function () {
         list.data('widget-counter', counter);
         var newElem = $(list.data('widget-tags')).html(newWidget);
         newElem.appendTo(list);
+    });
+
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
     });
 });
 

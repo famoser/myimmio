@@ -43,6 +43,7 @@ class MyTwigExtension extends Twig_Extension
             new Twig_SimpleFilter('booleanFormat', [$this, 'booleanFilter']),
             new Twig_SimpleFilter('camelCaseToUnderscore', [$this, 'camelCaseToUnderscoreFilter']),
             new Twig_SimpleFilter('implode', [$this, 'implodeFilter']),
+            new Twig_SimpleFilter('categoryTranslator', [$this, 'categoryTranslatorFilter']),
 
         ];
     }
@@ -105,6 +106,26 @@ class MyTwigExtension extends Twig_Extension
     public function implodeFilter($array, $glue)
     {
         return implode($glue, $array);
+    }
+
+    /**
+     * @param $category
+     * @return mixed
+     */
+    public function categoryTranslatorFilter($category)
+    {
+        $map = [
+            "AGRI" => "Landwirtschaft",
+            "APPT" => "Wohnung",
+            "GASTRO" => "Gastronomie",
+            "HOUSE" => "Haus",
+            "INDUS" => "Gewerbe/Industrie",
+            "PARK" => "Parkplatz",
+            "PROP" => "Grundstück",
+            "SECONDARY" => "Wohnnebenräume",
+            "GARDEN" => "Garten"
+        ];
+        return $map[$category];
     }
 
     /**

@@ -1,0 +1,88 @@
+{% extends 'layout_base.html.twig' %}
+
+{% block title %}{{ "index.title"|trans }}{% endblock %}
+{% block description %}{{ "index.description"|trans }}{% endblock %}
+
+{% trans_default_domain "static" %}
+
+{% block content %}
+
+    <div class="map_placer">
+        <div id="map" style="height: 800px; max-height: 100%">
+
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+
+                    {% for building in buildings %}
+                        <div class="container index-container default-color list-container">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <img data-toggle="lightbox" src="{{ building.imageUrl }}" alt="{{ building.name }}"
+                                         class="img-responsive rounded img-fluid img-bordered img-directory">
+
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="small">{{ building.category|categoryTranslator }}:</span>
+                                    <h3>{{ building.name }}</h3>
+                                    <p class="small hidden">{{ building.description|easyadmin_truncate(300)|raw }}</p>
+                                    <p class="small">
+                                        {{ building.addressLines|implode(", ") }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-4">
+                    <div class="container index-container default-color list-container">
+                        <a {% if category != "APPT" %}class="small"{% endif %} href="{{ path("directory_filter", {"filter": "APPT"}) }}">
+                            Wohnung
+                        </a>
+                    </div>
+                    <div class="container index-container default-color list-container">
+                        <a {% if category != "INDUS" %}class="small"{% endif %} href="{{ path("directory_filter", {"filter": "INDUS"}) }}">
+                            Gewerbe/Industrie
+                        </a>
+                    </div>
+                    <div class="container index-container default-color list-container">
+                        <a {% if category != "PARK" %}class="small"{% endif %} href="{{ path("directory_filter", {"filter": "PARK"}) }}">
+                            Parkplatz
+                        </a>
+                    </div>
+                </div>
+                <!--empty space for map control-->
+            </div>
+        </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+{% block javascript %}
+    <script>
+
+        function initMap() {
+            var myLatLng = {lat: -25.363, lng: 131.044};
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: myLatLng
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!'
+            });
+        }
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsqmG8PXY5oYWOhe505YZn8pAdQwGIq78&callback=initMap">
+    </script>
+{% endblock %}

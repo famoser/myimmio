@@ -45,7 +45,7 @@ class ApplicantType extends BaseAbstractType
         $builder->add("nationality", CountryType::class, ['preferred_choices' => array('CH')]);
         $builder->add("residenceAuthorization", TextType::class);
         $builder->add("applicantJob", ApplicantJobType::class);
-        $builder->add("currentLandlord", ApplicantLandlordType::class);
+        $builder->add("currentLandLord", ApplicantLandlordType::class);
     }
 
     /**
