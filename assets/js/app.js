@@ -16,13 +16,15 @@ var disableFormButton = function () {
 //prevent double submit & give user instant feedback
 var navigateTable = function () {
     var $tr = $(this);
-    var target = $tr.attr("data-href");
-    window.location = target;
+    window.location = $tr.attr("data-href");
 };
 
 $(document).ready(function () {
     $("form").on("submit", disableFormButton);
     $("tr[data-href]").on("click", navigateTable);
+    if ($("leaf-view").length) {
+        initializeLeafView();
+    }
     $(".add-another-applicant-widget").click(function (e) {
         e.preventDefault();
         var list = $($(this).data('list'));
@@ -51,13 +53,13 @@ $(document).ready(function () {
         });
     });
 
-    $('[data-status] i').click(function(evt) {
+    $('[data-status] i').click(function (evt) {
         evt.preventDefault();
         evt.stopPropagation();
         var applicationId = this.parentNode.parentNode.dataset.id;
         var status = this.dataset.status;
         var $this = $(this);
-        if($this.hasClass('status-active')) {
+        if ($this.hasClass('status-active')) {
             $this.removeClass('status-active');
         } else {
             $this.parent().find('.status-active').removeClass('status-active');
@@ -70,3 +72,24 @@ $(document).ready(function () {
 
     $('[data-table]').DataTable();
 });
+
+function initializeListView() {
+    var leafActive = 0;
+    var leafes = $(".leaf-view .leaf");
+    leafes[0].css("display", "block");
+
+    var forwardButton = $(".leaf-view .go-forward");
+    var backButton = $(".leaf-view .go-back");
+
+    forwardButton.on("click", function (e) {
+        e.preventDefault();
+        leafes[leafActive].css("display", "none");
+        leafActive++;
+        leafes[leafActive].css("display", "block");
+        backButton.css("display", "block");
+    })
+}
+
+function goToActiveLeaf() {
+    $(".leaf-view .leaf")[leafActive].css("display", "block");
+}
