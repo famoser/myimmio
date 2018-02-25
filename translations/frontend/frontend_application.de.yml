@@ -23,7 +23,7 @@ apply:
   title: 'Auf Wohnung bewerben'
   description: 'Sie können sich hier online auf diese Wohnung bewerben.'
   choose_template: 'Möchten Sie eine Ihrer ehemaligen Bewerbungen als Vorlage auswählen?'
-  choose_template_warning: 'Dadurch werden alle Ihre bereits ausgeüllten Daten überschrieben'
+  choose_template_warning: 'Dadurch werden alle Ihre bereits ausgefüllten Daten überschrieben'
   choose_template_action: 'Als Vorlage verwenden'
   add_applicant: 'Person hinzufügen'
   submit: 'Bewerben'
