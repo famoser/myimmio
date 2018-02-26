@@ -1,0 +1,60 @@
+Hi! we are group myimmio, and we've created a complete web application from scratch for this challenge. 
+If you want to start exploring while I am talking, you can do so now by visiting myimm.io
+
+We were not quite happy with implementing a chatbot, because usually they go two kind of ways:
+Either you build it to help you gather information.
+
+But let me make an example, lets take a look at this page. 
+Those are buildings from the database we've received, so its a long list, you'll get lost eventually.
+So because you want to rent a garage, you want to filter the list by garage. Klick, easy as that.
+Why would you engage in a meaningless conversation to ask a chatbot to do that? 
+
+Or you build it to be your social companion
+
+But this does not work either, 
+because no one can really define how "social" is supposed to work, 
+especially not computer science people
+Additionally of course, writing is tedius, and slow, and often not the best way to communicate.
+
+So to build a chatbot seems like a waste of time, 
+and we wanted to really follow the motivation you've given: 
+To provide better customer service, and automate customer enquiries.
+
+because if you've ever looked for an apartment, 
+you will most likely make the same experience as we did:
+
+finding an apartment is easy, there are a lot of good webpages for that
+being able to move in is hard.
+
+Because most administrations won't want you; 
+they don't like students, 
+they don't like you being poor, 
+they don't like you being tall, or whatever
+but whats really frustration is they know it the second you walk in, 
+the first time they glance over your application
+But till they really glance over your application a lot of time has been wasted:
+
+you had to visit the place,
+fill out their application sheet by hand,
+attach personal papers, 
+wait weeks for their feedback
+
+In short, it sucks.
+
+hopefully in the near future here is how it works:
+the administration will visit a webpage, OUR webpage, and creates an invitation link
+you'll find that link in one of the search engines, and apply
+they'll see if you are a potential fit, and will invite you only if you are.
+
+as easy as that, we've saved both parties a lot of time
+
+the administration save time
+because the preliminary filtering ensures less crowded calenders
+less emails and more time for the soon-to-be customers rather than the never-will-be.
+
+the tenants save time
+because they only need to type in their personal data once, 
+they can see the status of their application online and 
+they only visit an apartments they will probably see more than once from the inside
+
+thanks for your attention
